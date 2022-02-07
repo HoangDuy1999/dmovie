@@ -1,0 +1,23 @@
+.high_rate_tv_show {
+  width: 100%;
+  position: relative;
+  margin: 100px auto;
+  background-color: #fafafa;
+  // margin-top: 20px;
+  // overflow: hidden;
+}
+
+.high_rate_tv_show_top {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+.high_rate_tv_show_bottom {
+  width: 90%;
+  margin-left:  auto;
+  margin-right: auto;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

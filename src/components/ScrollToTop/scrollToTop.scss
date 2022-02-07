@@ -1,0 +1,39 @@
+.scroll-to-top-container {
+  max-width: 1500px;
+  margin: auto;
+  background-color: royalblue;
+}
+.scroll-to-top {
+  position: fixed;
+  bottom: 2px;
+  right: 2px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #8b0000;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  justify-content: center;
+}
+.scroll-to-top:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.arrow_upward {
+  color: white;
+  animation: scrollTop 0.5s alternate ease infinite;
+}
+
+@keyframes scrollTop {
+  from {
+    transform: translateY(1px);
+    // transform: scale(1.5);
+  }
+  to {
+    transform: translateY(-1px);
+    // transform: scale(1.5);
+  }
+}

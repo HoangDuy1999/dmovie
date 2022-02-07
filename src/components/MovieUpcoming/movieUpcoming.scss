@@ -1,0 +1,18 @@
+.movie_up_coming {
+  width: 90%;
+  position: relative;
+  margin-left:  auto;
+  margin-right: auto;
+  margin-top: 100px;
+  // overflow: hidden;
+}
+
+.movie_up_coming_top {
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+.movie_up_coming_bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
