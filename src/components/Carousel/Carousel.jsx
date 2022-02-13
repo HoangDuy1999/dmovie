@@ -14,12 +14,18 @@ const Carousel = () => {
     const getMovies = async () => {
       try {
         const response = await tmdbApi.getTrending();
-        setTrendMovieItems(response);
+        const { innerWidth: width} = window;
+        console.log(width);
+        if (width <= 420) {
+          setTrendMovieItems(response.slice(0, 5));
+        } else {
+          setTrendMovieItems(response);
+        }
         const timeout = setTimeout(() => {
           setDoneLoad(!doneLoad);
         }, 3000);
 
-        return () => clearTimeout(timeout)
+        return () => clearTimeout(timeout);
       } catch (e) {
         console.log(e);
       }

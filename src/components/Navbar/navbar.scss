@@ -4,21 +4,27 @@
   padding: 0;
   margin: 0;
   z-index: 10000000;
+  // background-color: red;
 }
-.container {
+.navbar_container {
   display: flex;
   height: 100%;
   background-color: #263238;
   align-items: center;
   padding: 0 20px;
   justify-content: space-between;
+  @media all and (max-width: 420px) {
+    padding: 0 5px;
+  }
 }
 
 .logoContainer {
   cursor: pointer;
   display: inline;
   flex: 0.5;
-  // background-color: red;
+  padding: 0 !important;
+  margin: 0 important;
+  align-items: flex-start;
   height: 100%;
   .logo_link {
     text-decoration: none;
@@ -27,15 +33,16 @@
       font-weight: bold;
       font-size: 40px;
       height: 60px;
-      line-height: 60px;
-      text-align: center;
+      line-height: 50px;
       // text-shadow: 2px 2px 0px black, 4px 6px 0px rgba(0, 0, 0, 0.3);
       color: #fff;
       font-family: "Niconne", cursive;
-      text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032,
-        2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939,
-        3px 3px 0px #c11a2b, 6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b,
-        4px 4px 0px #c11a2b;
+      text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032, 2px 2px 0px #46b59b,
+        4px 4px 0px #017e7f, 4px 4px 0px #052939, 3px 3px 0px #c11a2b,
+        6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b, 4px 4px 0px #c11a2b;
+      @media all and (max-width: 420px) {
+        font-size: 25px;
+      }
     }
   }
 }
@@ -47,54 +54,72 @@
   height: 60%;
   border-radius: 5px;
   position: relative;
+  margin-left: 10px;
   color: white;
+  .search input::-webkit-input-placeholder {
+    color: white;
+  }
+
+  .inputSearch {
+    background-color: #37474f;
+    width: 100%;
+    border-radius: 5px;
+    height: 100%;
+    border: none;
+    font-size: 14px;
+    color: white;
+    padding-left: 10px;
+  }
+
+  .inputSearch:focus {
+    outline: none;
+    // background-color: white;
+    // color: white;
+  }
+
+  .iconSearch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 6px 10px;
+    color: white;
+  }
 }
 
-.search input::-webkit-input-placeholder {
-  color: white;
-}
-
-.inputSearch {
-  background-color: #37474f;
-  width: 100%;
-  border-radius: 5px;
-  height: 100%;
-  border: none;
-  font-size: 14px;
-  color: white;
-  padding-left: 10px;
-}
-
-.inputSearch:focus {
-  outline: none;
-  // background-color: white;
-  // color: white;
-}
-
-.iconSearch {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 6px 10px;
-  color: white;
-}
-
-.navlink {
+.nav_link {
   cursor: pointer;
   flex: 1;
   display: flex;
-  justify-content: space-around;
-}
+  justify-content: space-between;
+  .nav_link_menu{
+    display: none;
+    @media screen and (max-width: 1200px){
+      display: block;
+      margin-left: 30px;
+      color: white;
+      font-size: 28px;
+    }
+  }
+  .nav_link_item {
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    @media screen and (max-width: 1200px){
+      display: none !important;
+    }
+    .link {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 400;
+    }
 
-.link {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.link:hover {
-  text-decoration: underline;
+    .link:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .profile {
@@ -105,7 +130,7 @@
   justify-content: flex-end;
   .register {
     color: white;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
   }
   .login {

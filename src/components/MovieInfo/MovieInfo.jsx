@@ -74,6 +74,21 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
         try {
           const params = {};
           const response = await tmdbApi.detail(category, movieId, { params });
+          const { innerWidth: width } = window;
+          if (width <= 420) {
+            response.genres = response.genres
+              ? response.genres.slice(0, 2)
+              : [];
+            response.overview = response.overview.substring(0, 400);
+            if(response.overview.length > 400){
+              response.overview =  response.overview + " ...";
+            }
+          }else{
+            response.overview = response.overview.substring(0, 600);
+            if(response.overview.length > 600){
+              response.overview =  response.overview + " ...";
+            }
+          }
           setMovieInfo(response);
         } catch (e) {
           // console.log(e);
@@ -82,20 +97,35 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
       getMovies();
       const getCredits = async () => {
         const res = await tmdbApi.credits(category, movieId);
-        setCasts(res.cast.slice(0, 5));
+        const { innerWidth: width } = window;
+        if (width <= 420) {
+          setCasts(res.cast.slice(0, 4));
+        } else {
+          setCasts(res.cast.slice(0, 5));
+        }
       };
       getCredits();
       const getTrailerFilms = async () => {
         const res = await tmdbApi.getVideos(category, movieId);
         setSelectedtrailerFilms(res.results[0] || {});
-        setTrailerFilms(res.results.slice(0, 4));
+        const { innerWidth: width } = window;
+        if (width <= 420) {
+          setTrailerFilms(res.results.slice(0, 3));
+        } else {
+          setTrailerFilms(res.results.slice(0, 4));
+        }
       };
       getTrailerFilms();
 
       const getSimilarFilms = async () => {
         try {
           const response = await tmdbApi.similar(category, movieId);
-          setSimilarFilms(response.results.slice(0, 16));
+          const { innerWidth: width } = window;
+          if (width <= 420) {
+            setSimilarFilms(response.results.slice(0, 8));
+          } else {
+            setSimilarFilms(response.results.slice(0, 16));
+          }
           const timeout = setTimeout(() => {
             setDoneLoad(true);
           }, 2000);
@@ -188,7 +218,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                   })}
                 </div>
                 <div className="plot">
-                  <span>{movieInfos.overview.substring(0, 600)}</span>
+                  <span>{movieInfos.overview}</span>
                 </div>
                 <div className="casts">
                   {casts?.map((item) => {
@@ -351,7 +381,8 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                         </div>
                         <div className="desc">
                           <div className="name">
-                            <span>{item.author.toUpperCase()}</span>
+                            {/* <>{item.author.toUpperCase()}</> */}
+                            {item.author.toUpperCase()}
                             <div
                               style={{ display: "flex", alignItem: "center" }}
                             >
