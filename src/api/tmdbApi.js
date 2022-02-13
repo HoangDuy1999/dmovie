@@ -99,8 +99,20 @@ const tmdbApi = {
     const url = category[cate] + "/" + id + "/credits";
     return axiosClient.get(url, { params: {} });
   },
+  reviews: (cate, id) => {
+    const url = category[cate] + "/" + id + "/reviews";
+    return axiosClient.get(url, { params: {page: 1} });
+  },
+  discover: (cate, params) => {
+    const url = "discover/" + category[cate];
+    return axiosClient.get(url, { params: params });
+  },
   similar: (cate, id) => {
     const url = category[cate] + "/" + id + "/similar";
+    return axiosClient.get(url, { params: {} });
+  },
+  genresList: (cate) => {
+    const url =  "/genre/" + category[cate] + "/list"
     return axiosClient.get(url, { params: {} });
   },
 };

@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar/Navbar";
 import MovieInfo from "../components/MovieInfo/MovieInfo";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
-const MovieDetail = () => {
+const TvDetail = () => {
   const [movieId, setMovieId] = useState(useParams().movieId);
   const handleChangeMovieId = function (id) {
-    console.log("set lại movieid");
+    console.log("set lại tvid");
     console.log("cái qq j v: " + id);
     setMovieId(() => id);
   };
@@ -16,8 +16,8 @@ const MovieDetail = () => {
     <div>
       <Navbar />
       <MovieInfo
+        category="tv"
         id={movieId}
-        category="movie"
         onChangeMovieId={handleChangeMovieId}
       />
       <Footer />
@@ -25,4 +25,4 @@ const MovieDetail = () => {
   );
 };
 
-export default MovieDetail;
+export default TvDetail;
