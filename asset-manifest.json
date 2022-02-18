@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/dmovie/static/css/main.70d6d9d8.chunk.css",
+    "main.js": "/dmovie/static/js/main.16b8c785.chunk.js",
+    "main.js.map": "/dmovie/static/js/main.16b8c785.chunk.js.map",
+    "runtime-main.js": "/dmovie/static/js/runtime-main.9dbcf783.js",
+    "runtime-main.js.map": "/dmovie/static/js/runtime-main.9dbcf783.js.map",
+    "static/css/2.de9c4841.chunk.css": "/dmovie/static/css/2.de9c4841.chunk.css",
+    "static/js/2.d4881502.chunk.js": "/dmovie/static/js/2.d4881502.chunk.js",
+    "static/js/2.d4881502.chunk.js.map": "/dmovie/static/js/2.d4881502.chunk.js.map",
+    "static/js/3.2b1a72e9.chunk.js": "/dmovie/static/js/3.2b1a72e9.chunk.js",
+    "static/js/3.2b1a72e9.chunk.js.map": "/dmovie/static/js/3.2b1a72e9.chunk.js.map",
+    "index.html": "/dmovie/index.html",
+    "static/css/2.de9c4841.chunk.css.map": "/dmovie/static/css/2.de9c4841.chunk.css.map",
+    "static/css/main.70d6d9d8.chunk.css.map": "/dmovie/static/css/main.70d6d9d8.chunk.css.map",
+    "static/js/2.d4881502.chunk.js.LICENSE.txt": "/dmovie/static/js/2.d4881502.chunk.js.LICENSE.txt",
+    "static/media/mobiscroll.min.css": "/dmovie/static/media/icons_mobiscroll.f7218242.woff",
+    "static/media/slick-theme.css": "/dmovie/static/media/slick.c94f7671.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9dbcf783.js",
+    "static/css/2.de9c4841.chunk.css",
+    "static/js/2.d4881502.chunk.js",
+    "static/css/main.70d6d9d8.chunk.css",
+    "static/js/main.16b8c785.chunk.js"
+  ]
+}
