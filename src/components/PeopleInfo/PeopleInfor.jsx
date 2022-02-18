@@ -414,7 +414,7 @@ const PeopleInfo = () => {
                                 "/" +
                                 (item.media_type === "movie"
                                   ? "movies/detail/"
-                                  : "tv/detail") +
+                                  : "tv/detail/") +
                                 item.id
                               }
                             >
