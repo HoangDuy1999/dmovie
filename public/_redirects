@@ -1,1 +1,2 @@
-/secure/* https://tmovie.org/secure/:splat
+/secure/* https://tmovie.org/secure/:splat 200
+/*  /index.html  200
