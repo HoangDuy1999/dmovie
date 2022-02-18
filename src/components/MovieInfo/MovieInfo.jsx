@@ -94,8 +94,8 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
               response.overview = response.overview + " ...";
             }
           } else {
-            response.overview = response.overview.substring(0, 600);
-            if (response.overview.length > 600) {
+            response.overview = response.overview.substring(0, 500);
+            if (response.overview.length > 500) {
               response.overview = response.overview + " ...";
             }
           }
