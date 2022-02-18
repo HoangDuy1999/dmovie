@@ -6,10 +6,6 @@ module.exports = (app) => {
       target: "https://tmovie.org",
       changeOrigin: true,
     }),
-    // createProxyMiddleware("/secure/people", {
-    //   target: "https://tmovie.org",
-    //   changeOrigin: true,
-    // })
   );
   app.use(
     createProxyMiddleware("/secure/people", {
