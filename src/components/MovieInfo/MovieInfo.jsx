@@ -182,57 +182,63 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
             <div className="banner_bottom"></div>
           </div>
           <div className="shadow"></div>
-          <div className="content">
-            <div className="poster">
-              <img
-                src={process.env.REACT_APP_PATH_IMG + movieInfos.poster_path}
-                alt={category === "movie" ? movieInfos.title : movieInfos.name}
-                onError={(event) => {
-                  event.target.src =
-                    "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                  event.onerror = null;
-                }}
-              />
-            </div>
-            <div className="detail">
-              <span className="title">
-                {category === "movie" ? movieInfos.title : movieInfos.name}
-              </span>
-              <div className="genres">
-                {movieInfos.genres?.map((item, index) => {
-                  return (
-                    <div className="genre" key={index}>
-                      <span>{item.name}</span>
-                    </div>
-                  );
-                })}
+          <div className="content_container">
+            <div className="content_wrapper">
+              <div className="poster">
+                <img
+                  src={process.env.REACT_APP_PATH_IMG + movieInfos.poster_path}
+                  alt={
+                    category === "movie" ? movieInfos.title : movieInfos.name
+                  }
+                  onError={(event) => {
+                    event.target.src =
+                      "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                    event.onerror = null;
+                  }}
+                />
               </div>
-              <div className="plot">
-                <span>{movieInfos.overview}</span>
-              </div>
-              <div className="casts">
-                {casts?.map((item, index) => {
-                  return (
-                    <div key={index} className="cast">
-                      <img
-                        src={process.env.REACT_APP_PATH_IMG + item.profile_path}
-                        onError={(event) => {
-                          event.target.src =
-                            "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                          event.onerror = null;
-                        }}
-                        // style={{ minWidth: "80px", minHeight: "100px" }}
-                        alt={item.original_name}
-                      />
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        to={"/person/detail/" + item.id}
-                      >
-                        <span>{item.original_name}</span>
-                      </Link>
-                    </div>
-                  );
-                })}
+              <div className="detail">
+                <span className="title">
+                  {category === "movie" ? movieInfos.title : movieInfos.name}
+                </span>
+                <div className="genres">
+                  {movieInfos.genres?.map((item, index) => {
+                    return (
+                      <div className="genre" key={index}>
+                        <span>{item.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="plot">
+                  <span>{movieInfos.overview}</span>
+                </div>
+                <div className="casts">
+                  {casts?.map((item, index) => {
+                    return (
+                      <div key={index} className="cast">
+                        <img
+                          src={
+                            process.env.REACT_APP_PATH_IMG + item.profile_path
+                          }
+                          onError={(event) => {
+                            event.target.src =
+                              "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                            event.onerror = null;
+                          }}
+                          // style={{ minWidth: "80px", minHeight: "100px" }}
+                          alt={item.original_name}
+                        />
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          to={"/person/detail/" + item.id}
+                        >
+                          <span>{item.original_name}</span>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

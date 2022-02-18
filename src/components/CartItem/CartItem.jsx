@@ -28,7 +28,7 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
       >
         <div
           className="now_playing_container"
-          style={person && size[0] > 420 ? { marginRight: "15px" } : {}}
+          style={size[0] > 420 ? { marginRight: "15px" } : {}}
           title={name}
         >
           <img
