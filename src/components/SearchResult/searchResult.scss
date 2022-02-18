@@ -1,0 +1,48 @@
+.search_result_container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  .list_movies {
+    display: flex;
+    flex-direction: column;
+    .list_movies_label {
+      margin-bottom: 25px;
+      margin-top: 50px;
+      font-size: 35px;
+      font-weight: 600;
+    }
+    .list_movies_content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      @media all and (max-width: 978px) {
+        justify-content: flex-start;
+      }
+      @media all and (max-width: 420px) {
+        justify-content: space-between;
+      }
+    }
+  }
+  .list_tvs {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    .list_tvs_label {
+      margin-bottom: 25px;
+      font-size: 35px;
+      font-weight: 600;
+    }
+    .list_tvs_content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      @media all and (max-width: 978px) {
+        justify-content: flex-start;
+      }
+      @media all and (max-width: 420px) {
+        justify-content: space-between;
+      }
+    }
+  }
+}

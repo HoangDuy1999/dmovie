@@ -17,7 +17,7 @@ const TvAiring = () => {
     };
     getMovies();
   }, []);
-  console.log(tvAirings);
+  // console.log(tvAirings);
 
   return (
     <div className="tv_airing">

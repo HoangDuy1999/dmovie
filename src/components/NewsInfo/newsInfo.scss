@@ -1,0 +1,104 @@
+.news_detail_container {
+  width: 90%;
+  margin: 0 auto;
+  .news_detail_wrapper {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    @media screen and (max-width: 978px) {
+      flex-direction: column;
+    }
+    .left_container {
+      flex: 5;
+      .left {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 50px;
+        //   background-color: red;
+        border: 2px solid #f1f1f1;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: left;
+        .news_title {
+          margin-top: 100px;
+          font-size: 30px;
+          font-weight: 600;
+          color: #67b8ef;
+        }
+        .news_sub_title {
+          margin: 15px 0;
+          display: flex;
+          font-size: 16px;
+          color: gray;
+          .created_at {
+            padding-right: 10px;
+            border-right: 1px solid #ebe1e1;
+          }
+          .type {
+            margin-left: 10px;
+          }
+        }
+        .new_poster {
+          float: left;
+          height: 120px;
+          img {
+            width: 100px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+
+            height: 120px;
+          }
+        }
+      }
+    }
+
+    .other_news_container {
+      flex: 3;
+      margin-left: 20px;
+      padding: 10px;
+      background-color: #fafafa;
+      align-items: center;
+      justify-content: center;
+      @media screen and (max-width: 978px) {
+        margin-top: 20px;
+        margin-left: 0;
+      }
+      .label {
+        margin-top: 15px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #777787;
+      }
+      .wrapper {
+        display: flex;
+        margin-bottom: 35px;
+        .poster {
+          flex: 1;
+          img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+          }
+        }
+        .desc {
+          flex: 7;
+          margin-left: 10px;
+          display: flex;
+          flex-direction: column;
+          .title {
+            color: #365667;
+            font-weight: 600;
+          }
+          .title:hover {
+            text-decoration: underline;
+          }
+          .sub_title {
+            margin-top: 5px;
+            color: gray;
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+}

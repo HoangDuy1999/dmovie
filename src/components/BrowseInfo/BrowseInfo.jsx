@@ -7,12 +7,15 @@ import tmdbApi from "../../api/tmdbApi";
 import mobiscroll from "@mobiscroll/react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import CartItemBrowses from "../CartItemBrowses/CartItemBrowses";
-import Button from "@material-ui/core/button";
+import Button from "@material-ui/core/Button";
 import { languages } from "../../Data/language";
 import ReactLoading from "react-loading";
-
+import { AiOutlineMenuUnfold } from "react-icons/ai";
+import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
+// import { CSSTransition } from "react-transition-group";
 const BrowseInfo = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [sideBarLeft, setSideBarLeft] = useState(false);
   const [doneLoad, setDoneLoad] = useState(false);
   const [subDoneLoad, setSubDoneLoad] = useState(true);
   const [dataLists, setDataLists] = useState([]);
@@ -70,6 +73,11 @@ const BrowseInfo = () => {
 
   // get data
   useEffect(() => {
+    setDoneLoad(!doneLoad);
+    setSideBarLeft(false);
+    const timeout = setTimeout(() => {
+      setDoneLoad(true);
+    }, 5000);
     const params = {
       "release_date.gte": releaseIn[0] + "-01-01",
       "release_date.lte": releaseIn[1] + "-01-01",
@@ -93,10 +101,6 @@ const BrowseInfo = () => {
           setTotalPage(response.total_pages || 1);
           // console.log(response);
           setDataLists(response.results);
-          const timeout = setTimeout(() => {
-            setDoneLoad(true);
-          }, 2000);
-          return () => clearTimeout(timeout);
           // if(response.results !== undefined){
 
           // }
@@ -106,6 +110,7 @@ const BrowseInfo = () => {
       }
     };
     getData();
+    return () => clearTimeout(timeout);
   }, [selectMovieGenres, selectedType, score, releaseIn, selectedLanguege]);
 
   // const handleChangeSetSelectedType = (e) => {
@@ -120,6 +125,10 @@ const BrowseInfo = () => {
 
   const handleChangeReleaseIn = (e) => {
     setReleaseIn(e);
+  };
+
+  const handleClickOpenMenuLeft = (e) => {
+    setSideBarLeft(!sideBarLeft);
   };
 
   const handleChangeScore = (e) => {
@@ -148,6 +157,10 @@ const BrowseInfo = () => {
   };
 
   const handleClickLoadMore = () => {
+    setDoneLoad(!doneLoad);
+    const timeout = setTimeout(() => {
+      setDoneLoad(true);
+    }, 5000);
     // setSubDoneLoad(false);
     const params = {
       "release_date.gte": releaseIn[0] + "-01-01",
@@ -175,44 +188,25 @@ const BrowseInfo = () => {
             setTotalPage(response.total_pages || 1);
             // console.log(response);
             setDataLists([...dataLists, ...response.results]);
-            // console.log([...dataLists, ...response.results]);
-            // const timeout = setTimeout(() => {
-            //   setSubDoneLoad(true);
-            // }, 2000);
-            // return () => clearTimeout(timeout);
           }
         } catch (e) {
           console.log(e);
         }
       };
       getData();
+      return () => clearTimeout(timeout);
     }
   };
 
   return (
     <>
-      {!doneLoad ? (
+      <PageLoadingEffeect doneLoad={doneLoad} />
+      <div className="browseInfoContainer">
         <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgb(48, 48, 48, 0.1)",
-            zIndex: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="side_bar_left"
+          style={sideBarLeft ? {} : { display: "none" }}
         >
-          <ReactLoading
-            type={"bars"}
-            color={"#283040"}
-            height={100}
-            width={100}
-          />
-        </div>
-      ) : (
-        <div className="browseInfoContainer">
-          <div className="wrapper">
+          <div className="container">
             <div className="left">
               <div className="type">
                 <div className="type_label">
@@ -222,13 +216,6 @@ const BrowseInfo = () => {
                   <span style={{ fontSize: "20px", fontWeight: 600 }}>
                     {selectedType.label}
                   </span>
-                  {/* <span>{selectedType}</span> */}
-                  {/* <Select
-                  options={types}
-                  value={selectedType}
-                  disabled={selectedType}
-                  onChange={(e) => handleChangeSetSelectedType(e)}
-                /> */}
                 </div>
                 <hr
                   style={{
@@ -290,7 +277,7 @@ const BrowseInfo = () => {
                   <span>VOTE AVERAGE</span>
                 </div>
                 <mobiscroll.Slider
-                  className="score_release_in"
+                  className="score_slider"
                   value={[0, 10]}
                   onChange={(e) => handleChangeScore(e)}
                   min={0}
@@ -298,7 +285,7 @@ const BrowseInfo = () => {
                   // data-step-labels="[1880, 1920, 1960, 2000, 2029]"
                   data-tooltip="true"
                 ></mobiscroll.Slider>
-                <div className="group_score_in">
+                <div className="group_score">
                   <div className="group_score_in_left">{score[0]}</div>
                   <div className="group_score_in_right">{score[1]}</div>
                 </div>
@@ -319,70 +306,200 @@ const BrowseInfo = () => {
                     />
                   </div>
                 </div>
-                <hr
-                  style={{
-                    backgroundColor: "#e0e0e0",
-                    height: "1px",
-                    border: 0,
-                  }}
-                />
               </div>
             </div>
-            <div className="right">
-              {!subDoneLoad ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    width: "100vw",
-                    height: "100vh",
-                    backgroundColor: "rgb(48, 48, 48, 0.1)",
-                    zIndex: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <ReactLoading
-                    type={"bars"}
-                    color={"#283040"}
-                    height={100}
-                    width={100}
+            <div
+              className="right"
+              onClick={(e) => handleClickOpenMenuLeft(e)}
+            ></div>
+          </div>
+        </div>
+        <div className="wrapper">
+          <div className="left">
+            <div className="type">
+              <div className="type_label">
+                <span>TITLE TYPE</span>
+              </div>
+              <div className="type_select">
+                <span style={{ fontSize: "20px", fontWeight: 600 }}>
+                  {selectedType.label}
+                </span>
+                {/* <span>{selectedType}</span> */}
+                {/* <Select
+                  options={types}
+                  value={selectedType}
+                  disabled={selectedType}
+                  onChange={(e) => handleChangeSetSelectedType(e)}
+                /> */}
+              </div>
+              <hr
+                style={{
+                  backgroundColor: "#e0e0e0",
+                  height: "1px",
+                  border: 0,
+                }}
+              />
+            </div>
+            <div className="genres">
+              <div className="genres_label">WITH SELECTED GENRES</div>
+              {genresLists.map((item, index) => (
+                <div className="checkgroup" key={index}>
+                  <input
+                    type="checkbox"
+                    id={item.name}
+                    name={item.name}
+                    value={item.id}
+                    onChange={(e) => handleChangeGenres(e)}
+                  />
+                  <label> {item.name}</label>
+                </div>
+              ))}
+              <hr
+                style={{
+                  backgroundColor: "#e0e0e0",
+                  height: "1px",
+                  border: 0,
+                }}
+              />
+            </div>
+            <div className="release_in">
+              <div className="release_in_title">
+                <span>RELEASE IN</span>
+              </div>
+              <mobiscroll.Slider
+                className="slider_release_in"
+                value={[1880, 2029]}
+                onChange={(e) => handleChangeReleaseIn(e)}
+                min={1880}
+                max={2029}
+                // data-step-labels="[1880, 1920, 1960, 2000, 2029]"
+                data-tooltip="true"
+              ></mobiscroll.Slider>
+              <div className="group_relase_in">
+                <div className="group_relase_in_left">{releaseIn[0]}</div>
+                <div className="group_relase_in_right">{releaseIn[1]}</div>
+              </div>
+              <hr
+                style={{
+                  backgroundColor: "#e0e0e0",
+                  height: "1px",
+                  border: 0,
+                }}
+              />
+            </div>
+            <div className="score">
+              <div className="score_in_title">
+                <span>VOTE AVERAGE</span>
+              </div>
+              <mobiscroll.Slider
+                className="score_release_in"
+                value={[0, 10]}
+                onChange={(e) => handleChangeScore(e)}
+                min={0}
+                max={10}
+                // data-step-labels="[1880, 1920, 1960, 2000, 2029]"
+                data-tooltip="true"
+              ></mobiscroll.Slider>
+              <div className="group_score_in">
+                <div className="group_score_in_left">{score[0]}</div>
+                <div className="group_score_in_right">{score[1]}</div>
+              </div>
+              <hr
+                style={{
+                  backgroundColor: "#e0e0e0",
+                  height: "1px",
+                  border: 0,
+                }}
+              />
+              <div className="countries">
+                <div className="countries_label">LANGUAGES</div>
+                <div className="select_country">
+                  <Select
+                    options={languages}
+                    value={selectedLanguege}
+                    onChange={setselectedLanguege}
                   />
                 </div>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {dataLists.map((item) => (
-                    <CartItemBrowses
-                      item={item}
-                      key={item.id}
-                      types={
-                        selectedType.label === "Tv series" ? "tv" : "movies"
-                      }
-                      colorGroup={{}}
-                    />
-                  ))}
-                </div>
-              )}
-              <div className="btn_load_more">
-                {page + 1 <= totalPages ? (
-                  <Button variant="outlined" onClick={handleClickLoadMore}>
-                    Load more ...
-                  </Button>
-                ) : (
-                  ""
-                )}
               </div>
+              <hr
+                style={{
+                  backgroundColor: "#e0e0e0",
+                  height: "1px",
+                  border: 0,
+                }}
+              />
+            </div>
+          </div>
+          <div className="right">
+            <div className="label_top">
+              <div className="label_left">Browse</div>
+              <AiOutlineMenuUnfold
+                className="filter_icon"
+                onClick={(e) => {
+                  handleClickOpenMenuLeft(e);
+                }}
+              />
+            </div>
+            {!subDoneLoad ? (
+              <div
+                style={{
+                  position: "absolute",
+                  width: "100vw",
+                  height: "100vh",
+                  backgroundColor: "rgb(48, 48, 48, 0.1)",
+                  zIndex: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ReactLoading
+                  type={"bars"}
+                  color={"#283040"}
+                  height={100}
+                  width={100}
+                />
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                }}
+              >
+                {dataLists.map((item) => (
+                  <CartItemBrowses
+                    item={item}
+                    key={item.id}
+                    types={selectedType.label === "Tv series" ? "tv" : "movies"}
+                    colorGroup={{}}
+                  />
+                ))}
+              </div>
+            )}
+            {/* <ButtonLoadMore
+              page={page}
+              totalPages={totalPages}
+              onClick={() => handleClickLoadMore()}
+            /> */}
+            <div className="btn_load_more">
+              {page + 1 <= totalPages ? (
+                <Button
+                  variant="outlined"
+                  onClick={() => handleClickLoadMore()}
+                >
+                  Load more ...
+                </Button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
-      )}
+      </div>
+      {/* )} */}
     </>
   );
 };

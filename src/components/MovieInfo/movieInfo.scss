@@ -123,7 +123,6 @@ $black: #000;
           height: auto !important;
           align-items: stretch;
           @media all and (max-width: 420px) {
-
           }
           .genre {
             flex: 1;
@@ -157,7 +156,7 @@ $black: #000;
           margin-top: 20px;
           color: white;
           text-align: justify;
-          @media screen and (max-width: 420px){
+          @media screen and (max-width: 420px) {
             font-size: 12px;
           }
         }
@@ -170,7 +169,7 @@ $black: #000;
             width: 100px;
             height: 125px;
             margin-right: 10px;
-            @media screen and (max-width: 420px){
+            @media screen and (max-width: 420px) {
               width: 80px;
               height: 100px;
             }
@@ -180,6 +179,7 @@ $black: #000;
             height: 100%;
             border-radius: 5px;
             object-fit: cover;
+            border: 1px solid #f1f1f1;
           }
           .cast span {
             position: relative;
@@ -188,9 +188,12 @@ $black: #000;
             margin-top: 2px;
             font-size: 14px;
             text-align: left;
-            @media screen and (max-width: 420px){
-              font-size: 12px
+            @media screen and (max-width: 420px) {
+              font-size: 12px;
             }
+          }
+          .cast span:hover {
+            text-decoration: underline;
           }
         }
       }
@@ -341,7 +344,7 @@ $black: #000;
             justify-content: center;
             display: flex;
             z-index: 0;
-            @media all and (max-width: 420px){
+            @media all and (max-width: 420px) {
               // width: 170px !important;
             }
             .icon_play {

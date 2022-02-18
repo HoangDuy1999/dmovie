@@ -1,10 +1,40 @@
 .navbar {
   width: 100%;
+  min-height: 60px;
   height: 60px;
   padding: 0;
   margin: 0;
-  z-index: 10000000;
+  z-index: 222;
+  // overflow-x: hidden;
   // background-color: red;
+  .input_search {
+    position: absolute;
+    box-sizing: border-box;
+    border: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 899999999999;
+    background-color: white;
+    padding-left: 15px;
+    font-size: 14px;
+    border: 1px solid #e7e7e7;
+  }
+  .input_search:focus {
+    outline: none;
+  }
+  .icon_close {
+    z-index: 999999999999;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 28px;
+    color: red;
+    margin-right: 20px;
+    margin-top: 15px;
+    cursor: pointer;
+  }
 }
 .navbar_container {
   display: flex;
@@ -12,136 +42,287 @@
   background-color: #263238;
   align-items: center;
   padding: 0 20px;
+  // overflow-x: hidden;
   justify-content: space-between;
   @media all and (max-width: 420px) {
     padding: 0 5px;
   }
-}
-
-.logoContainer {
-  cursor: pointer;
-  display: inline;
-  flex: 0.5;
-  padding: 0 !important;
-  margin: 0 important;
-  align-items: flex-start;
-  height: 100%;
-  .logo_link {
-    text-decoration: none;
+  .logoContainer {
+    cursor: pointer;
+    display: inline;
+    flex: 0.5;
+    padding: 0 !important;
+    margin: 0 important;
+    align-items: flex-start;
     height: 100%;
-    .logoText {
-      font-weight: bold;
-      font-size: 40px;
-      height: 60px;
-      line-height: 50px;
-      // text-shadow: 2px 2px 0px black, 4px 6px 0px rgba(0, 0, 0, 0.3);
-      color: #fff;
-      font-family: "Niconne", cursive;
-      text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032, 2px 2px 0px #46b59b,
-        4px 4px 0px #017e7f, 4px 4px 0px #052939, 3px 3px 0px #c11a2b,
-        6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b, 4px 4px 0px #c11a2b;
-      @media all and (max-width: 420px) {
-        font-size: 25px;
+    .logo_link {
+      text-decoration: none;
+      height: 100%;
+      .logoText {
+        font-weight: bold;
+        font-size: 40px;
+        height: 60px;
+        line-height: 50px;
+        // text-shadow: 2px 2px 0px black, 4px 6px 0px rgba(0, 0, 0, 0.3);
+        color: #fff;
+        font-family: "Niconne", cursive;
+        text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032,
+          2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939,
+          3px 3px 0px #c11a2b, 6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b,
+          4px 4px 0px #c11a2b;
+        @media all and (max-width: 420px) {
+          font-size: 25px;
+        }
       }
     }
   }
-}
 
-.search {
-  flex: 2;
-  display: flex;
-  align-items: center;
-  height: 60%;
-  border-radius: 5px;
-  position: relative;
-  margin-left: 10px;
-  color: white;
-  .search input::-webkit-input-placeholder {
-    color: white;
-  }
-
-  .inputSearch {
-    background-color: #37474f;
-    width: 100%;
-    border-radius: 5px;
-    height: 100%;
-    border: none;
-    font-size: 14px;
-    color: white;
-    padding-left: 10px;
-  }
-
-  .inputSearch:focus {
-    outline: none;
-    // background-color: white;
-    // color: white;
-  }
-
-  .iconSearch {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 6px 10px;
-    color: white;
-  }
-}
-
-.nav_link {
-  cursor: pointer;
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  .nav_link_menu{
-    display: none;
-    @media screen and (max-width: 1200px){
-      display: block;
-      margin-left: 30px;
-      color: white;
-      font-size: 28px;
-    }
-  }
-  .nav_link_item {
-    background-color: red;
+  .search {
+    flex: 2;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    @media screen and (max-width: 1200px){
-      display: none !important;
-    }
-    .link {
-      color: white;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 400;
-    }
-
-    .link:hover {
-      text-decoration: underline;
-    }
-  }
-}
-
-.profile {
-  cursor: pointer;
-  flex: 0.5;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  .register {
+    height: 60%;
+    border-radius: 5px;
+    position: relative;
+    margin-left: 10px;
     color: white;
-    font-size: 18px;
-    font-weight: 400;
+    box-sizing: border-box;
+    @media screen and (max-width: 820px) {
+      flex: 3.5;
+    }
+    flex-direction: column;
+    @media screen and (max-width: 420px) {
+      flex-direction: row;
+    }
+    .search_wrapper {
+      width: 99%;
+      height: 100%;
+      min-height: 100%;
+      @media screen and (max-width: 420px) {
+        display: none;
+      }
+      .search input::-webkit-input-placeholder {
+        color: white;
+      }
+      .inputSearch {
+        background-color: #37474f;
+        width: 100%;
+        border-radius: 5px;
+        height: 100%;
+        border: none;
+        font-size: 14px;
+        color: white;
+        padding-left: 10px;
+      }
+
+      .inputSearch:focus {
+        outline: none;
+        // background-color: white;
+        // color: white;
+      }
+
+      .iconSearch {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 6px 10px;
+        color: white;
+        cursor: pointer;
+      }
+    }
+    .data_results {
+      background-color: white;
+      box-sizing: border-box;
+      padding: 0 10px;
+      margin-top: 5px;
+      margin-left: 10px;
+      z-index: 999999999999;
+      width: 100%;
+      min-height: 500px !important;
+      max-height: 500px !important;
+      height: 500px !important;
+      display: flex;
+      flex-direction: column !important;
+      overflow-y: scroll;
+      @media screen and (max-width: 420px) {
+        display: none;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .data_result {
+        display: flex;
+        flex-direction: row;
+        // background-color: yellow;
+        align-items: center;
+        .data_result_backdrop {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          img {
+            width: 60px;
+            height: 90px;
+            border-radius: 5px;
+          }
+        }
+        .data_result_content {
+          flex: 7;
+          display: flex;
+          flex-direction: column;
+          margin-left: 5px;
+          .data_result_title {
+            margin-top: -5px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #4656b7;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1; /* number of lines to show */
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+          }
+          .data_result_description {
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+        }
+      }
+    }
+    .data_result:hover{
+      background-color: #dbdbdb;
+    }
+    .search_navbar_icon {
+      display: none;
+      margin-left: 20px;
+      .search_navbar_icon {
+        color: white;
+        font-size: 28px;
+      }
+      @media screen and (max-width: 420px) {
+        display: block;
+        margin-left: 5px;
+        font-size: 30px;
+      }
+    }
   }
-  .login {
-    color: #37474f;
+
+  .nav_link {
     cursor: pointer;
-    padding: 10px 20px;
-    background-color: white;
-    margin-left: 15px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 3px;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 420px) {
+      margin: 0;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 0.5;
+    }
+    .nav_bar_menu {
+      display: none;
+      margin-left: 30px;
+      text-decoration: none;
+      .link {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 400;
+      }
+      @media screen and (max-width: 1250px) {
+        margin-left: 30px;
+        display: inline-block;
+        // position: relative;
+        .nav_bar_menu_icon {
+          color: white;
+          font-size: 28px;
+        }
+      }
+      @media screen and (max-width: 420px) {
+        margin: 0;
+        align-items: flex-end;
+      }
+    }
+    .nav_link_item {
+      // background-color: red;
+      display: flex;
+      margin-left: 10px;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+      @media screen and (max-width: 1250px) {
+        display: none !important;
+      }
+      .link {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 400;
+      }
+
+      .link:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .profile {
+    cursor: pointer;
+    flex: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    // background-color: red;
+    .profile_items {
+      display: flex;
+      align-items: center;
+      .register {
+        color: white;
+        font-size: 18px;
+        font-weight: 400;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .login {
+        color: #37474f;
+        cursor: pointer;
+        padding: 8px 16px;
+        background-color: white;
+        margin-left: 15px;
+        font-size: 18px;
+        font-weight: 550;
+        border: none;
+        border-radius: 3px;
+      }
+      @media screen and (max-width: 820px) {
+        display: none !important;
+      }
+    }
+
+    .nav_bar_profile {
+      display: none;
+      // margin-left: 30px;
+      text-decoration: none;
+      .link {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 400;
+      }
+      @media screen and (max-width: 820px) {
+        // margin-left: 30px;
+        display: flex;
+        // position: relative;
+        .nav_bar_profile_icon {
+          color: white;
+          font-size: 28px;
+        }
+      }
+    }
   }
 }

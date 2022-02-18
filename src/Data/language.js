@@ -1,5 +1,9 @@
 export const languages = [
   {
+    value: "",
+    label: "All languge",
+  },
+  {
     value: "an",
     label: "Aragonese",
   },

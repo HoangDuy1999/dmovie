@@ -1,0 +1,250 @@
+.people_container {
+  width: 90%;
+  margin: 25px auto;
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+  .left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 768px) {
+      flex-direction: row;
+    }
+    // background-color: red;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    .avatar {
+      @media screen and (max-width: 768px) {
+        flex: 3;
+      }
+      @media screen and (max-width: 420px) {
+        flex: 4;
+      }
+      // background-color: red;
+      display: flex;
+      align-items: flex-start;
+      img {
+        width: 100%;
+        border-radius: 5px;
+        filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.9));
+      }
+    }
+    .person_info {
+      @media screen and (max-width: 768px) {
+        flex: 5;
+        margin-left: 20px;
+      }
+      @media screen and (max-width: 420px) {
+        flex: 4;
+        margin-left: 15px;
+      }
+      .label {
+        margin-top: 15px;
+        @media screen and (max-width: 768px) {
+          display: none;
+          margin: 0;
+          padding: 0;
+          width: 0;
+          height: 0;
+        }
+        // @media screen and (max-width: 420px) {
+        //   font-size: 18px;
+        // }
+        font-size: 22px;
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.87);
+      }
+      .person_info_wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        @media screen and (max-width: 420px) {
+          margin-top: 0px;
+        }
+        color: rgba(0, 0, 0, 0.87);
+        .info_group {
+          font-size: 18px;
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 15px;
+          @media screen and (max-width: 420px) {
+            font-size: 16px;
+            margin-bottom: 5px;
+          }
+          h5 {
+            margin: 0;
+            padding: 0;
+          }
+          span {
+            color: rgba(0, 0, 0, 0.54);
+            font-size: 16px;
+            @media screen and (max-width: 420px) {
+              font-size: 14px;
+            }
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+  .right {
+    flex: 6;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    // background-color: yellow;
+
+    .people_desc {
+      display: flex;
+      flex-direction: column;
+      .full_name {
+        font-size: 40px;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .biography_group {
+        margin-top: 30px;
+        .label {
+          font-size: 22px;
+          font-weight: 600;
+          color: rgba(0, 0, 0, 0.9);
+          margin-bottom: 15px;
+        }
+        .desc {
+          font-size: 15px;
+          font-weight: 400;
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+    }
+
+    .known_for_wrapper {
+      margin-top: 50px;
+      .label {
+        font-size: 22px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.9);
+        margin-bottom: 15px;
+      }
+      .known_for_items {
+        width: 100%;
+        // background: red;
+        margin-left: auto;
+        margin-right: auto;
+        // padding-bottom: 40px;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        @media all and (max-width: 978px) {
+          justify-content: flex-start;
+        }
+        @media all and (max-width: 420px) {
+          justify-content: space-between;
+        }
+      }
+    }
+    .filmography {
+      margin-top: 35px;
+      .label {
+        font-size: 22px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.9);
+        margin-bottom: 15px;
+      }
+      .filmography_wrapper {
+        display: flex;
+        flex-direction: column;
+        .filmography_group {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 20px;
+          width: 100%;
+          min-height: 40px;
+          cursor: pointer;
+          background-color: white;
+          border-radius: 5px;
+          box-sizing: border-box;
+          transition: height 2s;
+          filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.6));
+          .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 50px;
+            height: 40px;
+            padding: 0 25px;
+            box-sizing: border-box;
+            // background-color: yellow;
+            .label {
+              box-sizing: border-box;
+              // background-color: red;
+              font-size: 18px;
+              font-weight: 600;
+              padding: 0;
+              margin: 0;
+              color: rgba(0, 0, 0, 1);
+            }
+            .arrow_icon {
+              font-size: 25px;
+              transition: transform 0.5s ease-in-out;
+            }
+          }
+          .bottom {
+            // display: none;
+            padding: 0 25px;
+            margin-top: 10px;
+            .items_wrapper {
+              margin-bottom: 15px;
+							width: 100%;
+              .items {
+                display: flex;
+								min-width: 100%;
+								// background: yellow;
+								justify-content: space-between;
+								align-items:center;
+								.left{
+									flex: 7;
+									padding: 0;
+									margin: 0;
+									display: flex;
+									flex-direction: column;
+									.movie_name{
+										font-size: 18px;
+										color: rgba(0, 0, 0, 0.9);
+										font-weight: 600;
+									}
+									.movie_name:hover{
+										text-decoration: underline;
+									}
+									.character{
+										font-size: 16px;
+										font-weight: 400;
+										color: rgba(0, 0, 0, 0.9)
+									}
+								}
+								.right {
+									flex: 1;
+									display: flex;
+									align-items: flex-end;
+									padding: 0;
+									margin: 0;
+									font-size: 16px;
+									color: rgba(0, 0, 0, 0.9);
+									font-weight: 400;
+								};
+              }
+            }
+          }
+        }
+        .filmography_group:hover {
+          background-color: lightcyan;
+        }
+      }
+    }
+  }
+}

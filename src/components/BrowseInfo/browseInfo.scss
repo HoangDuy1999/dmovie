@@ -1,25 +1,101 @@
 .browseInfoContainer {
   margin-top: 50px;
   margin-bottom: 50px;
-  width: 90%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  .side_bar_left {
+    width: 100%;
+    z-index: 3;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background: rgba(0, 0, 0, 0.1);
+    animation-name: example;
+    animation-duration: 1s;
+    @keyframes example {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 0%;
+      }
+    }
+    .container {
+      // overflow: scroll;
+      background: rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      margin-top: 0 !important;
+      width: 100%;
+      min-height: 100vh;
+      // height: 100vh;
+      // transition: 10s;
+      display: flex;
+      flex-direction: row;
+      .left {
+        background: white;
+        padding: 10px;
+        // background-color: red;
+        flex: 6;
+        .release_in {
+          width: 100%;
+          .slider_release_in {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+          }
+          .group_relase_in {
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+        .score {
+          width: 100%;
+          .score_slider {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+          }
+          .group_score {
+            display: flex;
+            justify-content: space-between;
+          }
+          .countries {
+            .countries_label {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+      .right {
+        flex: 2;
+        background-color: rgba(0, 0, 0, 0.00000000000000001);
+        opacity: 0.1;
+      }
+    }
+  }
   .wrapper {
     display: flex;
+    width: 90%;
+    margin: 0 auto;
     flex-direction: row;
     .left {
       flex: 2;
       padding: 0 10px;
       display: flex;
       flex-direction: column;
-      // @media only screen and (max-width: 500px) and (min-width: 370px)  {
-      //   width: 0 !important;
-      //   height: 0;
-      //   flex: 0;
-      //   visibility: hidden;
-      //   background-color: red;
-
-      // }
+      // transition: 1s ease-in-out;
+      @media only screen and (max-width: 420px) {
+        width: 0 !important;
+        height: 0 !important;
+        flex: 0;
+        display: none;
+        // visibility: hidden;
+        background-color: red;
+      }
       .type_label {
         font-size: 20px;
         font-weight: 600;
@@ -99,6 +175,24 @@
       }
     }
     .right {
+      .label_top {
+        display: flex;
+        align-items: center;
+        margin-bottom: 50px;
+        .label_left {
+          font-size: 28px;
+          font-weight: 600;
+        }
+        .filter_icon {
+          margin-left: 10px;
+          font-size: 28px;
+          cursor: pointer;
+          display: none;
+          @media screen and (max-width: 420px) {
+            display: inline-block;
+          }
+        }
+      }
       flex: 6;
       // background-color: cadetblue;
       display: flex;

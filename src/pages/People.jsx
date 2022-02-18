@@ -1,17 +1,18 @@
 import React from "react";
-import BrowseInfo from "../components/BrowseInfo/BrowseInfo";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
+import PeopleList from "../components/PeopleList/PeopleList";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
-const Browse = () => {
+
+const People = () => {
   return (
     <div>
       <Navbar />
-      <BrowseInfo />
+      <PeopleList />
       <Footer />
       <ScrollToTop />
     </div>
   );
 };
 
-export default Browse;
+export default People;

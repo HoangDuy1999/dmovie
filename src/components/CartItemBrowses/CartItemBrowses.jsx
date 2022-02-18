@@ -2,6 +2,8 @@ import { PlayArrow } from "@material-ui/icons";
 import React, { useState, useEffect } from "react";
 import "./cartItemBrowses.scss";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
 const CartItemBrowses = ({ item, types, colorGroup }) => {
   const [name, setName] = useState("");
 
@@ -17,11 +19,26 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
   }, []);
   return (
     <div className="cart_item_browse">
-      <Link to={"/" + types + "/detail/" + item.id} style={{textDecoration: "none"}}>
+      <Link
+        to={"/" + types + "/detail/" + item.id}
+        style={{ textDecoration: "none" }}
+      >
         <div className="cart_item_browse_container" title={name}>
+          {/* <LazyLoadImage
+            alt={name}
+            // height={image.height}
+            src={process.env.REACT_APP_PATH_IMG + item.poster_path} // use normal <img> attributes as props
+            // width={image.width}
+          /> */}
+
           <img
             className="cart_item_browse_image"
             src={process.env.REACT_APP_PATH_IMG + item.poster_path}
+            onError={(event) => {
+              event.target.src =
+                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+              event.onerror = null;
+            }}
             alt={name}
           />
           <div className="cart_item_browse_icon">

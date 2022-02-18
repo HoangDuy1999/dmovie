@@ -101,7 +101,7 @@ const tmdbApi = {
   },
   reviews: (cate, id) => {
     const url = category[cate] + "/" + id + "/reviews";
-    return axiosClient.get(url, { params: {page: 1} });
+    return axiosClient.get(url, { params: { page: 1 } });
   },
   discover: (cate, params) => {
     const url = "discover/" + category[cate];
@@ -112,8 +112,24 @@ const tmdbApi = {
     return axiosClient.get(url, { params: {} });
   },
   genresList: (cate) => {
-    const url =  "/genre/" + category[cate] + "/list"
+    const url = "/genre/" + category[cate] + "/list";
     return axiosClient.get(url, { params: {} });
+  },
+  getDetailPerson: (id) => {
+    const url = "/person/" + id;
+    return axiosClient.get(url, { params: {} });
+  },
+  getPopularPeople: (page=1) => {
+    const url = "/person/popular";
+    return axiosClient.get(url, { params: {page: page} });
+  },
+  getCombineCreditsPerson: (id) => {
+    const url = "/person/" + id +"/combined_credits";
+    return axiosClient.get(url, { params: {} });
+  },
+  searchMulties: (txtSearch) => {
+    const url = "/search/multi";
+    return axiosClient.get(url, { params: { query: txtSearch, page: 1} });
   },
 };
 

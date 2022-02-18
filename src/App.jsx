@@ -7,6 +7,13 @@ import "./app.scss";
 import MovieDetail from "./pages/MovieDetail";
 import TvDetail from "./pages/TvDetail";
 import Browse from "./pages/Browse";
+import Search from "./pages/Search";
+import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
+import People from "./pages/People";
+import PeopleDetail from "./pages/PeopleDetail";
+import Login from "./pages/Login";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   return (
     <div className="app">
@@ -17,6 +24,19 @@ const App = () => {
           <Route path="movies/detail/:id" element={<MovieDetail />} />
           {/*TV */}
           <Route path="tv/detail/:id" element={<TvDetail />} />
+          {/* Search */}
+          <Route path="/search" element={<Search />} />
+          {/* People */}
+          <Route path="/person" element={<People />} />
+          {/*People detail */}
+          <Route path="/person/detail/:id" element={<PeopleDetail />} />
+          {/* News */}
+          <Route path="/news" element={<News />} />
+          {/* News Detail*/}
+          <Route path="/news/detail/:id" element={<NewsDetail />} />
+          {/* Login Detail*/}
+          <Route path="/account" element={<Login />} />
+          
           {/*HOME */}
           <Route path="/" element={<Home />} />
         </Routes>
