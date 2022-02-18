@@ -170,8 +170,8 @@ $black: #000;
             height: 125px;
             margin-right: 10px;
             @media screen and (max-width: 420px) {
-              width: 80px;
-              height: 100px;
+              width: 75px;
+              height: 90px;
             }
           }
           .cast img {
@@ -189,7 +189,7 @@ $black: #000;
             font-size: 14px;
             text-align: left;
             @media screen and (max-width: 420px) {
-              font-size: 12px;
+              font-size: 10px;
             }
           }
           .cast span:hover {
@@ -293,7 +293,7 @@ $black: #000;
       flex-wrap: wrap;
       // overflow-x: hidden;
       .content {
-        width: 100%;
+        width: 99%;
         height: 250px;
         .slick-dots li.slick-active button:before {
           color: white;
@@ -411,19 +411,48 @@ $black: #000;
           .desc {
             flex: 7;
             // background-color: red;
+            display: flex;
+            flex-direction: column;
             padding-top: 0 !important;
             margin-top: 0 !important;
-            .name {
+            .info_name {
               color: #2b54e6;
               // background-color: yellow;
               font-weight: 600;
+              margin-bottom: 5px;
               // margin-right: 10px;
               margin-left: 5px;
               margin-top: -5px !important;
               // padding-top: -10px !important;
               display: flex;
-              align-items: flex-start;
+              align-items: center;
               justify-content: space-between;
+              .full_name {
+                flex: 5.5;
+                font-size: 15px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1; /* number of lines to show */
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+              }
+              .evalute {
+                flex: 2.5;
+                display: flex;
+                margin:0;
+                padding: 0;
+                align-items: center;
+                justify-content: flex-end;
+                span{
+                  margin: 0;
+                  padding: 0;
+                  font-size: 15px;
+                }
+                .star_icon{
+                  color: gold;
+                }
+              }
             }
             .desc_review {
               width: 100%;
@@ -438,6 +467,8 @@ $black: #000;
               }
               a {
                 color: #d9f2e6 !important;
+                margin: 0;
+                padding: 0;
               }
               .content_css {
                 span {

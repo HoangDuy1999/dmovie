@@ -167,7 +167,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
     // onChangeMovieId(id);
     navigate(`/movies/detail/${id}`);
   };
-console.log(casts);
+  console.log(casts);
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
@@ -221,7 +221,7 @@ console.log(casts);
                             "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                           event.onerror = null;
                         }}
-                        style={{ minWidth: "100px", minHeight: "125px" }}
+                        // style={{ minWidth: "80px", minHeight: "100px" }}
                         alt={item.original_name}
                       />
                       <Link
@@ -408,13 +408,13 @@ console.log(casts);
                         />
                       </div>
                       <div className="desc">
-                        <div className="name">
-                          {/* <>{item.author.toUpperCase()}</> */}
-                          {item.author.toUpperCase()}
-                          <div style={{ display: "flex", alignItem: "center" }}>
-                            <StarRateIcon
-                              style={{ fontSize: "28px", color: "gold" }}
-                            />
+                        <div className="info_name">
+                          <div className="full_name">
+                            {item.author.toUpperCase()}
+                          </div>
+                          <div className="evalute">
+                            <StarRateIcon className="star_icon" />
+
                             <span style={{ color: "#F0CD41" }}>
                               {item.author_details.rating === null
                                 ? 7
@@ -423,11 +423,6 @@ console.log(casts);
                             </span>
                           </div>
                         </div>
-                        {/* <div style={{margin: "0", padding: "0"}}>
-                          <div style={{color: "white", fontSize: "18px"}}>
-                            <StarRateIcon  style={{fontSize: "28px", color: "gold"}}/> / 10
-                          </div>
-                        </div> */}
                         <div className="desc_review">
                           <ShowMoreText
                             lines={3}
