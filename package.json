@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "https://tmovie.org",
-  "homepage": "https://HoangDuy1999.github.io/dmovie",
+  "homepage": "https://hoangduy1999.github.io/dmovie",
   "dependencies": {
     "@emotion/styled": "^11.6.0",
     "@material-ui/core": "^5.0.0-beta.5",
