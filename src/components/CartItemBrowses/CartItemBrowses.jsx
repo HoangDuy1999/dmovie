@@ -1,4 +1,5 @@
-import { PlayArrow } from "@material-ui/icons";
+import { BsPlayCircle } from "react-icons/bs";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import "./cartItemBrowses.scss";
 import { Link } from "react-router-dom";
@@ -6,7 +7,19 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const CartItemBrowses = ({ item, types, colorGroup }) => {
   const [name, setName] = useState("");
-
+  const [posterHover, setPosterHover] = useState(false);
+  const handleOnMoveOverPoster = (e) => {
+    const timeout = setTimeout(() => {
+      setPosterHover(true);
+    }, 10);
+    return () => clearTimeout(timeout);
+  };
+  const handleOnMoveOutPoster = (e) => {
+    const timeout = setTimeout(() => {
+      setPosterHover(false);
+    }, 10);
+    return () => clearTimeout(timeout);
+  };
   useEffect(() => {
     const getName = async () => {
       if (types === "movies") {
@@ -19,48 +32,65 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
   }, []);
   return (
     <div className="cart_item_browse">
-      <Link
-        to={"/" + types + "/detail/" + item.id}
-        style={{ textDecoration: "none" }}
-      >
-        <div className="cart_item_browse_container" title={name}>
-          {/* <LazyLoadImage
-            alt={name}
-            // height={image.height}
-            src={process.env.REACT_APP_PATH_IMG + item.poster_path} // use normal <img> attributes as props
-            // width={image.width}
-          /> */}
-
+      <div className="cart_item_browse_container">
+        <Link
+          to={"/" + types + "/detail/" + item.id}
+          style={{ textDecoration: "none" }}
+        >
           <img
+            style={posterHover ? { transform: "scale(1.2)" } : {}}
             className="cart_item_browse_image"
-            src={process.env.REACT_APP_PATH_IMG + item.poster_path}
             onError={(event) => {
               event.target.src =
                 "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
               event.onerror = null;
             }}
+            src={process.env.REACT_APP_PATH_IMG + item.poster_path}
             alt={name}
           />
-          <div className="cart_item_browse_icon">
-            <div className="cart_item_browse_circle"></div>
-          </div>
-          <div className="cart_item_browse_icon">
-            <PlayArrow
-              size="large"
+        </Link>
+        <div
+          className="icon_group"
+          onMouseOver={(e) => {
+            handleOnMoveOverPoster(e);
+          }}
+          onMouseOut={(e) => {
+            handleOnMoveOutPoster(e);
+          }}
+          style={posterHover ? { opacity: 1 } : { opacity: 0 }}
+        >
+          <Link
+            to={"/" + types + "/detail/" + item.id}
+            style={{ textDecoration: "none" }}
+          >
+            <div className="play_icon">
+              <BsPlayCircle
+                style={{
+                  fontSize: "40px",
+                  marginRight: "10px",
+                  color: "white",
+                  cursor: "pointer" 
+                }}
+              />
+            </div>
+          </Link>
+          <div className="add_icon">
+            <IoIosAddCircleOutline
               style={{
-                fontSize: "20px",
-                transform: "scale(2)",
+                fontSize: "50px",
                 color: "white",
+                cursor: "pointer" 
               }}
             />
           </div>
         </div>
-        <div className="now_play_description">
-          <span className="now_play_title" title={name}>
-            {name}
-          </span>
-        </div>
-      </Link>
+      </div>
+
+      <div className="now_play_description">
+        <span className="now_play_title" title={name}>
+          {name}
+        </span>
+      </div>
     </div>
   );
 };

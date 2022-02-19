@@ -85,17 +85,17 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
           const params = {};
           const response = await tmdbApi.detail(category, movieId, { params });
           const { innerWidth: width } = window;
-          if (width <= 420) {
+          if (width <= 768) {
             response.genres = response.genres
               ? response.genres.slice(0, 2)
               : [];
             response.overview = response.overview.substring(0, 400);
-            if (response.overview.length > 400) {
+            if (response.overview.length >= 400) {
               response.overview = response.overview + " ...";
             }
           } else {
             response.overview = response.overview.substring(0, 500);
-            if (response.overview.length > 500) {
+            if (response.overview.length >= 500) {
               response.overview = response.overview + " ...";
             }
           }
