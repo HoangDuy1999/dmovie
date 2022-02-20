@@ -175,10 +175,21 @@
       }
     }
     .right {
+      margin: 0;
+      padding: 0;
+      flex: 6;
+      // background-color: cadetblue;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      flex-direction: column;
       .label_top {
         display: flex;
         align-items: center;
         margin-bottom: 50px;
+        @media screen and (min-width: 758px) and (max-width: 958px) {
+          margin-bottom: 0;
+        }
         .label_left {
           font-size: 28px;
           font-weight: 600;
@@ -193,16 +204,13 @@
           }
         }
       }
-      flex: 6;
-      // background-color: cadetblue;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      flex-direction: column;
       .btn_load_more {
         display: flex;
         align-items: center;
         justify-content: center;
+        @media only screen and (min-width: 758px) and (max-width: 978px) {
+          margin-top: -15px;
+        }
         margin-top: 15px;
         button {
           padding: 10px 40px;

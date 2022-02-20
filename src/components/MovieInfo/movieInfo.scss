@@ -99,10 +99,17 @@ $black: #000;
           @media all and (max-width: 978px) {
             flex: 0;
           }
+          background-image: url("../../images/default_image.jpg");
+          border-radius: 20px;
+          background-size: cover;
+          background-position: center;
+          min-height: 300px;
+          max-height: 300px;
         }
         .poster img {
           width: 100%;
-          height: auto;
+          // height: auto;
+          object-fit: fill;
           border-radius: 20px;
           @media all and (max-width: 978px) {
             height: 0;
@@ -204,7 +211,8 @@ $black: #000;
             }
             .cast img {
               width: 100%;
-              height: 100%;
+              min-height: 100%;
+
               border-radius: 5px;
               object-fit: cover;
               // border: 1px solid #f1f1f1;
@@ -330,30 +338,85 @@ $black: #000;
       // overflow-x: hidden;
       .content {
         width: 99%;
-        height: 250px;
-        .slick-dots li.slick-active button:before {
-          color: white;
+        display: flex;
+        flex-direction: column;
+        // .slick-dots li.slick-active button:before {
+        //   color: white;
+        // }
+        .slick-slide div {
+          display: flex !important;
+          flex-direction: column;
+          // justify-content: center;
+          // align-items: center;
         }
-        // .slick-slide {
-        //   width: 100px;
-        //   height: 100px;
+        // .slick-slide div .play_icon {
+        //   // font-size: 100px;
+        //   // width: 100px;
+        //   // height: 100px;
+        //   // z-index: 999999999999999999999;
+        //   // color: white;
+        //   // position: absolute;
+        //   // top: 0;
+        //   // left: 0;
         // }
 
-        // .slick-slide img {
-        //   width: 100px;
-        //   height: 100px;
-        // }
+        .slick-arrow {
+          transform: scale(2);
+          margin-left: 30px;
+          margin-right: 30px;
+          margin-top: -15px;
+          background-color: #2b54e6 !important;
+          border-radius: 40px;
+          z-index: 9999999999999;
+        }
+
         .item {
           display: flex;
           flex-direction: column;
-          width: 100px;
-          height: 100px;
+          margin-bottom: 15px;
+          box-sizing: border-box;
+          padding: 5px;
+          .similar_background {
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            opacity: 1;
+            .backdrop_path {
+              box-sizing: border-box;
+              min-width: 100%;
+              height: 250px;
+              @media screen and (max-width: 420px){
+                height:200px;
+              }
+              overflow: hidden;
+              background-image: url("../../images/default_image.jpg");
+              img {
+                width: 100%;
+                background-size: fill;
+                background-position: cover;
+              }
+            }
+            .play_icon {
+              box-sizing: border-box;
+              font-size: 60px;
+              // padding: 50px;
+              cursor: pointer;
+              position: absolute;
+              filter: drop-shadow(0 0 1.5rem rgb(255, 255, 255));
+              z-index: 999999999999999999999;
+              color: red !important;
+            }
+          }
           .title {
             color: white;
+            z-index: 20000;
             position: relative;
-            // background-color: blue;
-            font-size: 18px;
-            font-weight: 700;
+            padding-right: 20px;
+            font-size: 16px;
+            font-weight: 400;
             text-decoration: none;
             color: white;
             overflow: hidden;
@@ -365,36 +428,7 @@ $black: #000;
           }
           .title:hover {
             text-decoration: underline;
-          }
-          .backdrop_path {
-            width: 250px;
-            height: 200px;
-            z-index: 2;
-          }
-          .shadow_backdrop {
-            position: absolute;
-            top: 0;
-            width: 250px;
-            height: 200px;
-            align-items: center;
-            justify-content: center;
-            display: flex;
-            z-index: 0;
-            @media all and (max-width: 420px) {
-              // width: 170px !important;
-            }
-            .icon_play {
-              font-size: 0px;
-              z-index: 0;
-            }
-          }
-          .shadow_backdrop:hover {
-            background-color: rgba(0, 0, 0, 0.5);
-            .icon_play {
-              font-size: 50px;
-              color: white;
-              cursor: pointer;
-            }
+            cursor: pointer;
           }
         }
       }
@@ -545,3 +579,9 @@ $black: #000;
     }
   }
 }
+// .slider-arrow {
+//   position: absolute;
+//   height: 100%;
+//   width: 100%;
+//   align-items: center;
+// }

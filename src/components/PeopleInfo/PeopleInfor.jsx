@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import axios from "axios";
 import ShowMoreText from "react-show-more-text";
-import CarItem from "../CartItem/CartItem";
+import CartItemPeoPle from "../CartItemFilmPeoPle/CartItemFilmPeoPle";
 import { BsFillArrowDownSquareFill } from "react-icons/bs";
 import tmdbApi from "../../api/tmdbApi";
 import { Link } from "react-router-dom";
@@ -31,6 +31,7 @@ const PeopleInfo = () => {
     // api trả kết quả sai
     setKnowFor(() => []);
     setPeopleInfo(() => {});
+
     const getInfoPeople = () => {
       axios
         .get(`/secure/people/${params.id}`, {
@@ -46,7 +47,7 @@ const PeopleInfo = () => {
           if (date.length >= 2)
             res.data.person.birth_date =
               date[2] + "-" + date[1] + "-" + date[0];
-          res.data.knownFor = res.data.knownFor.splice(0, 3);
+          // res.data.knownFor = res.data.knownFor.splice(0, 3);
           setInfos(res.data);
         })
         .catch((error) => console.log(error));
@@ -71,7 +72,7 @@ const PeopleInfo = () => {
         if (rs.cast) {
           const temp = [...rs.cast];
           temp.sort((a, b) => b.vote_average - a.vote_average);
-          setKnowFor(temp.splice(0, 3));
+          setKnowFor(temp.splice(0, 4));
         }
         //format data
         rs.cast = rs.cast.map((item, index) => {
@@ -100,6 +101,7 @@ const PeopleInfo = () => {
       }
     };
     getCombineCreditPeople();
+    return () => clearTimeout(timeout);
   }, [params]);
 
   const handleClickShowCast = (e) => {
@@ -136,7 +138,7 @@ const PeopleInfo = () => {
               src={process.env.REACT_APP_PATH_IMG + peopleInfo?.profile_path}
               onError={(event) => {
                 event.target.src =
-                  "https://www.leadershipmartialartsct.com/wp_content/uploads/2017/04/default_image_620x600.jpg";
+                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                 event.onerror = null;
               }}
               onLoad={(e) => {
@@ -202,7 +204,7 @@ const PeopleInfo = () => {
             <div className="known_for_items">
               {knownFor?.length > 0
                 ? knownFor?.map((item, index) => (
-                    <CarItem
+                    <CartItemPeoPle
                       item={item}
                       key={index}
                       types={item.media_type === "movie" ? "movies" : "tv"}
@@ -326,7 +328,7 @@ const PeopleInfo = () => {
                                 "/" +
                                 (item.media_type === "movie"
                                   ? "movies/detail/"
-                                  : "tv/detail") +
+                                  : "tv/detail/") +
                                 item.id
                               }
                             >

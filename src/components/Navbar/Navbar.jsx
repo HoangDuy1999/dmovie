@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 import "./navbar.scss";
 // import tmovie from "../../images/tmovie.png";
 import { Link } from "react-router-dom";
@@ -11,11 +10,12 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import tmdbApi from "../../api/tmdbApi";
 import { useNavigate } from "react-router-dom";
+// import defaultImage from "../../images/default_image.jpg";
 
 const Navbar = () => {
   // const [searchFocusColor, setsearchFocusColor] = useState({ color: "black" });
   // XỬ LÝ NAV_MENU_LINK
-  const options = ["Movies", "Series", "PeoPle", "News"];
+  // const options = ["Movies", "Series", "PeoPle", "News"];
   const navigate = useNavigate();
   const [isCloseIcon, setIsCloseIcon] = useState(false);
   const [ancho, setAncho] = React.useState(null);
@@ -36,7 +36,7 @@ const Navbar = () => {
     setAnchorProfile(null);
   };
   //
-  const { innerWidth: width } = window;
+  // const { innerWidth: width } = window;
   // const [widthWindow, setWidthWindow] = useState(width || 1280);
   const [searchResult, setSearchResult] = useState([]);
   const [isSearchShow, setIsSearchShow] = useState(false);
@@ -80,7 +80,7 @@ const Navbar = () => {
     }, 200);
     setWordEntered("");
     setIsCloseIcon(false);
-    // return () => clearTimeout(timeout);
+    return () => clearTimeout(timeout);
   };
   return (
     <div className="navbar">
@@ -172,8 +172,7 @@ const Navbar = () => {
                                 item.poster_path
                           }
                           onError={(event) => {
-                            event.target.src =
-                              "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                            event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                             event.onerror = null;
                           }}
                           alt={item.name ? item.name : item.title}
@@ -279,7 +278,10 @@ const Navbar = () => {
         </div>
         <div className="profile">
           <div className="profile_items">
-            <Link style={{ textDecoration: "none" }} to="/account?type=register">
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/account?type=register"
+            >
               {" "}
               <span className="register">Register</span>
             </Link>

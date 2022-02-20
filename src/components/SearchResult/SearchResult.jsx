@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./searchResult.scss";
 import tmdbApi from "../../api/tmdbApi";
 import CarItem from "../CartItem/CartItem";
-import ReactLoading from "react-loading";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 
 const SearchResult = ({ txtSearch }) => {

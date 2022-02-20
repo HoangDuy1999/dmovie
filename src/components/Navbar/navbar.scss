@@ -73,7 +73,7 @@
         @media all and (max-width: 420px) {
           font-size: 25px;
           text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032,
-          2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939;
+            2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939;
         }
       }
     }
@@ -152,16 +152,22 @@
         height: 0 !important;
         margin: 0 !important;
       }
-      
+
       .data_result {
         display: flex;
         flex-direction: row;
         // background-color: yellow;
         align-items: center;
         .data_result_backdrop {
+          max-width: 60px;
+          height: 90px;
           flex: 1;
+          overflow: hidden;
           display: flex;
           align-items: center;
+          background-image: url("../../images/default_image.jpg");
+          background-size: cover;
+          background-position: center;
           img {
             width: 60px;
             height: 90px;
@@ -197,7 +203,7 @@
         }
       }
     }
-    .data_result:hover{
+    .data_result:hover {
       background-color: #dbdbdb;
     }
     .search_navbar_icon {

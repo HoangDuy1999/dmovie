@@ -25,7 +25,7 @@ const BrowseInfo = () => {
   const [totalPages, setTotalPage] = useState(1);
   const [genresLists, setGenresLists] = useState([]);
   const [selectMovieGenres, setSelectMovieGenres] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState(
     {
       value: searchParams.get("type") === "series" ? "tv" : "movie",

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ButtonLoad from "@material-ui/core/Button";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
-
+// import defaultImage from "../../images/default_image.jpg";
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);

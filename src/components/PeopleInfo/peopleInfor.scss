@@ -138,10 +138,10 @@
         margin-right: auto;
         // padding-bottom: 40px;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         flex-wrap: wrap;
         @media all and (max-width: 978px) {
-          justify-content: flex-start;
+          justify-content: space-between;
         }
         @media all and (max-width: 420px) {
           justify-content: space-between;

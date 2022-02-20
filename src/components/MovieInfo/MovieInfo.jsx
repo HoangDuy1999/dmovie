@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+// import defaultImage from "../../images/default_image.jpg";
 import { useNavigate } from "react-router-dom";
-import ReactLoading from "react-loading";
 import tmdbApi from "../../api/tmdbApi";
 import ReactPlayer from "react-player";
 import "./movieInfo.scss";
 import YouTubeIcon from "@material-ui/icons/YouTube";
-import PlayCircleFilledWhite from "@material-ui/icons/PlayCircleFilledWhite";
 import StarRateIcon from "@material-ui/icons/StarRate";
-// import { ArrowBackIos, ArrowForwardIos } from "@material-ui/icons";
 import ShowMoreText from "react-show-more-text";
 import { Link } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { BiPlayCircle } from "react-icons/bi";
 
 const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
   // console.log(id);
@@ -28,14 +27,15 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [reviewFilms, setReviewFilms] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
+  const [similarPosterHover, setSimilarPosterHover] = useState("");
   const settings = {
-    dots: true,
-    arrows: false,
+    dots: false,
+    arrows: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
-    initialSlide: 0,
-    infinite: false,
+    initialSlide: 1,
+    infinite: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -57,18 +57,22 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
     ],
   };
-  const config = {
-    disablePictureInPicture: true,
-    controlsList: "nodownload",
-    youtube: { playerVars: { disablekb: 1 } },
-  };
 
+  const handleMoveOverSimilarPostter = (e) => {
+    setSimilarPosterHover(() => e);
+    console.log(e);
+  };
+  const handleMoveOutSimilarPostter = (e) => {
+    console.log(e);
+    setSimilarPosterHover(() => "");
+    console.log(e);
+  };
   useEffect(() => {
     setMovieId(id);
   }, [id]);
@@ -89,8 +93,8 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
             response.genres = response.genres
               ? response.genres.slice(0, 2)
               : [];
-            response.overview = response.overview.substring(0, 400);
-            if (response.overview.length >= 400) {
+            response.overview = response.overview.substring(0, 380);
+            if (response.overview.length >= 380) {
               response.overview = response.overview + " ...";
             }
           } else {
@@ -160,14 +164,13 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
     setSelectedtrailerFilms(item);
   };
   const handleChangeMovieId = (id) => {
-    // onChangeMovieId(id);
     setDoneLoad(false);
-    // setMovieId(id);
-    // console.log("id: " + id);
-    // onChangeMovieId(id);
+    setSimilarFilms([]);
+    setMovieInfo([]);
+    setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
-  console.log(casts);
+  // console.log(casts);
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
@@ -191,8 +194,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                     category === "movie" ? movieInfos.title : movieInfos.name
                   }
                   onError={(event) => {
-                    event.target.src =
-                      "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                    event.target.src = process.env.REACT_APP_IMG_DEFAULT;
                     event.onerror = null;
                   }}
                 />
@@ -311,12 +313,6 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                               appId: "12345",
                             },
                           }}
-                          // config={{
-                          //   youtube: {
-                          //     playerVars: { origin: "http://localhost:3002" },
-                          //   },
-                          // }}
-                          config={config}
                         />
                         <div className="shadow_video">
                           <YouTubeIcon
@@ -350,29 +346,52 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                 {similarFilms.map((item, index) => {
                   return (
                     <div key={index} className="item">
-                      <div>
-                        <img
-                          className="backdrop_path"
-                          src={
-                            process.env.REACT_APP_PATH_IMG + item.poster_path
-                          }
-                          onError={(event) => {
-                            event.target.src =
-                              "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                            event.onerror = null;
-                          }}
-                          alt=""
-                        />
-                        <div className="shadow_backdrop" title={item.title}>
-                          <PlayCircleFilledWhite
-                            className="icon_play"
-                            onClick={() => handleChangeMovieId(item.id)}
+                      <div className="similar_background">
+                        <div className="backdrop_path">
+                          <img
+                            style={
+                              similarPosterHover === item.id
+                                ? { transform: "scale(1.5)" }
+                                : {}
+                            }
+                            // onClick={() => handleChangeMovieId(item.id)}
+                            // ref={index}
+                            onMouseOver={(e) => {
+                              handleMoveOverSimilarPostter(item.id);
+                            }}
+                            onMouseOut={(e) => {
+                              handleMoveOutSimilarPostter(item.id);
+                            }}
+                            src={
+                              process.env.REACT_APP_PATH_IMG + item.poster_path
+                            }
+                            onError={(event) => {
+                              event.target.src =
+                                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                              event.onerror = null;
+                            }}
+                            alt=""
                           />
                         </div>
+                        <BiPlayCircle
+                          // ref={index}
+                          onClick={() => handleChangeMovieId(item.id)}
+                          style={
+                            similarPosterHover === item.id
+                              ? { opacity: 1 }
+                              : { opacity: 0 }
+                          }
+                          onMouseOver={(e) => {
+                            handleMoveOverSimilarPostter(item.id);
+                          }}
+                          onMouseOut={(e) => {
+                            handleMoveOutSimilarPostter(e);
+                          }}
+                          className="play_icon"
+                        />
                       </div>
 
                       <div
-                        // to={`/movies/detail/${item.id}`}
                         onClick={() => handleChangeMovieId(item.id)}
                         className="title"
                         title={category === "movie" ? item.title : item.name}

@@ -1,12 +1,14 @@
 import { BsPlayCircle } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import React, { useState, useEffect } from "react";
-import "./cartItemBrowses.scss";
+import "./cartItemFilmPeoPle.scss";
 import { Link } from "react-router-dom";
+import defaultImage from "../../images/default_image.jpg";
 
-const CartItemBrowses = ({ item, types, colorGroup }) => {
-  const [name, setName] = useState("");
+const CartItemFilmPeoPle = ({ item, types, colorGroup, length, person = false }) => {
+  // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
   const [posterHover, setPosterHover] = useState(false);
+  const [name, setName] = useState("");
   const handleOnMoveOverPoster = (e) => {
     const timeout = setTimeout(() => {
       setPosterHover(true);
@@ -21,26 +23,22 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
   };
   useEffect(() => {
     const getName = async () => {
-      if (types === "movies") {
-        setName(item.title);
-      } else {
-        setName(item.name);
-      }
+      item.title ? setName(item.title) : setName(item.name);
     };
     getName();
   }, []);
   return (
-    <div className="cart_item_browse">
-      <div className="cart_item_browse_container">
+    <div className="cart_item_people">
+      <div className="cart_item_people_container" title={name}>
         <Link
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
           <img
             style={posterHover ? { transform: "scale(1.2)" } : {}}
-            className="cart_item_browse_image"
+            className="now_playing_image"
             onError={(event) => {
-              event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+              event.target.src = {defaultImage}
               event.onerror = null;
             }}
             src={process.env.REACT_APP_PATH_IMG + item.poster_path}
@@ -65,7 +63,7 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
               <BsPlayCircle
                 style={{
                   fontSize: "40px",
-                  marginRight: "10px",
+                  marginRight: "0px",
                   color: "white",
                   cursor: "pointer",
                 }}
@@ -84,7 +82,7 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
         </div>
       </div>
 
-      <div className="now_play_description">
+      <div className="now_play_description_home">
         <Link
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
@@ -98,4 +96,4 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
   );
 };
 
-export default CartItemBrowses;
+export default CartItemFilmPeoPle;

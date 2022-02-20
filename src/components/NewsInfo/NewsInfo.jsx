@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import _ from "lodash";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
+// import defaultImage from "../../images/default_image.jpg";
 
 const NewsInfo = () => {
   const { id } = useParams();
@@ -80,7 +81,14 @@ const NewsInfo = () => {
                   <div className="type">{newsInfo.meta.source}</div>
                 </div>
                 <div className="new_poster">
-                  <img src={newsInfo.meta.image} alt={newsInfo.title} />
+                  <img
+                    src={newsInfo.meta.image}
+                    alt={newsInfo.title}
+                    onError={(event) => {
+                      event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                      event.onerror = null;
+                    }}
+                  />
                 </div>
                 {newsInfo.body.split("...")[0] + "..."}
               </div>
@@ -113,7 +121,14 @@ const NewsInfo = () => {
               return (
                 <div className="wrapper" key={index}>
                   <div className="poster">
-                    <img src={item.meta.image} alt={item.title} />
+                    <img
+                      src={newsInfo.meta.image}
+                      alt={newsInfo.title}
+                      onError={(event) => {
+                        event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                        event.onerror = null;
+                      }}
+                    />
                   </div>
                   <div className="desc">
                     <Link

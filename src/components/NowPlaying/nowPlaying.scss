@@ -21,10 +21,10 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  @media all and (max-width:978px) {
-    justify-content: flex-start;
-  }
-  @media all and (max-width:420px) {
-    justify-content: space-between;
-  }
+  // @media all and (max-width:978px) {
+  //   justify-content: space-between;
+  // }
+  // @media all and (max-width:420px) {
+  //   justify-content: space-between;
+  // }
 }

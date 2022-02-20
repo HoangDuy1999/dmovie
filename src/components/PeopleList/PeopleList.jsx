@@ -8,6 +8,7 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import tmdbApi from "../../api/tmdbApi";
+import defaultImage from "../../images/default_image.jpg";
 
 const PeopleList = () => {
   const [doneLoad, setDoneLoad] = useState(false);
@@ -95,7 +96,7 @@ const PeopleList = () => {
     // getInfoPeople();
     const getPopularPeople = async () => {
       const rs = await tmdbApi.getPopularPeople(page);
-      setListPeople([...listPeople, ...rs.results]);
+      setListPeople(()=> [...listPeople, ...rs.results]);
       setTotalPage(rs.total_pages);
     };
     getPopularPeople();
@@ -200,7 +201,7 @@ const PeopleList = () => {
                         onError={({ currentTarget }) => {
                           currentTarget.onerror = null; // prevents looping
                           currentTarget.src =
-                            "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                            {defaultImage}
                         }}
                         // onError={(event) => {
                         //   event.target.src =

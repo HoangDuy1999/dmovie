@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import tmdbApi from "../../api/tmdbApi";
 import { Link } from "react-router-dom";
-import ReactLoading from "react-loading";
 import "./carousel.scss";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 

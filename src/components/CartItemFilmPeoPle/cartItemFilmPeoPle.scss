@@ -1,4 +1,4 @@
-.now_playing {
+.cart_item_people {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -39,25 +39,25 @@
   @media only screen and (min-width: 959px) and (max-width: 1200px) {
     min-width: 19%;
     max-width: 19%;
-    height: 250px;
-    min-height: 250px;
-    max-height: 250px;
+    height: 200px;
+    min-height: 200px;
+    max-height: 200px;
   }
   @media only screen and (min-width: 1201px) and (max-width: 1500px) {
     min-width: 19%;
     max-width: 19%;
-    height: 350px;
-    min-height: 350px;
-    max-height: 350px;
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
   }
   min-width: 19%;
   max-width: 19%;
-  height: 350px;
-  min-height: 350px;
-  max-height: 350px;
+  height: 250px;
+  min-height: 250px;
+  max-height: 250px;
 }
 
-.now_playing_container {
+.cart_item_people_container {
   background-image: url("../../images/default_image.jpg");
   background-size: cover;
   background-position: center;
