@@ -14,13 +14,15 @@ import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BiPlayCircle } from "react-icons/bi";
+import sample from "../../Data/sub1.vtt";
+import axios from "axios";
 
-const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
+const MovieInfo = ({ category }) => {
   // console.log(id);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [movieId, setMovieId] = useState(1);
-  const [movieInfos, setMovieInfo] = useState([]);
+  const [movieId, setMovieId] = useState(0);
+  const [movieInfos, setMovieInfor] = useState([]);
   const [casts, setCasts] = useState([]);
   const [trailerFilms, setTrailerFilms] = useState([]);
   const [selectedtrailerFilms, setSelectedtrailerFilms] = useState({});
@@ -28,6 +30,15 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
   const [reviewFilms, setReviewFilms] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
   const [similarPosterHover, setSimilarPosterHover] = useState("");
+  // If exist data films
+  const [isWatchFilm, setIsWatchFilm] = useState(false);
+  const [movieInfoLoklok, setMoviesInfoLokLok] = useState([]);
+
+  const headers = {
+    lang: "en",
+    versioncode: 11,
+    clienttype: "ios_jike_default",
+  };
   const settings = {
     dots: false,
     arrows: true,
@@ -63,15 +74,13 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
       },
     ],
   };
+  // console.log(id);
 
   const handleMoveOverSimilarPostter = (e) => {
     setSimilarPosterHover(() => e);
-    console.log(e);
   };
   const handleMoveOutSimilarPostter = (e) => {
-    console.log(e);
     setSimilarPosterHover(() => "");
-    console.log(e);
   };
   useEffect(() => {
     setMovieId(id);
@@ -79,6 +88,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
 
   useEffect(() => {
     setDoneLoad(false);
+    setIsWatchFilm(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
     }, 3000);
@@ -98,24 +108,29 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
               response.overview = response.overview + " ...";
             }
           } else {
+            response.genres = response.genres
+              ? response.genres.slice(0, 3)
+              : [];
             response.overview = response.overview.substring(0, 500);
             if (response.overview.length >= 500) {
               response.overview = response.overview + " ...";
             }
           }
-          setMovieInfo(response);
+          setMovieInfor(response);
         } catch (e) {
           // console.log(e);
         }
       };
       getMovies();
       const getCredits = async () => {
-        const res = await tmdbApi.credits(category, movieId);
-        const { innerWidth: width } = window;
-        if (width <= 420) {
-          setCasts(res.cast.slice(0, 4));
-        } else {
-          setCasts(res.cast.slice(0, 5));
+        if (movieId !== 0) {
+          const res = await tmdbApi.credits(category, movieId);
+          const { innerWidth: width } = window;
+          if (width <= 420) {
+            setCasts(res.cast.slice(0, 4));
+          } else {
+            setCasts(res.cast.slice(0, 5));
+          }
         }
       };
       getCredits();
@@ -134,12 +149,8 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
       const getSimilarFilms = async () => {
         try {
           const response = await tmdbApi.similar(category, movieId);
-          const { innerWidth: width } = window;
-          if (width <= 420) {
-            setSimilarFilms(response.results.slice(0, 8));
-          } else {
-            setSimilarFilms(response.results.slice(0, 16));
-          }
+          // const { innerWidth: width } = window;
+          setSimilarFilms(response.results.slice(0, 16));
         } catch (e) {
           console.log(e);
         }
@@ -160,15 +171,45 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
     return () => clearTimeout(timeout);
   }, [movieId, category]);
 
+  useEffect(() => {
+    if (movieInfos !== [] && movieInfos !== {}) {
+      const body = {
+        searchKeyWord: movieInfos.title ? movieInfos.title : movieInfos.name,
+        size: 1,
+        sort: "",
+        searchType: "",
+      };
+      axios
+        .post(
+          "https://ga-mobile-api.loklok.tv/cms/app/search/v1/searchWithKeyWord",
+          body,
+          { headers }
+        )
+        .then((response) => {
+          if (response.data.data.searchResults.length > 0) {
+            setIsWatchFilm(() => true);
+            setMoviesInfoLokLok(response.data.data.searchResults);
+          }
+        });
+    }
+  }, [movieInfos]);
+
   const handleSelectedVideo = (item) => {
     setSelectedtrailerFilms(item);
   };
   const handleChangeMovieId = (id) => {
     setDoneLoad(false);
     setSimilarFilms([]);
-    setMovieInfo([]);
+    setMovieInfor([]);
     setCasts([]);
     navigate(`/movies/detail/${id}`);
+  };
+  const handleClickWatchFilm = (e) => {
+    console.log("click");
+    console.log(movieInfoLoklok);
+    navigate(
+      `/watch/${movieInfoLoklok[0].id}?type=${movieInfoLoklok[0].domainType}`
+    );
   };
   // console.log(casts);
   return (
@@ -178,9 +219,13 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
         <div className="movie_info_top">
           <div
             className="banner"
-            style={{
-              backgroundImage: `url('${process.env.REACT_APP_PATH_IMG}${movieInfos.backdrop_path}')`,
-            }}
+            style={
+              movieInfos?.backdrop_path
+                ? {
+                    backgroundImage: `url('${process.env.REACT_APP_PATH_IMG}${movieInfos?.backdrop_path}')`,
+                  }
+                : {}
+            }
           >
             <div className="banner_bottom"></div>
           </div>
@@ -189,7 +234,11 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
             <div className="content_wrapper">
               <div className="poster">
                 <img
-                  src={process.env.REACT_APP_PATH_IMG + movieInfos.poster_path}
+                  src={
+                    movieInfos?.poster_path
+                      ? process.env.REACT_APP_PATH_IMG + movieInfos?.poster_path
+                      : ""
+                  }
                   alt={
                     category === "movie" ? movieInfos.title : movieInfos.name
                   }
@@ -212,6 +261,45 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                     );
                   })}
                 </div>
+                {isWatchFilm ? (
+                  <button
+                    onClick={(e) => {
+                      handleClickWatchFilm(e);
+                    }}
+                    style={{
+                      marginTop: "10px",
+                      maxWidth: "140px",
+                      padding: "10px 20px",
+                      marginBottom: "-15px",
+                      color: "white",
+                      fontSize: "18px",
+                      borderRadius: "5px",
+                      border: "none",
+                      backgroundColor: "#d9534f",
+                      zIndex: 999999999999999999999999999,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Watch film
+                  </button>
+                ) : (
+                  <button
+                    style={{
+                      marginTop: "10px",
+                      maxWidth: "140px",
+                      padding: "10px 20px",
+                      marginBottom: "-15px",
+                      color: "white",
+                      fontSize: "18px",
+                      borderRadius: "5px",
+                      border: "none",
+                      backgroundColor: "#f1f1f1",
+                    }}
+                  >
+                    Watch film
+                  </button>
+                )}
+
                 <div className="plot">
                   <span>{movieInfos.overview}</span>
                 </div>
@@ -221,7 +309,10 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                       <div key={index} className="cast">
                         <img
                           src={
-                            process.env.REACT_APP_PATH_IMG + item.profile_path
+                            item?.profile_path
+                              ? process.env.REACT_APP_PATH_IMG +
+                                item.profile_path
+                              : ""
                           }
                           onError={(event) => {
                             event.target.src =
@@ -256,8 +347,10 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                   className="react-player"
                   width="100%"
                   height="97%"
-                  muted={true}
+                  // muted={true}
+                  // volume={1}
                   controls={true}
+                  // url="https://ali-cdn-play.loklok.tv/b4dda15c655e4918a146e6961aa653ce/7d3e0d09c98a4dd5b15c2c5e5de0bc9c-80286400a5db0f65a99b17eeea8e339d-hd.m3u8?auth_key=1645371649-c6f9ba2e2c8a439790b160146fdc6753-0-327978a7afb5555a53c55400594d248b"
                   url={`http://www.youtube.com/embed/${selectedtrailerFilms.key}`}
                   config={{
                     youtube: {
@@ -265,6 +358,20 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                     },
                     facebook: {
                       appId: "12345",
+                    },
+                    file: {
+                      tracks: [
+                        {
+                          kind: "subtitles",
+                          src: sample,
+                          // src: "https://www.iandevlin.com/html5test/webvtt/upc-video-subtitles-en.vtt",
+                          // src: "https://subtitles.netpop.app/subtitles/20220124/1643008789508_英文e1.srt",
+                          srcLang: "es",
+                          default: true,
+                        },
+                        // {kind: 'subtitles', src: 'subs/subtitles.ja.vtt', srcLang: 'ja'},
+                        // {kind: 'subtitles', src: 'subs/subtitles.de.vtt', srcLang: 'de'}
+                      ],
                     },
                   }}
                 />
@@ -278,23 +385,10 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                         key={index}
                         style={{ backgroundColor: " #2b54e6" }}
                       >
-                        <ReactPlayer
+                        <img
                           className="react-player"
-                          // playIcon={<YouTubeIcon />}
-                          url={`http://www.youtube.com/embed/${item.key}`}
-                          config={{
-                            youtube: {
-                              playerVars: { showinfo: 0 },
-                            },
-                            facebook: {
-                              appId: "12345",
-                            },
-                          }}
-                          // config={{
-                          //   youtube: {
-                          //     playerVars: { origin: "http://localhost:3002" },
-                          //   },
-                          //}}
+                          alt=""
+                          src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
                         />
                         <div className="shadow_video"></div>
                       </div>
@@ -302,19 +396,13 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                   } else {
                     return (
                       <div className="cart_video" key={index}>
-                        <ReactPlayer
+                        <img
                           className="react-player"
-                          url={`http://www.youtube.com/embed/${item.key}`}
-                          config={{
-                            youtube: {
-                              playerVars: { showinfo: 0 },
-                            },
-                            facebook: {
-                              appId: "12345",
-                            },
-                          }}
+                          alt=""
+                          src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
                         />
-                        <div className="shadow_video">
+
+                        <div className="shadow_video" key={index}>
                           <YouTubeIcon
                             className="youtube_icon"
                             onClick={() => handleSelectedVideo(item)}
@@ -346,7 +434,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                 {similarFilms.map((item, index) => {
                   return (
                     <div key={index} className="item">
-                      <div className="similar_background">
+                      <div key={item.id} className="similar_background">
                         <div className="backdrop_path">
                           <img
                             style={
@@ -363,7 +451,10 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                               handleMoveOutSimilarPostter(item.id);
                             }}
                             src={
-                              process.env.REACT_APP_PATH_IMG + item.poster_path
+                              item?.poster_path
+                                ? process.env.REACT_APP_PATH_IMG +
+                                  item.poster_path
+                                : ""
                             }
                             onError={(event) => {
                               event.target.src =
@@ -419,8 +510,8 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                     "https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png";
                 }
                 return (
-                  <div>
-                    <div className="item" key={index}>
+                  <div key={index}>
+                    <div className="item">
                       <div className="avatar">
                         <img
                           src={path}
@@ -464,7 +555,7 @@ const MovieInfo = ({ moi_id, onChangeMovieId, category }) => {
                           </ShowMoreText>
                         </div>
                       </div>
-                    </div>{" "}
+                    </div>
                     <hr />
                   </div>
                 );

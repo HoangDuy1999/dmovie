@@ -6,17 +6,20 @@ const HighestRatingMovie = () => {
   const [highestRatingMovie, setHighestRatingMovie] = useState([]);
   // const [page, setPage] = useState(1);
   // const [numItems, setNumItems] = useState(10);
+  const getMovies = async () => {
+    try {
+      const response = await tmdbApi.getHighestRatingMovie({ page: 1 });
+      setHighestRatingMovie(response.results.slice(0, 10));
+      console.log("run");
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await tmdbApi.getHighestRatingMovie({ page: 1 });
-        setHighestRatingMovie(response.results.slice(0, 10));
-        console.log("run");
-      } catch (e) {
-        console.log(e);
-      }
-    };
     getMovies();
+    return () =>{
+      setHighestRatingMovie([]);
+    }
   }, []);
   // console.log(nowPlayingMovies);
   return (

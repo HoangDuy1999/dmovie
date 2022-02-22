@@ -122,8 +122,8 @@ const NewsInfo = () => {
                 <div className="wrapper" key={index}>
                   <div className="poster">
                     <img
-                      src={newsInfo.meta.image}
-                      alt={newsInfo.title}
+                      src={item.meta.image}
+                      alt={item.title}
                       onError={(event) => {
                         event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                         event.onerror = null;

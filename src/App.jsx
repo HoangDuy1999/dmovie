@@ -13,6 +13,8 @@ import NewsDetail from "./pages/NewsDetail";
 import People from "./pages/People";
 import PeopleDetail from "./pages/PeopleDetail";
 import Login from "./pages/Login";
+import WatchMovie from "./pages/WatchMovie";
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   return (
@@ -36,7 +38,9 @@ const App = () => {
           <Route path="/news/detail/:id" element={<NewsDetail />} />
           {/* Login Detail*/}
           <Route path="/account" element={<Login />} />
-          
+          {/* watch movie*/}
+          <Route path="/watch/:id" element={<WatchMovie />} />
+
           {/*HOME */}
           <Route path="/" element={<Home />} />
         </Routes>

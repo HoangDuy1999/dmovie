@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./browseInfo.scss";
 import Select from "react-select";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +8,6 @@ import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import CartItemBrowses from "../CartItemBrowses/CartItemBrowses";
 import Button from "@material-ui/core/Button";
 import { languages } from "../../Data/language";
-import ReactLoading from "react-loading";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 // import { CSSTransition } from "react-transition-group";
@@ -17,7 +15,7 @@ const BrowseInfo = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [sideBarLeft, setSideBarLeft] = useState(false);
   const [doneLoad, setDoneLoad] = useState(false);
-  const [subDoneLoad, setSubDoneLoad] = useState(true);
+  // const [subDoneLoad, setSubDoneLoad] = useState(true);
   const [dataLists, setDataLists] = useState([]);
   const [releaseIn, setReleaseIn] = useState([1880, 2029]);
   const [score, setScore] = useState([0, 10]);
@@ -73,7 +71,7 @@ const BrowseInfo = () => {
 
   // get data
   useEffect(() => {
-    setDoneLoad(!doneLoad);
+    setDoneLoad(false);
     setSideBarLeft(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
@@ -440,45 +438,24 @@ const BrowseInfo = () => {
                 }}
               />
             </div>
-            {!subDoneLoad ? (
-              <div
-                style={{
-                  position: "absolute",
-                  width: "100vw",
-                  height: "100vh",
-                  backgroundColor: "rgb(48, 48, 48, 0.1)",
-                  zIndex: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <ReactLoading
-                  type={"bars"}
-                  color={"#283040"}
-                  height={100}
-                  width={100}
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+              }}
+            >
+              {dataLists.map((item) => (
+                <CartItemBrowses
+                  item={item}
+                  key={item.id}
+                  types={selectedType.label === "Tv series" ? "tv" : "movies"}
+                  colorGroup={{}}
                 />
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                }}
-              >
-                {dataLists.map((item) => (
-                  <CartItemBrowses
-                    item={item}
-                    key={item.id}
-                    types={selectedType.label === "Tv series" ? "tv" : "movies"}
-                    colorGroup={{}}
-                  />
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
             {/* <ButtonLoadMore
               page={page}
               totalPages={totalPages}

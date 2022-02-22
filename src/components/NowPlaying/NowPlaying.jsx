@@ -6,17 +6,19 @@ const NowPlayings = () => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   // const [page, setPage] = useState(1);
   // const [numItems, setNumItems] = useState(10);
+  const getMovies = async () => {
+    try {
+      const response = await tmdbApi.getNowPlaying({ page: 1 });
+      setNowPlayingMovies(response.results.slice(0, 10));
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await tmdbApi.getNowPlaying({ page: 1 });
-        setNowPlayingMovies(response.results.slice(0, 10));
-        console.log("run");
-      } catch (e) {
-        console.log(e);
-      }
-    };
     getMovies();
+    return () => {
+      setNowPlayingMovies([]); // This worked for me
+    };
   }, []);
   // console.log(nowPlayingMovies);
   return (

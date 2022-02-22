@@ -26,6 +26,9 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
       item.title ? setName(item.title) : setName(item.name);
     };
     getName();
+    return () => {
+      setName(""); // This worked for me
+    };
   }, []);
   return (
     <div className="now_playing">

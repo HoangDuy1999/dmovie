@@ -6,16 +6,19 @@ const TvAiring = () => {
   const [tvAirings, settvAirings] = useState([]);
   // const [page, setPage] = useState(1);
   // const [numItems, setNumItems] = useState(10);
+  const getMovies = async () => {
+    try {
+      const response = await tmdbApi.getTvAiring({ page: 1 });
+      settvAirings(response.results.slice(0, 10));
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    const getMovies = async () => {
-      try {
-        const response = await tmdbApi.getTvAiring({ page: 1 });
-        settvAirings(response.results.slice(0, 10));
-      } catch (e) {
-        console.log(e);
-      }
-    };
     getMovies();
+    return () => {
+      settvAirings([]); // This worked for me
+    };
   }, []);
   // console.log(tvAirings);
 
