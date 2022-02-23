@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import ButtonLoad from "@material-ui/core/Button";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 // import defaultImage from "../../images/default_image.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 const NewsList = () => {
   const [newsList, setNewsList] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
@@ -74,10 +77,10 @@ const NewsList = () => {
           return (
             <div key={index} className="news_list_container_content">
               <div className="news_list_container_content_poster">
-                <img
+                <LazyLoadImage
                   src={item.meta.image}
                   alt={item.title}
-                  // style={{width: "100px",height: "100px", borderRadius: "5px"}}
+                  effect="blur"
                   onError={(event) => {
                     event.target.src =
                       "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";

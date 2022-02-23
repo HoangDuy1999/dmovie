@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./watch.scss";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import sample from "../../Data/sub1.vtt";
+// import sample from "../../Data/sub1.vtt";
 import _ from "lodash";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
-import { BsPlayFill } from "react-icons/bs";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
+import PlayerControl from "../PlayerControl/PlayerControl";
+import screenfull from "screenfull";
+
 var { default: srtParser2 } = require("srt-parser-2");
 
 const Watch = ({ cate }) => {
@@ -20,10 +18,30 @@ const Watch = ({ cate }) => {
   const [episodeId, setEpisodeId] = useState("0");
   const [doneLoad, setDoneLoad] = useState(true);
   const [displayResolution, setDisPlayResoluton] = useState("SD");
-  const [playing, setPlaying] = useState(false);
+  // const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState([]);
   const [engSub, setEnglishSub] = useState("");
   const [arrengSub, setArrEngSub] = useState({});
+  // rate video 2x
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClickOpenPopover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClickClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  const [playerStates, setPlayerStates] = useState({
+    playing: false,
+    muted: false,
+    volume: 1,
+    playbackRate: 1.0,
+  });
+
+  const playerRef = useRef(null);
+  const playerContainerRef = useRef(null);
+
   const getDetailMovies = () => {
     if (id !== undefined) {
       axios
@@ -149,29 +167,76 @@ const Watch = ({ cate }) => {
       setDisPlayResoluton(() => val);
     }
   };
-
+  // player control
   const handleProgressReactPlayer = (progress) => {
     //setPlayed([...played, progress.playedSeconds]);
-    console.log(arrengSub[(progress.playedSeconds + 0.2).toFixed()]);
-    console.log((progress.playedSeconds + 0.2).toFixed());
-    if (arrengSub[(progress.playedSeconds + 0.2).toFixed()] !== undefined) {
-      setEnglishSub(arrengSub[(progress.playedSeconds + 0.2).toFixed()]);
-    }
+    // console.log(arrengSub[(progress.playedSeconds + 0.2).toFixed()]);
+    // console.log((progress.playedSeconds + 0.2).toFixed());
+    // if (arrengSub[(progress.playedSeconds + 0.2).toFixed()] !== undefined) {
+    //   setEnglishSub(arrengSub[(progress.playedSeconds + 0.2).toFixed()]);
+    // }
     //if(sub_temp[(progress.playedSeconds + 0.2).toFixed()] !== undefined){
     // console.log(sub_temp[(progress.playedSeconds + 0.2).toFixed().toString()]);
-
     //}
+    console.log(progress);
+    setPlayerStates({ ...playerStates, ...progress });
   };
-  if (!_.isEmpty(movieInfo)) {
-    console.log(movieInfo);
-    console.log(videoUrl);
-  }
-  console.log(played);
+  const handleRewind = (e) => {
+    playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
+  };
+  const handleFastForward = (e) => {
+    playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
+  };
+  const handlePlayPause = (e) => {
+    setPlayerStates(() => ({
+      ...playerStates,
+      playing: !playerStates.playing,
+    }));
+  };
+  const handleMuted = (e) => {
+    setPlayerStates(() => ({
+      ...playerStates,
+      muted: !playerStates.muted,
+      volume: !playerStates.muted ? 0 : 1,
+    }));
+  };
+
+  const handleVolumeChange = (e, newValue) => {
+    setPlayerStates({
+      ...playerStates,
+      volume: parseFloat(newValue / 100),
+      muted: newValue === 0 ? true : false,
+    });
+  };
+
+  const handleVolumeSeekDown = (e, newValue) => {
+    setPlayerStates({
+      ...playerStates,
+      volume: parseFloat(newValue / 100),
+      muted: newValue === 0 ? true : false,
+    });
+  };
+
+  const handlePlayBackRateChange = (rate) => {
+    setPlayerStates({
+      ...playerStates,
+      playbackRate: rate,
+    });
+    setAnchorEl(null);
+  };
+
+  const handleToggleFullScreen = () => {
+    screenfull.toggle(playerContainerRef.current);
+  };
+  // if (!_.isEmpty(movieInfo)) {
+  //   console.log(movieInfo);
+  //   console.log(videoUrl);
+  // }
   return (
     <div className="watch_movie_container">
       <PageLoadingEffeect doneLoad={doneLoad} />
       <div className="watch_movie_wrapper">
-        <div className="player-wrapper">
+        <div className="player-wrapper" ref={playerContainerRef}>
           <ReactPlayer
             onProgress={(progress) => {
               handleProgressReactPlayer(progress);
@@ -179,61 +244,33 @@ const Watch = ({ cate }) => {
             className="react-player"
             width="100%"
             height="100%"
-            playing={true}
-            // control={true}
-            // playIcon={
-            //   <div
-            //     style={{
-            //       padding: "calc((100% - 60%)/2) ",
-            //       backgroundColor: "rgba(0,0,0,0.5)",
-            //       minWidth: "100%",
-            //       display: "flex",
-            //       alignItems: "center",
-            //       justifyContent: "center",
-            //     }}
-            //   >
-            //     <BsPlayFill
-            //       onClick={(e) => {
-            //         setPlaying(true);
-            //       }}
-            //       style={{
-            //         color: "white",
-            //         filter: "drop-shadow(0 0 10rem black)",
-            //         fontSize: "80px",
-            //       }}
-            //     />
-            //   </div>
-            // }
-            // controls={true}
-            // url={videoUrl}
-            url="https://ali-cdn-play.loklok.tv/88fc022074274d86b8d3c5773e74cb99/0fb2420a6f72438f93477716021aea6c-e098627e4471672f72db5041ecd0b6ca-sd.m3u8?auth_key=1645460527-5314a4487e114d5b92e9e6f109d01e11-0-0874ec1062bde96b0bee2620733b22f7"
-            // light={movieInfo?.coverHorizontalUrl}
+            playing={playerStates.playing}
+            muted={playerStates.muted}
+            url="https://ali-cdn-play.loklok.tv/8e2b5b09ecef496bb6a2f4b009db360f/525f1205ac0f43949fdde3ecc3fbcc26-3adb176bafea7be6978ee0391ebf84d5-ld.m3u8?auth_key=1645605910-5244e55613724548b5ac40440cb8209f-0-7a9e2ab6366995161740f58eab9c2f70"
+            ref={playerRef}
+            volume={playerStates.volume}
+            playbackRate={playerStates.playbackRate}
           />
-          <div className="controler_wrapper">
-            {/*   */}
-            <Grid
-              container
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              style={{ padding: 16 }}
-            >
-              <Grid item>
-                <Typography variant="h5" style={{ color: "#fff" }}>
-                  Video title
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<BookmarkIcon />}
-                >
-                  Bookmark
-                </Button>
-              </Grid>
-            </Grid>
-          </div>
+
+          {/* play control */}
+          <PlayerControl
+            onPlayPause={(e) => handlePlayPause(e)}
+            playing={playerStates.playing}
+            onRewind={(e) => handleRewind(e)}
+            onFastForward={(e) => handleFastForward(e)}
+            onMuted={handleMuted}
+            muted={playerStates.muted}
+            onVolumechange={handleVolumeChange}
+            onVolumeSeekDown={handleVolumeSeekDown}
+            volume={playerStates.volume}
+            playbackRate={playerStates.playbackRate}
+            onPlayBackRate={(e) => handlePlayBackRateChange(e)}
+            onHandleOpenPopover={handleClickOpenPopover}
+            onHandleClosePopover={handleClickClosePopover}
+            anchorEl={anchorEl}
+            onToggleFullScreen={handleToggleFullScreen}
+          />
+
           <div className="sub_title">
             <div className="wrapper">
               <span>{engSub}</span>
@@ -292,7 +329,7 @@ const Watch = ({ cate }) => {
                   <div className="episode" key={index}>
                     <button
                       style={
-                        episodeId == index.toString()
+                        episodeId === index.toString()
                           ? { backgroundColor: "#c58560" }
                           : {}
                       }

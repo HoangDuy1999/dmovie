@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import "./cartItem.scss";
 import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
   // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
@@ -37,15 +39,16 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
-          <img
+          <LazyLoadImage
             style={posterHover ? { transform: "scale(1.2)" } : {}}
             className="now_playing_image"
+            alt={name}
             onError={(event) => {
               event.target.src = {defaultImage}
               event.onerror = null;
             }}
+            effect="blur"
             src={process.env.REACT_APP_PATH_IMG + item.poster_path}
-            alt={name}
           />
         </Link>
         <div

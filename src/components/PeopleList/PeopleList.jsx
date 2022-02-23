@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import tmdbApi from "../../api/tmdbApi";
 import defaultImage from "../../images/default_image.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PeopleList = () => {
   const [doneLoad, setDoneLoad] = useState(false);
@@ -196,13 +198,14 @@ const PeopleList = () => {
                     }
                   >
                     <div className="poster">
-                      <img
+                      <LazyLoadImage
                         src={process.env.REACT_APP_PATH_IMG + item.profile_path}
                         onError={({ currentTarget }) => {
                           currentTarget.onerror = null; // prevents looping
                           currentTarget.src =
                             {defaultImage}
                         }}
+                        effect="blur"
                         // onError={(event) => {
                         //   event.target.src =
                         //     "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";

@@ -11,6 +11,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import tmdbApi from "../../api/tmdbApi";
 import { useNavigate } from "react-router-dom";
 // import defaultImage from "../../images/default_image.jpg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Navbar = () => {
   // const [searchFocusColor, setsearchFocusColor] = useState({ color: "black" });
@@ -163,7 +165,8 @@ const Navbar = () => {
                   >
                     <div key={index} className="data_result">
                       <div className="data_result_backdrop">
-                        <img
+                        <LazyLoadImage
+                          effect="blur"
                           src={
                             item.media_type === "person"
                               ? process.env.REACT_APP_PATH_IMG +
@@ -172,7 +175,8 @@ const Navbar = () => {
                                 item.poster_path
                           }
                           onError={(event) => {
-                            event.target.src = "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                            event.target.src =
+                              "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                             event.onerror = null;
                           }}
                           alt={item.name ? item.name : item.title}
