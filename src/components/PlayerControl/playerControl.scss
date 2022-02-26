@@ -5,6 +5,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
+  // background-color: red;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,18 +16,44 @@
     color: #999;
     font-size: 50px;
     transform: scale(1);
+    @media screen and (max-width: 540px) {
+      font-size: 25px;
+    }
   }
   .controlIcons:hover {
     color: #fff;
     transform: scale(1.2);
   }
+  .slider_seek_root {
+    .MuiSlider-thumb {
+      height: 18px;
+      width: 18px;
+    }
+    .MuiSlider-rail {
+      height: 8px !important;
+    }
+    .MuiSlider-track {
+      height: 8px !important;
+    }
+  }
   .bottom_icons {
     color: #999;
+    @media screen and (max-width: 540px) {
+      font-size: 20px !important;
+    }
   }
   .bottom_icons:hover {
     color: #fff;
   }
   .volume_slider {
     width: 100px;
+    @media screen and (max-width: 540px) {
+      width: 50px;
+    }
+  }
+  .time_line {
+    @media screen and (max-width: 540px) {
+      font-size: 12px;
+    }
   }
 }

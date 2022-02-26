@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Slider from "react-slick";
+// import Slider from "react-slick";
 // import defaultImage from "../../images/default_image.jpg";
 import { useNavigate } from "react-router-dom";
 import tmdbApi from "../../api/tmdbApi";
@@ -13,8 +13,7 @@ import { Link } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BiPlayCircle } from "react-icons/bi";
-import sample from "../../Data/sub1.vtt";
+import VideoSlider from "../VideoSlider/VidieoSlider";
 import axios from "axios";
 
 const MovieInfo = ({ category }) => {
@@ -29,7 +28,6 @@ const MovieInfo = ({ category }) => {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [reviewFilms, setReviewFilms] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
-  const [similarPosterHover, setSimilarPosterHover] = useState("");
   // If exist data films
   const [isWatchFilm, setIsWatchFilm] = useState(false);
   const [movieInfoLoklok, setMoviesInfoLokLok] = useState([]);
@@ -39,49 +37,8 @@ const MovieInfo = ({ category }) => {
     versioncode: 11,
     clienttype: "ios_jike_default",
   };
-  const settings = {
-    dots: false,
-    arrows: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    initialSlide: 1,
-    infinite: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-    ],
-  };
   // console.log(id);
 
-  const handleMoveOverSimilarPostter = (e) => {
-    setSimilarPosterHover(() => e);
-  };
-  const handleMoveOutSimilarPostter = (e) => {
-    setSimilarPosterHover(() => "");
-  };
   useEffect(() => {
     setMovieId(id);
   }, [id]);
@@ -91,7 +48,7 @@ const MovieInfo = ({ category }) => {
     setIsWatchFilm(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 3000);
+    }, 5000);
     window.scrollTo(0, 0);
     if (movieId && category) {
       const getMovies = async () => {
@@ -197,6 +154,15 @@ const MovieInfo = ({ category }) => {
   const handleSelectedVideo = (item) => {
     setSelectedtrailerFilms(item);
   };
+
+  const handleClickWatchFilm = (e) => {
+    console.log("click");
+    console.log(movieInfoLoklok);
+    navigate(
+      `/watch/${movieInfoLoklok[0].id}?type=${movieInfoLoklok[0].domainType}&ep=0`
+    );
+  };
+
   const handleChangeMovieId = (id) => {
     setDoneLoad(false);
     setSimilarFilms([]);
@@ -204,13 +170,7 @@ const MovieInfo = ({ category }) => {
     setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
-  const handleClickWatchFilm = (e) => {
-    console.log("click");
-    console.log(movieInfoLoklok);
-    navigate(
-      `/watch/${movieInfoLoklok[0].id}?type=${movieInfoLoklok[0].domainType}`
-    );
-  };
+
   // console.log(casts);
   return (
     <>
@@ -266,33 +226,14 @@ const MovieInfo = ({ category }) => {
                     onClick={(e) => {
                       handleClickWatchFilm(e);
                     }}
-                    style={{
-                      marginTop: "10px",
-                      maxWidth: "140px",
-                      padding: "10px 20px",
-                      marginBottom: "-15px",
-                      color: "white",
-                      fontSize: "18px",
-                      borderRadius: "5px",
-                      border: "none",
-                      backgroundColor: "#d9534f",
-                      zIndex: 999999999999999999999999999,
-                      cursor: "pointer",
-                    }}
+                    className="btn_watch_film"
                   >
                     Watch film
                   </button>
                 ) : (
                   <button
+                    className="btn_watch_film"
                     style={{
-                      marginTop: "10px",
-                      maxWidth: "140px",
-                      padding: "10px 20px",
-                      marginBottom: "-15px",
-                      color: "white",
-                      fontSize: "18px",
-                      borderRadius: "5px",
-                      border: "none",
                       backgroundColor: "#f1f1f1",
                     }}
                   >
@@ -307,25 +248,30 @@ const MovieInfo = ({ category }) => {
                   {casts?.map((item, index) => {
                     return (
                       <div key={index} className="cast">
-                        <img
-                          src={
-                            item?.profile_path
-                              ? process.env.REACT_APP_PATH_IMG +
-                                item.profile_path
-                              : ""
-                          }
-                          onError={(event) => {
-                            event.target.src =
-                              "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                            event.onerror = null;
-                          }}
-                          // style={{ minWidth: "80px", minHeight: "100px" }}
-                          alt={item.original_name}
-                        />
                         <Link
-                          style={{ textDecoration: "none" }}
+                          style={{
+                            textDecoration: "none",
+                            minHeight: "100%",
+                            width: "100%",
+                          }}
                           to={"/person/detail/" + item.id}
                         >
+                          <img
+                            style={{ width: "100%", minHeight: "100%" }}
+                            src={
+                              item?.profile_path
+                                ? process.env.REACT_APP_PATH_IMG +
+                                  item.profile_path
+                                : ""
+                            }
+                            onError={(event) => {
+                              event.target.src =
+                                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                              event.onerror = null;
+                            }}
+                            // style={{ minWidth: "80px", minHeight: "100px" }}
+                            alt={item.original_name}
+                          />
                           <span>{item.original_name}</span>
                         </Link>
                       </div>
@@ -358,20 +304,6 @@ const MovieInfo = ({ category }) => {
                     },
                     facebook: {
                       appId: "12345",
-                    },
-                    file: {
-                      tracks: [
-                        {
-                          kind: "subtitles",
-                          src: sample,
-                          // src: "https://www.iandevlin.com/html5test/webvtt/upc-video-subtitles-en.vtt",
-                          // src: "https://subtitles.netpop.app/subtitles/20220124/1643008789508_英文e1.srt",
-                          srcLang: "es",
-                          default: true,
-                        },
-                        // {kind: 'subtitles', src: 'subs/subtitles.ja.vtt', srcLang: 'ja'},
-                        // {kind: 'subtitles', src: 'subs/subtitles.de.vtt', srcLang: 'de'}
-                      ],
                     },
                   }}
                 />
@@ -430,69 +362,10 @@ const MovieInfo = ({ category }) => {
               </span>
             </div>
             <div className="content">
-              <Slider {...settings}>
-                {similarFilms.map((item, index) => {
-                  return (
-                    <div key={index} className="item">
-                      <div key={item.id} className="similar_background">
-                        <div className="backdrop_path">
-                          <img
-                            style={
-                              similarPosterHover === item.id
-                                ? { transform: "scale(1.5)" }
-                                : {}
-                            }
-                            // onClick={() => handleChangeMovieId(item.id)}
-                            // ref={index}
-                            onMouseOver={(e) => {
-                              handleMoveOverSimilarPostter(item.id);
-                            }}
-                            onMouseOut={(e) => {
-                              handleMoveOutSimilarPostter(item.id);
-                            }}
-                            src={
-                              item?.poster_path
-                                ? process.env.REACT_APP_PATH_IMG +
-                                  item.poster_path
-                                : ""
-                            }
-                            onError={(event) => {
-                              event.target.src =
-                                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                              event.onerror = null;
-                            }}
-                            alt=""
-                          />
-                        </div>
-                        <BiPlayCircle
-                          // ref={index}
-                          onClick={() => handleChangeMovieId(item.id)}
-                          style={
-                            similarPosterHover === item.id
-                              ? { opacity: 1 }
-                              : { opacity: 0 }
-                          }
-                          onMouseOver={(e) => {
-                            handleMoveOverSimilarPostter(item.id);
-                          }}
-                          onMouseOut={(e) => {
-                            handleMoveOutSimilarPostter(e);
-                          }}
-                          className="play_icon"
-                        />
-                      </div>
-
-                      <div
-                        onClick={() => handleChangeMovieId(item.id)}
-                        className="title"
-                        title={category === "movie" ? item.title : item.name}
-                      >
-                        {category === "movie" ? item.title : item.name}
-                      </div>
-                    </div>
-                  );
-                })}
-              </Slider>
+              <VideoSlider
+                videoList={similarFilms}
+                onHandleChangeMovieId={handleChangeMovieId}
+              />
             </div>
           </div>
         </div>

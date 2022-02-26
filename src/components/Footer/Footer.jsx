@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.scss";
+
 const Footer = () => {
   return (
     <div className="footer">
@@ -42,7 +43,7 @@ const Footer = () => {
         <span>
           Copyright © 2022 Movie Database | TV Shows | Trailers | Movie Ratings
         </span>
-      </div>
+      </div>     
     </div>
   );
 };

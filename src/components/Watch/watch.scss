@@ -15,23 +15,22 @@
       // overflow: hidden;
       margin: 0 auto;
       // background-color: red;
-      width: 80%;
-      @media screen and (max-width: 768px) {
-        width: 90%;
-        // height: 70%;
+      width: 90%;
+      max-height: 50%;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+        min-height: 225px;
       }
       // height: 60%;
       /* Player ratio: 100 / (1280 / 720) */
-   
-
 
       .sub_title {
         color: white;
         position: absolute;
-        background-color: red;
-        z-index: 999999999999999999999999999999999999999999;
-        font-size: 50px;
-        bottom: 15%;
+        // background-color: red;
+        z-index: 0;
+        // font-size: 50px;
+        bottom: 5%;
         min-width: 100%;
         margin: 0 auto !important;
         //left: calc((100% - 40%) / 2);
@@ -40,22 +39,28 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          flex-direction: column;
           margin: 0 auto !important;
           width: 100%;
         }
         span {
           margin: 0 auto !important;
-          width: 60%;
+          width: auto;
+          max-width: 75%;
           color: #ffff00;
           text-align: center;
-          font-size: 22px;
-          font-weight: 600;
+          font-size: 28px;
+          font-weight: 700;
           text-overflow: ellipsis;
           word-wrap: break-word;
           overflow: hidden;
-          max-height: 4.5em;
-          line-height: 1.5em;
-          background-color: rgba(0, 0, 0, 0.7);
+          max-height: 2.4em;
+          line-height: 1.2em;
+          background-color: rgba(0, 0, 0, 0.6);
+          @media screen and (max-height: 600px) and (orientation: landscape) {
+            font-size: 16px;
+            max-width: 75%;
+          }
         }
       }
     }
@@ -67,18 +72,115 @@
     }
   }
 
+  .player_sub_controls {
+    width: 90%;
+    margin: 15px auto;
+    box-sizing: border-box;
+    @media screen and (max-width: 978px) {
+      width: 95%;
+      // height: 70%;
+    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media screen and (max-width: 758px) {
+      flex-direction: column;
+    }
+    .player_sub_controls_group {
+      box-sizing: border-box;
+      display: flex;
+      // justify-content: space-between;
+      align-items: center;
+      .label {
+        font-size: 18px;
+        font-weight: 600;
+        margin-right: 20px;
+        border: 0;
+        color: white;
+        min-width: 60px;
+        @media screen and (max-width: 978px) {
+          font-size: 16px;
+        }
+        @media screen and (max-width: 758px){
+          min-width: 80px;
+        }
+      }
+      .speed_add_button {
+        height: 38px;
+        border-radius: 0 5px 5px 0;
+        border: 0;
+        background-color: white;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: blue;
+      }
+
+      .speed_sub_button {
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px 0px 0px 5px;
+        border: 0;
+        background-color: white;
+        color: red;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .speed_button:hover {
+        outline: none;
+        border: 0.5px solid blue;
+      }
+
+      .speed_input {
+        line-height: 36px;
+        background-color: #ebebe4;
+        text-align: center;
+        border: 0;
+        color: black;
+        font-size: 18px;
+        font-weight: 600;
+        max-width: 100px;
+        @media screen and (max-width: 978px) {
+          max-width: 50px;
+        }
+        @media screen and (max-width: 767px) {
+          max-width: 124px;
+        }
+      }
+      .select_custom {
+        min-width: 200px;
+        width: 200px;
+        @media screen and (max-width: 978px) {
+          min-width: 120px;
+          width: 120px;
+        }
+        @media screen and (max-width: 767px) {
+          min-width: 200px;
+          margin-top: 10px;
+          width: 200px;
+        }
+      }
+    }
+  }
+
   .server {
     color: white;
     display: flex;
-    width: 80%;
+    width: 90%;
     margin: 15px auto;
     align-items: center;
+    margin-top: 30px;
     @media screen and (max-width: 540px) {
       flex-direction: column;
     }
-    @media screen and (max-width: 768px) {
-      width: 90%;
-      height: 70%;
+    @media screen and (max-width: 978px) {
+      width: 95%;
+      // height: 70%;
     }
     .label {
       margin-right: 20px;
@@ -108,15 +210,16 @@
   }
 
   .list_episode {
-    width: 80%;
-    @media screen and (max-width: 768px) {
-      width: 90%;
+    width: 90%;
+    @media screen and (max-width: 978px) {
+      width: 95%;
     }
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     margin-top: 30px;
     // max-width: 100%;
+
     .episode {
       margin-right: 10px;
       button {
@@ -137,13 +240,13 @@
   }
 
   .desc {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-    @media screen and (max-width: 768px) {
-      width: 90%;
+    @media screen and (max-width: 978px) {
+      width: 95%;
     }
     color: #da966e;
     .name {
@@ -162,6 +265,23 @@
     .pilot {
       margin-top: 10px;
       color: #b3b3b3;
+    }
+  }
+
+  .similar {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    // display: flex;
+    // flex-direction: column;
+    @media screen and (max-width: 978px) {
+      width: 95%;
+    }
+    span{
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 10px 0px;
     }
   }
 }

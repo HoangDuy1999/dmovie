@@ -10,7 +10,7 @@ const WatchMovie = () => {
   return (
     <div>
       <Navbar />
-      <Watch cate={searchParams.get("type") || ""} />
+      <Watch cate={searchParams.get("type") || ""} ep={searchParams.get("ep")|| "0"} />
       <Footer />
       <ScrollToTop />
     </div>

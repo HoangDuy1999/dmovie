@@ -1,0 +1,101 @@
+.items{
+  .slick-slide div {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+  }
+  .slick-arrow {
+    transform: scale(2);
+    height: 40px;
+    width: 25px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden;
+    margin-left: 41px;
+    margin-right: 41px;
+    margin-top: -40px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    // border-radius: 50px;
+    // padding: 10px !important;
+    // filter: drop-shadow(0 0 10rem yellow);
+    color: red !important;
+    // border-radius: 40px;
+    z-index: 9999999999999;
+    @media screen and (max-width: 767px) {
+      margin-top: -45px;
+      margin-left: 35px;
+      margin-right: 35px;
+      transform: scale(1.5);
+    }
+  }
+  .slick-arrow.slick-next {
+    padding-top: 3px;
+  }
+  .slick-arrow.slick-prev {
+    padding-top: 3px;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    padding: 5px;
+    
+    .similar_background {
+      box-sizing: border-box;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      opacity: 1;
+      .backdrop_path {
+        box-sizing: border-box;
+        min-width: 100%;
+        height: 250px;
+        @media screen and (max-width: 420px) {
+          height: 200px;
+        }
+        overflow: hidden;
+        background-image: url("../../images/default_image.jpg");
+        background-size: cover;
+        background-position: center;
+        img {
+          width: 100%;
+          background-size: fill;
+          background-position: cover;
+        }
+      }
+      .play_icon {
+        box-sizing: border-box;
+        font-size: 60px;
+        // padding: 50px;
+        cursor: pointer;
+        position: absolute;
+        filter: drop-shadow(0 0 10rem yellow);
+        z-index: 999999999999999999999;
+        color: red !important;
+      }
+    }
+    .title {
+      z-index: 20000;
+      position: relative;
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      display: block; /* or inline-block */
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow: hidden;
+      max-height: 3em;
+      line-height: 1.5em;
+    }
+    .title:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
