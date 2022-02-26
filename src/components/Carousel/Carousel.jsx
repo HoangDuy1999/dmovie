@@ -19,13 +19,7 @@ const Carousel = () => {
         }, 5000);
 
         const response = await tmdbApi.getTrending();
-        const { innerWidth: width } = window;
-        console.log(width);
-        if (width <= 420) {
-          setTrendMovieItems(response.slice(0, 5));
-        } else {
-          setTrendMovieItems(response);
-        }
+        setTrendMovieItems(response.slice(0, 5));
         return () => clearTimeout(timeout);
       } catch (e) {
         console.log(e);

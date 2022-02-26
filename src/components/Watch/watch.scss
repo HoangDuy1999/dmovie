@@ -101,7 +101,7 @@
         @media screen and (max-width: 978px) {
           font-size: 16px;
         }
-        @media screen and (max-width: 758px){
+        @media screen and (max-width: 758px) {
           min-width: 80px;
         }
       }
@@ -277,11 +277,22 @@
     @media screen and (max-width: 978px) {
       width: 95%;
     }
-    span{
+    span {
       color: white;
       font-size: 18px;
       font-weight: 700;
       margin: 10px 0px;
+    }
+  }
+  .fb_comment {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    // display: flex;
+    // flex-direction: column;
+    background-color: white;
+    @media screen and (max-width: 978px) {
+      width: 95%;
     }
   }
 }

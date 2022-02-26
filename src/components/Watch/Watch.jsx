@@ -15,6 +15,8 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
+import FBComment from "../FBComment/FBComment";
+import { Player, BigPlayButton  } from "video-react";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -363,13 +365,13 @@ const Watch = ({ cate, ep }) => {
       timeDisplayFormat === "normal" ? "innormal" : "normal"
     );
   };
-  
-  const handleChangeMovieId = (_id, category)=>{
+
+  const handleChangeMovieId = (_id, category) => {
     // console.log(id);
     // console.log(cate);
     navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
-  }
+  };
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -577,10 +579,21 @@ const Watch = ({ cate, ep }) => {
 
         <div className="similar">
           <span>Maybe you want to see</span>
-        <VideoSlider
-                videoList={movieInfo?.likeList}
-                onHandleChangeMovieId={handleChangeMovieId}
-              />
+          <VideoSlider
+            videoList={movieInfo?.likeList}
+            onHandleChangeMovieId={handleChangeMovieId}
+          />
+        </div>
+        <div className="fb_comment">
+          <FBComment width={100} dataHref={window.location.href} />
+          <h2>{videoUrl}</h2>
+          {videoUrl !== "" ? (
+             <Player src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4">
+             <BigPlayButton position="center" />
+           </Player>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
