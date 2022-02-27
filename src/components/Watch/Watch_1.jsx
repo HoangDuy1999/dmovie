@@ -16,7 +16,17 @@ import { useNavigate } from "react-router-dom";
 import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
-import { Player, BigPlayButton  } from "video-react";
+import {
+  Player,
+  ControlBar,
+  ReplayControl,
+  BigPlayButton,
+  Shortcut,
+  FullscreenToggle,
+} from "video-react";
+import "video-react/dist/video-react.css";
+import HLSSource from "./HLSSource";
+import FullscreenIcon from "@material-ui/icons/Fullscreen";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -34,6 +44,8 @@ const Watch = ({ cate, ep }) => {
   const [subText2, setSubText2] = useState("");
   const [countHiddenText, setCountHiddenText] = useState(0);
 
+  // video react
+  const newShortcuts = [];
   const [arrSub, setArrSub] = useState([
     {
       value: "",
@@ -60,7 +72,7 @@ const Watch = ({ cate, ep }) => {
     seeking: false,
   });
 
-  const playerRef = useRef(null);
+  const [playerRef, setPlayerRef] = useState("");
   const playerContainerRef = useRef(null);
   const controlsRef = useRef(null);
   const [count, setCount] = useState(0);
@@ -95,7 +107,7 @@ const Watch = ({ cate, ep }) => {
         )
         .then((res) => {
           setMovieInfor(res.data.data);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           // if(res.data.data.episodeVo?.length > 0){
 
           // }
@@ -189,6 +201,13 @@ const Watch = ({ cate, ep }) => {
     return () => clearTimeout(timeout);
   }, [movieInfo, displayResolution, episodeId]);
 
+  useEffect(() => {
+    console.log(playerRef);
+    // console.log(videoUrl);
+    if (playerRef !== "") {
+      playerRef.load();
+    }
+  }, [videoUrl]);
   const handleKeyBoard = (e) => {
     if (e.keyCode === 37) {
       e.preventDefault();
@@ -213,7 +232,6 @@ const Watch = ({ cate, ep }) => {
       setDoneLoad(true);
     }, 5000);
     // getVideos(movieInfo.episodeVo[value].id);
-    console.log("dmmmm");
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
     return () => clearTimeout(timeout);
@@ -226,145 +244,145 @@ const Watch = ({ cate, ep }) => {
   };
 
   // PROCESS ....................
-  const handleProgressReactPlayer = (progress) => {
-    const secondRoot = parseInt(progress.playedSeconds);
-    // console.log(secondRoot);
-    const timeout = setTimeout(() => {
-      if (selectedSub1.value !== "") {
-        if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
-          if (selectedSub2.value === "") {
-            setSubText1(
-              listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$"
-            );
-            setCountHiddenText(0);
-          } else {
-            setSubText1(
-              listSubTitle[selectedSub1.value][secondRoot] +
-                "$$$$$$" +
-                listSubTitle[selectedSub2.value][secondRoot]
-            );
-            setCountHiddenText(0);
-          }
-        }
-      }
-      // if (selectedSub2.value !== "") {
-      //   if (listSubTitle[selectedSub2.value][secondRoot] !== undefined) {
-      //     setSubText2(listSubTitle[selectedSub2.value][secondRoot]);
-      //     setCountHiddenText(0);
-      //   }
-      // }
-    }, 0);
-    if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
-    // console.log(countHiddenText);
-    if (countHiddenText === 4) {
-      setSubText1("");
-      setSubText2("");
-    }
-    if (count >= 1) {
-      controlsRef.current.style.visibility = "hidden";
-    }
-    if (controlsRef.current.style.visibility === "visible") {
-      setCount(() => count + 1);
-    }
-    if (!playerStates.seeking) {
-      setPlayerStates({ ...playerStates, ...progress });
-    }
-    return () => clearTimeout(timeout);
-  };
+  // const handleProgressReactPlayer = (progress) => {
+  //   const secondRoot = parseInt(progress.playedSeconds);
+  //   // console.log(secondRoot);
+  //   const timeout = setTimeout(() => {
+  //     if (selectedSub1.value !== "") {
+  //       if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
+  //         if (selectedSub2.value === "") {
+  //           setSubText1(
+  //             listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$"
+  //           );
+  //           setCountHiddenText(0);
+  //         } else {
+  //           setSubText1(
+  //             listSubTitle[selectedSub1.value][secondRoot] +
+  //               "$$$$$$" +
+  //               listSubTitle[selectedSub2.value][secondRoot]
+  //           );
+  //           setCountHiddenText(0);
+  //         }
+  //       }
+  //     }
+  //     // if (selectedSub2.value !== "") {
+  //     //   if (listSubTitle[selectedSub2.value][secondRoot] !== undefined) {
+  //     //     setSubText2(listSubTitle[selectedSub2.value][secondRoot]);
+  //     //     setCountHiddenText(0);
+  //     //   }
+  //     // }
+  //   }, 0);
+  //   if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
+  //   // console.log(countHiddenText);
+  //   if (countHiddenText === 4) {
+  //     setSubText1("");
+  //     setSubText2("");
+  //   }
+  //   if (count >= 1) {
+  //     controlsRef.current.style.visibility = "hidden";
+  //   }
+  //   if (controlsRef.current.style.visibility === "visible") {
+  //     setCount(() => count + 1);
+  //   }
+  //   if (!playerStates.seeking) {
+  //     setPlayerStates({ ...playerStates, ...progress });
+  //   }
+  //   return () => clearTimeout(timeout);
+  // };
 
-  const handleRewind = (e) => {
-    playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
-  };
+  // const handleRewind = (e) => {
+  //   playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
+  // };
 
-  const handleFastForward = (e) => {
-    playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
-  };
+  // const handleFastForward = (e) => {
+  //   playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
+  // };
 
-  const handlePlayPause = (e) => {
-    // console.log(listSubTitle["vi"]);
-    // console.log(listSubTitle["en"]);
-    setPlayerStates(() => ({
-      ...playerStates,
-      playing: !playerStates.playing,
-    }));
-  };
+  // const handlePlayPause = (e) => {
+  //   // console.log(listSubTitle["vi"]);
+  //   // console.log(listSubTitle["en"]);
+  //   setPlayerStates(() => ({
+  //     ...playerStates,
+  //     playing: !playerStates.playing,
+  //   }));
+  // };
 
-  const handleMuted = (e) => {
-    setPlayerStates(() => ({
-      ...playerStates,
-      muted: !playerStates.muted,
-      volume: !playerStates.muted ? 0 : 1,
-    }));
-  };
+  // const handleMuted = (e) => {
+  //   setPlayerStates(() => ({
+  //     ...playerStates,
+  //     muted: !playerStates.muted,
+  //     volume: !playerStates.muted ? 0 : 1,
+  //   }));
+  // };
 
-  const handleVolumeChange = (e, newValue) => {
-    setPlayerStates({
-      ...playerStates,
-      volume: parseFloat(newValue / 100),
-      muted: newValue === 0 ? true : false,
-    });
-  };
+  // const handleVolumeChange = (e, newValue) => {
+  //   setPlayerStates({
+  //     ...playerStates,
+  //     volume: parseFloat(newValue / 100),
+  //     muted: newValue === 0 ? true : false,
+  //   });
+  // };
 
-  const handleVolumeSeekDown = (e, newValue) => {
-    setPlayerStates({
-      ...playerStates,
-      volume: parseFloat(newValue / 100),
-      muted: newValue === 0 ? true : false,
-    });
-  };
+  // const handleVolumeSeekDown = (e, newValue) => {
+  //   setPlayerStates({
+  //     ...playerStates,
+  //     volume: parseFloat(newValue / 100),
+  //     muted: newValue === 0 ? true : false,
+  //   });
+  // };
 
-  const handlePlayBackRateChange = (rate) => {
-    let value =
-      rate === "+"
-        ? playerStates.playbackRate + 0.1
-        : playerStates.playbackRate - 0.1;
-    if (value > 0 && value <= 2)
-      setPlayerStates({
-        ...playerStates,
-        playbackRate: Math.round(value * 10) / 10,
-      });
-    // setAnchorEl(null);
-  };
+  // const handlePlayBackRateChange = (rate) => {
+  //   let value =
+  //     rate === "+"
+  //       ? playerStates.playbackRate + 0.1
+  //       : playerStates.playbackRate - 0.1;
+  //   if (value > 0 && value <= 2)
+  //     setPlayerStates({
+  //       ...playerStates,
+  //       playbackRate: Math.round(value * 10) / 10,
+  //     });
+  //   // setAnchorEl(null);
+  // };
 
-  const handleToggleFullScreen = () => {
-    screenfull.toggle(playerContainerRef.current);
-  };
+  // const handleToggleFullScreen = () => {
+  //   screenfull.toggle(playerContainerRef.current);
+  // };
 
-  const handleSeekChange = (e, newValue) => {
-    setPlayerStates(() => ({
-      ...playerStates,
-      played: parseFloat(newValue / 100),
-      playing: false,
-    }));
-  };
+  // const handleSeekChange = (e, newValue) => {
+  //   setPlayerStates(() => ({
+  //     ...playerStates,
+  //     played: parseFloat(newValue / 100),
+  //     playing: false,
+  //   }));
+  // };
 
-  const handleSeekMouseDown = (e, newValue) => {
-    setPlayerStates(() => ({
-      ...playerStates,
-      seeking: true,
-    }));
-  };
+  // const handleSeekMouseDown = (e, newValue) => {
+  //   setPlayerStates(() => ({
+  //     ...playerStates,
+  //     seeking: true,
+  //   }));
+  // };
 
-  const handleSeekMoveUp = (e, newValue) => {
-    setPlayerStates(() => ({
-      ...playerStates,
-      playing: true,
-      // played: parseFloat(newValue / 100),
-      seeking: false,
-    }));
-    playerRef.current.seekTo(newValue / 100);
-  };
+  // const handleSeekMoveUp = (e, newValue) => {
+  //   setPlayerStates(() => ({
+  //     ...playerStates,
+  //     playing: true,
+  //     // played: parseFloat(newValue / 100),
+  //     seeking: false,
+  //   }));
+  //   playerRef.current.seekTo(newValue / 100);
+  // };
 
-  const handleMouseMove = () => {
-    controlsRef.current.style.visibility = "visible";
-    setCount(() => 0);
-  };
+  // const handleMouseMove = () => {
+  //   controlsRef.current.style.visibility = "visible";
+  //   setCount(() => 0);
+  // };
 
-  const handleChangeDisplayTimeFormat = () => {
-    setTimeDisplayFormat(
-      timeDisplayFormat === "normal" ? "innormal" : "normal"
-    );
-  };
+  // const handleChangeDisplayTimeFormat = () => {
+  //   setTimeDisplayFormat(
+  //     timeDisplayFormat === "normal" ? "innormal" : "normal"
+  //   );
+  // };
 
   const handleChangeMovieId = (_id, category) => {
     // console.log(id);
@@ -372,19 +390,13 @@ const Watch = ({ cate, ep }) => {
     navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
   };
-
-  const currentTime = playerRef.current
-    ? playerRef.current.getCurrentTime()
-    : "00:00";
-  const duration = playerRef.current
-    ? playerRef.current.getDuration()
-    : "00:00";
-  const elapsedTime =
-    timeDisplayFormat === "normal"
-      ? formatTimeVideo(currentTime)
-      : `-${formatTimeVideo(duration - currentTime)}`;
-  const totalDuration = formatTimeVideo(duration);
-
+  // console.log(videoUrl);
+  const handleClickVideoReact = () => {
+    // playerRef?.toggleFullscreen() =()=>{
+    //   console.log("Clịck");
+    // };
+          console.log("Clịck");
+  };
   return (
     <div className="watch_movie_container">
       <PageLoadingEffeect doneLoad={doneLoad} />
@@ -392,10 +404,12 @@ const Watch = ({ cate, ep }) => {
       <div className="watch_movie_wrapper">
         <div
           className="player-wrapper"
-          onMouseMove={handleMouseMove}
+          // onMouseMove={handleMouseMove}
           ref={playerContainerRef}
         >
-          <ReactPlayer
+         
+
+          {/* <ReactPlayer
             onProgress={(progress) => {
               handleProgressReactPlayer(progress);
             }}
@@ -409,10 +423,10 @@ const Watch = ({ cate, ep }) => {
             ref={playerRef}
             volume={playerStates.volume}
             playbackRate={playerStates.playbackRate}
-          />
+          /> */}
 
           {/* play control */}
-          <PlayerControl
+          {/* <PlayerControl
             ref={controlsRef}
             onPlayPause={(e) => handlePlayPause(e)}
             playing={playerStates.playing}
@@ -436,7 +450,7 @@ const Watch = ({ cate, ep }) => {
             elapsedTime={elapsedTime}
             totalDuration={totalDuration}
             onChangeDisplayFormat={handleChangeDisplayTimeFormat}
-          />
+          /> */}
 
           <div className="sub_title">
             <div className="wrapper">
@@ -449,7 +463,7 @@ const Watch = ({ cate, ep }) => {
         </div>
 
         <div className="player_sub_controls">
-          <div className="player_sub_controls_group">
+          {/* <div className="player_sub_controls_group">
             <div className="label">Speed</div>
             <button className="speed_sub_button">
               <SubIcon
@@ -490,7 +504,7 @@ const Watch = ({ cate, ep }) => {
                 onChange={setSelectedSub2}
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="server">
@@ -586,7 +600,6 @@ const Watch = ({ cate, ep }) => {
         </div>
         <div className="fb_comment">
           <FBComment width={100} dataHref={window.location.href} />
-          <h5>{videoUrl}</h5>
         </div>
       </div>
     </div>
