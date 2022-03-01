@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./peopleList.scss";
 // import ReactLoading from "react-loading";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 // import Select from "react-select";
 // import axios from "axios";
 import _ from "lodash";

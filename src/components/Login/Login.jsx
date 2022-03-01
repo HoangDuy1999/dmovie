@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@mui/material/Checkbox";
 import { AiFillGoogleSquare } from "react-icons/ai";
 import { FaFacebookSquare } from "react-icons/fa";
 import "./login.scss";

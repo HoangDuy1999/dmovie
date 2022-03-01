@@ -7,8 +7,8 @@ import _ from "lodash";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import PlayerControl from "../PlayerControl/PlayerControl";
 import screenfull from "screenfull";
-import AddIcon from "@material-ui/icons/Add";
-import SubIcon from "@material-ui/icons/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import SubIcon from "@mui/icons-material/Remove";
 import Select from "react-select";
 // import videojs from "video.js";
 // import "video.js/dist/video-js.css";
@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
-import { Player, BigPlayButton } from "video-react";
+import SubTitleList from "../SubTitleList/SubTitleList";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -28,10 +28,10 @@ const Watch = ({ cate, ep }) => {
   const [episodeId, setEpisodeId] = useState("0");
   const [doneLoad, setDoneLoad] = useState(true);
   const [displayResolution, setDisPlayResoluton] = useState("SD");
-  // const [arrengSub, setArrEngSub] = useState({});
+  const [subTextSize, setSubTextSize] = useState("27px");
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
   const [subText1, setSubText1] = useState("");
-  const [subText2, setSubText2] = useState("");
+  // const [subText2, setSubText2] = useState("");
   const [countHiddenText, setCountHiddenText] = useState(0);
 
   const [arrSub, setArrSub] = useState([
@@ -258,8 +258,7 @@ const Watch = ({ cate, ep }) => {
     if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
     // console.log(countHiddenText);
     if (countHiddenText === 4) {
-      setSubText1("");
-      setSubText2("");
+      setSubText1(" $$$$$$ ");
     }
     if (count >= 1) {
       controlsRef.current.style.visibility = "hidden";
@@ -328,7 +327,14 @@ const Watch = ({ cate, ep }) => {
   };
 
   const handleToggleFullScreen = () => {
+    console.log("DMMMMMMMMMMM");
+    // subTextSize === "27px" ? setSubTextSize("34px") : setSubTextSize("27px");
     screenfull.toggle(playerContainerRef.current);
+    if (screenfull.isFullscreen) {
+      setSubTextSize("27px");
+    } else {
+      setSubTextSize("34px");
+    }
   };
 
   const handleSeekChange = (e, newValue) => {
@@ -391,7 +397,7 @@ const Watch = ({ cate, ep }) => {
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">
-        <div>
+        <div className="group">
           <div
             className="player-wrapper"
             onMouseMove={handleMouseMove}
@@ -414,40 +420,58 @@ const Watch = ({ cate, ep }) => {
             />
 
             {/* play control */}
-            <PlayerControl
-              ref={controlsRef}
-              onPlayPause={(e) => handlePlayPause(e)}
-              playing={playerStates.playing}
-              onRewind={(e) => handleRewind(e)}
-              onFastForward={(e) => handleFastForward(e)}
-              onMuted={handleMuted}
-              muted={playerStates.muted}
-              onVolumechange={handleVolumeChange}
-              onVolumeSeekDown={handleVolumeSeekDown}
-              volume={playerStates.volume}
-              playbackRate={playerStates.playbackRate}
-              onPlayBackRate={(e) => handlePlayBackRateChange(e)}
-              // onHandleOpenPopover={handleClickOpenPopover}
-              // onHandleClosePopover={handleClickClosePopover}
-              // anchorEl={anchorEl}
-              onToggleFullScreen={handleToggleFullScreen}
-              played={playerStates.played}
-              onSeek={handleSeekChange}
-              onSeekMouseDown={handleSeekMouseDown}
-              onSeekMouseUp={handleSeekMoveUp}
-              elapsedTime={elapsedTime}
-              totalDuration={totalDuration}
-              onChangeDisplayFormat={handleChangeDisplayTimeFormat}
-            />
+            <div
+              className="player_control"
+              style={{ backgroundColor: "yellow" }}
+            >
+              <PlayerControl
+                ref={controlsRef}
+                onPlayPause={(e) => handlePlayPause(e)}
+                playing={playerStates.playing}
+                onRewind={(e) => handleRewind(e)}
+                onFastForward={(e) => handleFastForward(e)}
+                onMuted={handleMuted}
+                muted={playerStates.muted}
+                onVolumechange={handleVolumeChange}
+                onVolumeSeekDown={handleVolumeSeekDown}
+                volume={playerStates.volume}
+                playbackRate={playerStates.playbackRate}
+                onPlayBackRate={(e) => handlePlayBackRateChange(e)}
+                // onHandleOpenPopover={handleClickOpenPopover}
+                // onHandleClosePopover={handleClickClosePopover}
+                // anchorEl={anchorEl}
+                onToggleFullScreen={handleToggleFullScreen}
+                played={playerStates.played}
+                onSeek={handleSeekChange}
+                onSeekMouseDown={handleSeekMouseDown}
+                onSeekMouseUp={handleSeekMoveUp}
+                elapsedTime={elapsedTime}
+                totalDuration={totalDuration}
+                onChangeDisplayFormat={handleChangeDisplayTimeFormat}
+              />
+            </div>
 
             <div className="sub_title">
               <div className="wrapper">
-                <span>{subText1?.split("$$$$$$")[0]}</span>
-                <span style={{ color: "white" }}>
+                <span style={{ fontSize: subTextSize }}>
+                  {subText1?.split("$$$$$$")[0]}
+                </span>
+                <span style={{ color: "white", fontSize: subTextSize }}>
                   {subText1?.split("$$$$$$")[1]}
                 </span>
               </div>
             </div>
+          </div>
+
+          <div className="sub_list">
+            <SubTitleList
+              listSubTitle={listSubTitle}
+              selectedSub1={selectedSub1}
+              selectedSub2={selectedSub2}
+              second={
+                playerRef.current ? playerRef.current.getCurrentTime() : 0
+              }
+            />
           </div>
         </div>
 

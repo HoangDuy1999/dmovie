@@ -1,21 +1,22 @@
 import React, { forwardRef } from "react";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import BookmarkIcon from "@material-ui/icons/Bookmark";
-import IconButton from "@material-ui/core/IconButton";
-import FastRewindIcon from "@material-ui/icons/FastRewind";
-import FastForwardIcon from "@material-ui/icons/FastForward";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import Slider1 from "@material-ui/core/Slider";
-import Tooltip from "@material-ui/core/Tooltip";
-// import { styled } from "@material-ui/core/styles";
-import VolumeUpIcons from "@material-ui/icons/VolumeUp";
-import VolumeOffIcons from "@material-ui/icons/VolumeOff";
-import FullscreenIcon from "@material-ui/icons/Fullscreen";
-// import Popover from "@material-ui/core/Popover";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import IconButton from "@mui/material/IconButton";
+import FastRewindIcon from "@mui/icons-material/FastRewind";
+import FastForwardIcon from "@mui/icons-material/FastForward";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
+import Slider1 from "@mui/material/Slider";
+import Tooltip from "@mui/material/Tooltip";
+// import { styled } from "@mui/material/styles";
+import VolumeUpIcons from "@mui/icons-material/VolumeUp";
+import VolumeOffIcons from "@mui/icons-material/VolumeOff";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+// import Popover from "@mui/material/Popover";
 import "./playerControl.scss";
+import PropTypes from "prop-types";
 
 const PlayerControl = (
   {
@@ -44,7 +45,6 @@ const PlayerControl = (
   },
   ref
 ) => {
-  // hiện thời gian progressbar
   function ValueLabelComponent(props) {
     const { children, value } = props;
 
@@ -54,8 +54,15 @@ const PlayerControl = (
       </Tooltip>
     );
   }
-  //posterHover
 
+  ValueLabelComponent.propTypes = {
+    children: PropTypes.element.isRequired,
+    value: PropTypes.number.isRequired,
+  };
+  //posterHover
+  function valuetext(value) {
+    return `${value}°C`;
+  }
   const open = Boolean(anchorEl);
   // const popoverId = open ? "simple-popover" : undefined;
   // console.log("update");
@@ -103,6 +110,7 @@ const PlayerControl = (
             onClick={onRewind}
             className="controlIcons"
             aria-label="requind"
+            size="large"
           >
             <FastRewindIcon fontSize="inherit" />
           </IconButton>
@@ -110,6 +118,7 @@ const PlayerControl = (
             onClick={(e) => onPlayPause(e)}
             className="controlIcons"
             aria-label="requind"
+            size="large"
           >
             {playing ? (
               <PauseIcon fontSize="inherit" />
@@ -121,6 +130,7 @@ const PlayerControl = (
             onClick={onFastForward}
             className="controlIcons"
             aria-label="requind"
+            size="large"
           >
             <FastForwardIcon fontSize="inherit" />
           </IconButton>
@@ -141,14 +151,20 @@ const PlayerControl = (
               value={played * 100}
               onChange={onSeek}
               onMouseOver={(e, value) => {
-                handleSliderMouseOver(e, value)
+                handleSliderMouseOver(e, value);
               }}
               // getAriaValueText={handleSliderMouseOver}
               onMouseDown={onSeekMouseDown}
               onChangeCommitted={onSeekMouseUp}
-              ValueLabelComponent={(props) => (
-                <ValueLabelComponent {...props} value={elapsedTime} />
-              )}
+              valueLabelDisplay="auto"
+              components={{
+                ValueLabel: ValueLabelComponent,
+              }}
+              // components={{
+              //   ValueLabel: (
+              //     <ValueLabelComponent {...props} value={elapsedTime} />
+              //   ),
+              // }}
             />
           </Grid>
 
@@ -158,6 +174,7 @@ const PlayerControl = (
                 className="bottom_icons"
                 key="icon1"
                 onClick={(e) => onPlayPause()}
+                size="large"
               >
                 {playing ? (
                   <PauseIcon fontSize="inherit" />
@@ -169,6 +186,7 @@ const PlayerControl = (
                 onClick={onMuted}
                 className="bottom_icons"
                 key="icon2"
+                size="large"
               >
                 {muted ? (
                   <VolumeOffIcons fontSize="inherit" />
@@ -199,48 +217,49 @@ const PlayerControl = (
 
           <Grid>
             {/* <Button
-              variant="text"
-              key="bottom3"
-              aria-describedby={popoverId}
-              className="bottom_icons"
-              onClick={onHandleOpenPopover}
-            >
-              <Typography>{playbackRate}X</Typography>
-            </Button>
-            <Popover
-              id={popoverId}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={onHandleClosePopover}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-            >
-              <Grid container direction="column-reverse">
-                {[0.5, 1, 1.5, 2].map((item, index) => (
-                  <Button
-                    key={item}
-                    variant="text"
-                    onClick={() => onPlayBackRate(item)}
+            variant="text"
+            key="bottom3"
+            aria-describedby={popoverId}
+            className="bottom_icons"
+            onClick={onHandleOpenPopover}
+          >
+            <Typography>{playbackRate}X</Typography>
+          </Button>
+          <Popover
+            id={popoverId}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={onHandleClosePopover}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+          >
+            <Grid container direction="column-reverse">
+              {[0.5, 1, 1.5, 2].map((item, index) => (
+                <Button
+                  key={item}
+                  variant="text"
+                  onClick={() => onPlayBackRate(item)}
+                >
+                  <Typography
+                    color={playbackRate === item ? "primary" : "secondary"}
                   >
-                    <Typography
-                      color={playbackRate === item ? "primary" : "secondary"}
-                    >
-                      {item}x
-                    </Typography>
-                  </Button>
-                ))}
-              </Grid>
-            </Popover> */}
+                    {item}x
+                  </Typography>
+                </Button>
+              ))}
+            </Grid>
+          </Popover> */}
             <IconButton
               onClick={onToggleFullScreen}
               className="bottom_icons"
               key="bottom4"
+              size="large"
             >
               <FullscreenIcon fontSize="inherit" />
             </IconButton>

@@ -1,4 +1,4 @@
-import { KeyboardArrowUp } from "@material-ui/icons";
+import { KeyboardArrowUp } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { useWindowScroll } from "react-use";
 import "./scrollToTop.scss";

@@ -6,7 +6,7 @@ import tmdbApi from "../../api/tmdbApi";
 import mobiscroll from "@mobiscroll/react";
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 import CartItemBrowses from "../CartItemBrowses/CartItemBrowses";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import { languages } from "../../Data/language";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./newsList.scss";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ButtonLoad from "@material-ui/core/Button";
+import ButtonLoad from "@mui/material/Button";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 // import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
