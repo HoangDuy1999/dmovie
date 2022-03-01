@@ -61,8 +61,8 @@ const PlayerControl = (
   // console.log("update");
   // console.log(played);
   const handleSliderMouseOver = (e, value) => {
-    console.log(e);
-    console.log(value);
+    // console.log(e);
+    // console.log(value);
   };
   return (
     <>

@@ -53,16 +53,13 @@ const SearchResult = ({ txtSearch }) => {
             />
           </div>
           <div
-            style={
-              listMovies.length <= 4 ? { justifyContent: "flex-start" } : {}
-            }
             className="list_movies_content"
           >
             {listMovies.map((item) => (
               <CarItem
                 item={item}
                 key={item.id}
-                length={listMovies.length}
+                // length={listMovies.length}
                 types="movies"
                 colorGroup={{}}
               />
@@ -88,13 +85,10 @@ const SearchResult = ({ txtSearch }) => {
           </div>
           <div
             className="list_tvs_content"
-            style={
-              listSeries.length <= 4 ? { justifyContent: "flex-start" } : {}
-            }
           >
             {listSeries.map((item) => (
               <CarItem
-                length={listSeries.length}
+                // length={listSeries.length}
                 item={item}
                 key={item.id}
                 types="tv"

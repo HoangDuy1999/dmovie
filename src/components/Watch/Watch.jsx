@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
-import { Player, BigPlayButton  } from "video-react";
+import { Player, BigPlayButton } from "video-react";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -95,7 +95,7 @@ const Watch = ({ cate, ep }) => {
         )
         .then((res) => {
           setMovieInfor(res.data.data);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           // if(res.data.data.episodeVo?.length > 0){
 
           // }
@@ -206,14 +206,15 @@ const Watch = ({ cate, ep }) => {
       }));
     }
   };
+
   useEventListener("keydown", handleKeyBoard);
+
   const handleClickChangeEpisode = (value) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
     }, 5000);
     // getVideos(movieInfo.episodeVo[value].id);
-    console.log("dmmmm");
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
     return () => clearTimeout(timeout);
@@ -390,60 +391,62 @@ const Watch = ({ cate, ep }) => {
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">
-        <div
-          className="player-wrapper"
-          onMouseMove={handleMouseMove}
-          ref={playerContainerRef}
-        >
-          <ReactPlayer
-            onProgress={(progress) => {
-              handleProgressReactPlayer(progress);
-            }}
-            className="react-player"
-            width="100%"
-            height="100%"
-            playing={playerStates.playing}
-            muted={playerStates.muted}
-            onError={(error, data, hlsInstance, hlsGlobal) => {}}
-            url={videoUrl}
-            ref={playerRef}
-            volume={playerStates.volume}
-            playbackRate={playerStates.playbackRate}
-          />
+        <div>
+          <div
+            className="player-wrapper"
+            onMouseMove={handleMouseMove}
+            ref={playerContainerRef}
+          >
+            <ReactPlayer
+              onProgress={(progress) => {
+                handleProgressReactPlayer(progress);
+              }}
+              className="react-player"
+              width="100%"
+              height="100%"
+              playing={playerStates.playing}
+              muted={playerStates.muted}
+              onError={(error, data, hlsInstance, hlsGlobal) => {}}
+              url={videoUrl}
+              ref={playerRef}
+              volume={playerStates.volume}
+              playbackRate={playerStates.playbackRate}
+            />
 
-          {/* play control */}
-          <PlayerControl
-            ref={controlsRef}
-            onPlayPause={(e) => handlePlayPause(e)}
-            playing={playerStates.playing}
-            onRewind={(e) => handleRewind(e)}
-            onFastForward={(e) => handleFastForward(e)}
-            onMuted={handleMuted}
-            muted={playerStates.muted}
-            onVolumechange={handleVolumeChange}
-            onVolumeSeekDown={handleVolumeSeekDown}
-            volume={playerStates.volume}
-            playbackRate={playerStates.playbackRate}
-            onPlayBackRate={(e) => handlePlayBackRateChange(e)}
-            // onHandleOpenPopover={handleClickOpenPopover}
-            // onHandleClosePopover={handleClickClosePopover}
-            // anchorEl={anchorEl}
-            onToggleFullScreen={handleToggleFullScreen}
-            played={playerStates.played}
-            onSeek={handleSeekChange}
-            onSeekMouseDown={handleSeekMouseDown}
-            onSeekMouseUp={handleSeekMoveUp}
-            elapsedTime={elapsedTime}
-            totalDuration={totalDuration}
-            onChangeDisplayFormat={handleChangeDisplayTimeFormat}
-          />
+            {/* play control */}
+            <PlayerControl
+              ref={controlsRef}
+              onPlayPause={(e) => handlePlayPause(e)}
+              playing={playerStates.playing}
+              onRewind={(e) => handleRewind(e)}
+              onFastForward={(e) => handleFastForward(e)}
+              onMuted={handleMuted}
+              muted={playerStates.muted}
+              onVolumechange={handleVolumeChange}
+              onVolumeSeekDown={handleVolumeSeekDown}
+              volume={playerStates.volume}
+              playbackRate={playerStates.playbackRate}
+              onPlayBackRate={(e) => handlePlayBackRateChange(e)}
+              // onHandleOpenPopover={handleClickOpenPopover}
+              // onHandleClosePopover={handleClickClosePopover}
+              // anchorEl={anchorEl}
+              onToggleFullScreen={handleToggleFullScreen}
+              played={playerStates.played}
+              onSeek={handleSeekChange}
+              onSeekMouseDown={handleSeekMouseDown}
+              onSeekMouseUp={handleSeekMoveUp}
+              elapsedTime={elapsedTime}
+              totalDuration={totalDuration}
+              onChangeDisplayFormat={handleChangeDisplayTimeFormat}
+            />
 
-          <div className="sub_title">
-            <div className="wrapper">
-              <span>{subText1?.split("$$$$$$")[0]}</span>
-              <span style={{ color: "white" }}>
-                {subText1?.split("$$$$$$")[1]}
-              </span>
+            <div className="sub_title">
+              <div className="wrapper">
+                <span>{subText1?.split("$$$$$$")[0]}</span>
+                <span style={{ color: "white" }}>
+                  {subText1?.split("$$$$$$")[1]}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -586,7 +589,7 @@ const Watch = ({ cate, ep }) => {
         </div>
         <div className="fb_comment">
           <FBComment width={100} dataHref={window.location.href} />
-          <h5>{videoUrl}</h5>
+          {/* <h5>{videoUrl}</h5> */}
         </div>
       </div>
     </div>
