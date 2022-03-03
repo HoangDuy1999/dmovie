@@ -1,129 +1,157 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react";
+import _ from "lodash";
+import "./subTitleList.scss";
 
-const SubTitleList = () => {
+const SubTitleList = ({
+  second,
+  listSubTitle,
+  selectedSub1,
+  selectedSub2,
+  handleSetStart,
+}) => {
+  const itemsRef = useRef([]);
+  const [arrSub1, setArrSub1] = useState({});
+  const [arrSub2, setArrSub2] = useState({});
+  const [selectedSub, setSelectedSub] = useState(0);
+  useEffect(() => {
+    if (selectedSub1.value !== "" || selectedSub2.value !== "") {
+      try {
+        if (
+          listSubTitle[selectedSub1.value][second] !== undefined ||
+          listSubTitle[selectedSub2.value][second] !== undefined
+        ) {
+          setSelectedSub(parseInt(second).toString());
+        }
+        itemsRef.current[second.toString()].scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "nearest",
+        });
+      } catch (e) {}
+    }
+  }, [second]);
+
+  useEffect(() => {
+    setArrSub1(listSubTitle[selectedSub1.value] || {});
+    setArrSub2(listSubTitle[selectedSub2.value] || {});
+  }, [selectedSub1, selectedSub2, listSubTitle]);
+
+  const items = [
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+    "Item ",
+  ];
+
+  const messagesEndRef = useRef(null);
+
   return (
-    <div>SubTitleList</div>
-  )
-}
-
-export default SubTitleList
-// import React from "react";
-// import "./subTitleList.scss";
-// import Grid from "@mui/material/Grid";
-// import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
-// import IconButton from "@mui/material/IconButton";
-// import HomeIcon from "@mui/icons-material/Home";
-// import {
-//   DataGridPro,
-//   useGridApiRef,
-//   gridVisibleRowCountSelector,
-//   visibleGridColumnsLengthSelector,
-//   visibleGridColumnsSelector,
-//   gridVisibleSortedRowIdsSelector,
-//   GridCellParams,
-// } from "@mui/x-data-grid-pro";
-// import { useDemoData } from "@mui/x-data-grid-generator";
-
-// const SubTitleList = ({ second }) => {
-//   const apiRef = useGridApiRef();
-
-//   const [coordinates, setCoordinates] = React.useState({
-//     rowIndex: 0,
-//     colIndex: 0,
-//   });
-
-//   const { data } = useDemoData({
-//     dataSet: "Commodity",
-//     rowLength: 100,
-//   });
-
-//   React.useEffect(() => {
-//     const { rowIndex, colIndex } = coordinates;
-//     apiRef.current.scrollToIndexes(coordinates);
-//     const id = gridVisibleSortedRowIdsSelector(apiRef)[rowIndex];
-//     const column = visibleGridColumnsSelector(apiRef)[colIndex];
-//     apiRef.current.setCellFocus(id, column.field);
-//   }, [apiRef, coordinates]);
-
-//   const handleClick = (position) => () => {
-//     position = position.toString();
-//     const maxRowIndex = gridVisibleRowCountSelector(apiRef) - 1;
-//     const maxColIndex = visibleGridColumnsLengthSelector(apiRef) - 1;
-
-//     setCoordinates((coords) => {
-//       switch (position) {
-//         case "top":
-//           return { ...coords, rowIndex: Math.max(0, coords.rowIndex - 1) };
-//         case "bottom":
-//           return {
-//             ...coords,
-//             rowIndex: Math.min(maxRowIndex, coords.rowIndex + 1),
-//           };
-//         case "left":
-//           return { ...coords, colIndex: Math.max(0, coords.colIndex - 1) };
-//         case "right":
-//           return {
-//             ...coords,
-//             colIndex: Math.min(maxColIndex, coords.colIndex + 1),
-//           };
-//         default:
-//           return { ...coords, rowIndex: 0, colIndex: 0 };
-//       }
-//     });
-//   };
-
-//   const handleCellClick = (params: GridCellParams) => {
-//     const rowIndex = gridVisibleSortedRowIdsSelector(apiRef).findIndex(
-//       (id) => id === params.id
-//     );
-//     const colIndex = visibleGridColumnsSelector(apiRef).findIndex(
-//       (column) => column.field === params.field
-//     );
-//     setCoordinates({ rowIndex, colIndex });
-//   };
-
-//   return (
-//     <div style={{ width: "100%" }}>
-//       <Box sx={{ width: 300, margin: "0 auto 16px" }}>
-//         <Grid container justifyContent="center">
-//           <Grid item>
-//             <Button onClick={handleClick("top")}>top</Button>
-//           </Grid>
-//         </Grid>
-//         <Grid container textAlign="center">
-//           <Grid item xs={4}>
-//             <Button onClick={handleClick("left")}>left</Button>
-//           </Grid>
-//           <Grid item xs={4}>
-//             <IconButton
-//               color="primary"
-//               aria-label="home"
-//               onClick={handleClick("home")}
-//             >
-//               <HomeIcon />
-//             </IconButton>
-//           </Grid>
-//           <Grid item xs={4}>
-//             <Button onClick={handleClick("right")}>right</Button>
-//           </Grid>
-//         </Grid>
-//         <Grid container justifyContent="center">
-//           <Grid item>
-//             <Button onClick={handleClick("bottom")}>bottom</Button>
-//           </Grid>
-//         </Grid>
-//       </Box>
-//       <Box sx={{ height: 400, bgcolor: "background.paper" }}>
-//         <DataGridPro
-//           apiRef={apiRef}
-//           onCellClick={handleCellClick}
-//           hideFooter
-//           {...data}
-//         />
-//       </Box>
-//     </div>
-//   );
-// };
-
-// export default SubTitleList;
+    <div ref={messagesEndRef} className="list_sub_container">
+      {_.isEmpty(arrSub1)
+        ? Object.keys(arrSub2).map((key) => (
+            <div
+              onClick={handleSetStart(parseInt(key))}
+              className="group"
+              style={
+                key === selectedSub
+                  ? { backgroundColor: "#333333" }
+                  : { backgroundColor: "white" }
+              }
+              //style={{ backgroundColor: "red" }}
+              ref={(el) => (itemsRef.current[key] = el)}
+              id={key}
+              key={key}
+            >
+              <div
+                className="sub1"
+                style={key === selectedSub ? { color: "white" } : {}}
+              >
+                {arrSub1[key] || ""}
+              </div>
+              <div
+                className="sub2"
+                style={key === selectedSub ? { color: "lightgray" } : {}}
+              >
+                {arrSub2[key] || ""}
+              </div>
+              <hr />
+            </div>
+          ))
+        : Object.keys(arrSub1).map((key) => (
+            <div
+            onClick={()=> handleSetStart(parseInt(key))}
+              className="group"
+              style={
+                key === selectedSub
+                  ? { backgroundColor: "#333333" }
+                  : { backgroundColor: "white" }
+              }
+              //style={{ backgroundColor: "red" }}
+              ref={(el) => (itemsRef.current[key] = el)}
+              id={key}
+              key={key}
+            >
+              <div
+                className="sub1"
+                style={key === selectedSub ? { color: "white" } : {}}
+              >
+                {arrSub1[key] || ""}
+              </div>
+              <div
+                className="sub2"
+                style={key === selectedSub ? { color: "lightgray" } : {}}
+              >
+                {arrSub2[key] || ""}
+              </div>
+              <hr />
+            </div>
+          ))}
+    </div>
+  );
+};
+export default SubTitleList;

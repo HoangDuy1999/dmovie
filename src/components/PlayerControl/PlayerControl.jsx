@@ -46,10 +46,10 @@ const PlayerControl = (
   ref
 ) => {
   function ValueLabelComponent(props) {
-    const { children, value } = props;
-
+    let { children } = props;
+    // value = elapsedTime;
     return (
-      <Tooltip enterTouchDelay={0} placement="top" title={value}>
+      <Tooltip enterTouchDelay={0} placement="top" title={elapsedTime}>
         {children}
       </Tooltip>
     );
@@ -60,10 +60,7 @@ const PlayerControl = (
     value: PropTypes.number.isRequired,
   };
   //posterHover
-  function valuetext(value) {
-    return `${value}°C`;
-  }
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
   // const popoverId = open ? "simple-popover" : undefined;
   // console.log("update");
   // console.log(played);
@@ -146,13 +143,13 @@ const PlayerControl = (
           <Grid item xs={12} key="bottom1" style={{ padding: "0px 16px" }}>
             <Slider1
               className="slider_seek_root"
-              min={10}
+              min={0}
               max={100}
               value={played * 100}
               onChange={onSeek}
-              onMouseOver={(e, value) => {
-                handleSliderMouseOver(e, value);
-              }}
+              // onMouseOver={(e, value) => {
+              //   handleSliderMouseOver(e, value);
+              // }}
               // getAriaValueText={handleSliderMouseOver}
               onMouseDown={onSeekMouseDown}
               onChangeCommitted={onSeekMouseUp}

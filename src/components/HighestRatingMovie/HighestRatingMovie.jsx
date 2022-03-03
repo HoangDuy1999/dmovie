@@ -10,7 +10,7 @@ const HighestRatingMovie = () => {
     try {
       const response = await tmdbApi.getHighestRatingMovie({ page: 1 });
       setHighestRatingMovie(response.results.slice(0, 10));
-      console.log("run");
+      // console.log("run");
     } catch (e) {
       console.log(e);
     }

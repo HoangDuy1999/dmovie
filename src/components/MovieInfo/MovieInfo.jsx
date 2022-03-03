@@ -75,7 +75,7 @@ const MovieInfo = ({ category }) => {
           }
           setMovieInfor(response);
         } catch (e) {
-          // console.log(e);
+          console.log(e);
         }
       };
       getMovies();
@@ -90,6 +90,7 @@ const MovieInfo = ({ category }) => {
           }
         }
       };
+
       getCredits();
       const getTrailerFilms = async () => {
         const res = await tmdbApi.getVideos(category, movieId);
@@ -117,15 +118,22 @@ const MovieInfo = ({ category }) => {
         try {
           const response = await tmdbApi.reviews(category, movieId);
           setReviewFilms(response.results.slice(0, 10));
-          // console.log(response.results.author_details);
-          // console.log(response.results.slice(0, 10).author_details.avatar_path);
         } catch (e) {
           console.log(e);
         }
       };
       getReviewFilms();
     }
-    return () => clearTimeout(timeout);
+
+    return () => {
+      clearTimeout(timeout);
+      setMovieInfor([]);
+      setSimilarFilms([]);
+      setCasts([]);
+      setTrailerFilms([]);
+      setReviewFilms([]);
+      setSelectedtrailerFilms([]);
+    };
   }, [movieId, category]);
 
   useEffect(() => {
@@ -156,8 +164,8 @@ const MovieInfo = ({ category }) => {
   };
 
   const handleClickWatchFilm = (e) => {
-    console.log("click");
-    console.log(movieInfoLoklok);
+    // console.log("click");
+    // console.log(movieInfoLoklok);
     navigate(
       `/watch/${movieInfoLoklok[0].id}?type=${movieInfoLoklok[0].domainType}&ep=0`
     );

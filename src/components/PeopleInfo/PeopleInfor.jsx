@@ -102,7 +102,7 @@ const PeopleInfo = () => {
     };
     getCombineCreditPeople();
     return () => clearTimeout(timeout);
-  }, [params]);
+  }, [params.id]);
 
   const handleClickShowCast = (e) => {
     setIsShowCast(() => !isShowCast);
@@ -127,25 +127,42 @@ const PeopleInfo = () => {
     console.log(e);
   };
   // console.log(infos);
-  console.log(combineCredits);
+  // console.log(combineCredits);
   return (
     <div>
       <PageLoadingEffeect doneLoad={doneLoad} />
       <div className="people_container">
         <div className="left">
           <div className="avatar">
-            <img
-              src={process.env.REACT_APP_PATH_IMG + peopleInfo?.profile_path}
-              onError={(event) => {
-                event.target.src =
-                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
-                event.onerror = null;
-              }}
-              onLoad={(e) => {
-                handleImgaeLoadDone(e);
-              }}
-              alt=""
-            />
+            {peopleInfo?.profile_path ? (
+              <img
+                src={process.env.REACT_APP_PATH_IMG + peopleInfo?.profile_path}
+                onError={(event) => {
+                  event.target.src =
+                    "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                  event.onerror = null;
+                }}
+                onLoad={(e) => {
+                  handleImgaeLoadDone(e);
+                }}
+                alt=""
+              />
+            ) : (
+              <img
+                src={
+                  "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg"
+                }
+                onError={(event) => {
+                  event.target.src =
+                    "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                  event.onerror = null;
+                }}
+                onLoad={(e) => {
+                  handleImgaeLoadDone(e);
+                }}
+                alt=""
+              />
+            )}
           </div>
           <div className="person_info">
             <div className="label">Personal Info</div>

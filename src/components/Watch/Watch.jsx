@@ -206,8 +206,10 @@ const Watch = ({ cate, ep }) => {
       }));
     }
   };
-
   useEventListener("keydown", handleKeyBoard);
+  // useEventListener("dblclick", ()=>{
+  //   console.log("double click");
+  // });
 
   const handleClickChangeEpisode = (value) => {
     setDoneLoad(false);
@@ -215,6 +217,14 @@ const Watch = ({ cate, ep }) => {
       setDoneLoad(true);
     }, 5000);
     // getVideos(movieInfo.episodeVo[value].id);
+    setSelectedSub1({
+      value: "",
+      label: "Off",
+    });
+    setSelectedSub2({
+      value: "",
+      label: "Off",
+    });
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
     return () => clearTimeout(timeout);
@@ -230,37 +240,27 @@ const Watch = ({ cate, ep }) => {
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
     // console.log(secondRoot);
-    const timeout = setTimeout(() => {
-      if (selectedSub1.value !== "") {
-        if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
-          if (selectedSub2.value === "") {
-            setSubText1(
-              listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$"
-            );
-            setCountHiddenText(0);
-          } else {
-            setSubText1(
-              listSubTitle[selectedSub1.value][secondRoot] +
-                "$$$$$$" +
-                listSubTitle[selectedSub2.value][secondRoot]
-            );
-            setCountHiddenText(0);
-          }
+
+    if (selectedSub1.value !== "" || selectedSub2.value !== "") {
+      if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
+        if (selectedSub2.value === "" && selectedSub1.value !== "") {
+          setSubText1(listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$");
+          setCountHiddenText(0);
+        } else {
+          setSubText1(
+            listSubTitle[selectedSub1.value][secondRoot] +
+              "$$$$$$" +
+              listSubTitle[selectedSub2.value][secondRoot]
+          );
+          setCountHiddenText(0);
         }
       }
-      // if (selectedSub2.value !== "") {
-      //   if (listSubTitle[selectedSub2.value][secondRoot] !== undefined) {
-      //     setSubText2(listSubTitle[selectedSub2.value][secondRoot]);
-      //     setCountHiddenText(0);
-      //   }
-      // }
-    }, 0);
+    }
     if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
-    // console.log(countHiddenText);
     if (countHiddenText === 4) {
       setSubText1(" $$$$$$ ");
     }
-    if (count >= 1) {
+    if (count >= 2) {
       controlsRef.current.style.visibility = "hidden";
     }
     if (controlsRef.current.style.visibility === "visible") {
@@ -269,7 +269,6 @@ const Watch = ({ cate, ep }) => {
     if (!playerStates.seeking) {
       setPlayerStates({ ...playerStates, ...progress });
     }
-    return () => clearTimeout(timeout);
   };
 
   const handleRewind = (e) => {
@@ -278,6 +277,12 @@ const Watch = ({ cate, ep }) => {
 
   const handleFastForward = (e) => {
     playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
+  };
+
+  const handleSetStart = (val) => {
+    if (playerStates.playing) {
+      playerRef.current.seekTo(val);
+    }
   };
 
   const handlePlayPause = (e) => {
@@ -327,16 +332,14 @@ const Watch = ({ cate, ep }) => {
   };
 
   const handleToggleFullScreen = () => {
-    console.log("DMMMMMMMMMMM");
-    // subTextSize === "27px" ? setSubTextSize("34px") : setSubTextSize("27px");
     screenfull.toggle(playerContainerRef.current);
-    if (screenfull.isFullscreen) {
-      setSubTextSize("27px");
-    } else {
-      setSubTextSize("34px");
-    }
   };
 
+  if (screenfull.isFullscreen && subTextSize !== "34px") {
+    setSubTextSize("34px");
+  } else if (screenfull.isFullscreen === false && subTextSize !== "27px") {
+    setSubTextSize("27px");
+  }
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
@@ -348,18 +351,19 @@ const Watch = ({ cate, ep }) => {
   const handleSeekMouseDown = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
-      seeking: true,
+      playing: false,
+      seeking: false,
     }));
   };
 
   const handleSeekMoveUp = (e, newValue) => {
+    playerRef.current.seekTo(newValue / 100);
     setPlayerStates(() => ({
       ...playerStates,
-      playing: true,
+      playing: false,
       // played: parseFloat(newValue / 100),
-      seeking: false,
+      seeking: true,
     }));
-    playerRef.current.seekTo(newValue / 100);
   };
 
   const handleMouseMove = () => {
@@ -378,8 +382,17 @@ const Watch = ({ cate, ep }) => {
     // console.log(cate);
     navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
+    setSelectedSub1({
+      value: "",
+      label: "Off",
+    });
+    setSelectedSub2({
+      value: "",
+      label: "Off",
+    });
   };
 
+  console.log(ReactPlayer.canPlay(videoUrl));
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
     : "00:00";
@@ -391,9 +404,14 @@ const Watch = ({ cate, ep }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
-
+  const handleReactOnReady = (e) => {
+    console.log(e);
+  };
   return (
-    <div className="watch_movie_container">
+    <div
+      className="watch_movie_container"
+      // onKeyDown={(e) => handlePlayControlClick(e)}
+    >
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">
@@ -417,6 +435,7 @@ const Watch = ({ cate, ep }) => {
               ref={playerRef}
               volume={playerStates.volume}
               playbackRate={playerStates.playbackRate}
+              onReady={handleReactOnReady}
             />
 
             {/* play control */}
@@ -458,6 +477,7 @@ const Watch = ({ cate, ep }) => {
                 </span>
                 <span style={{ color: "white", fontSize: subTextSize }}>
                   {subText1?.split("$$$$$$")[1]}
+                  {/* {subText1} */}
                 </span>
               </div>
             </div>
@@ -468,8 +488,11 @@ const Watch = ({ cate, ep }) => {
               listSubTitle={listSubTitle}
               selectedSub1={selectedSub1}
               selectedSub2={selectedSub2}
+              handleSetStart={(val) => handleSetStart(val)}
               second={
-                playerRef.current ? playerRef.current.getCurrentTime() : 0
+                playerRef.current
+                  ? parseInt(playerRef.current.getCurrentTime())
+                  : 0
               }
             />
           </div>
@@ -605,7 +628,7 @@ const Watch = ({ cate, ep }) => {
         </div>
 
         <div className="similar">
-          <span>Maybe you want to see</span>
+          <h2 style={{ color: "white" }}>Maybe you want to see</h2>
           <VideoSlider
             videoList={movieInfo?.likeList}
             onHandleChangeMovieId={handleChangeMovieId}

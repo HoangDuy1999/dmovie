@@ -6,6 +6,7 @@ const HLSSource = ({ src, video }) => {
   useEffect(() => {
     hls.loadSource(src);
     hls.attachMedia(video);
+    console.log(src);
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
       // video.play();
     });

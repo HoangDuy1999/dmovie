@@ -24,11 +24,11 @@ const Navbar = () => {
   const [anchorProfile, setAnchorProfile] = React.useState(null);
   const openMenu = (event) => {
     setAncho(event.currentTarget);
-    console.log(event.currentTarget);
+    // console.log(event.currentTarget);
   };
   const openMenuProfile = (event) => {
     setAnchorProfile(event.currentTarget);
-    console.log(event.currentTarget);
+    // console.log(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -44,7 +44,7 @@ const Navbar = () => {
   const [isSearchShow, setIsSearchShow] = useState(false);
   const [wordEntered, setWordEntered] = useState("");
   const handClickSearch = () => {
-    console.log("clicked");
+    // console.log("clicked");
   };
   const handleOnkeyUpSearch = async (e) => {
     if (e.key === "Enter" || e.keyCode === 13) {
@@ -61,7 +61,7 @@ const Navbar = () => {
       e.target.value.toString().trim()
     );
     setSearchResult(response.results || []);
-    console.log(response.results);
+    // console.log(response.results);
     setIsCloseIcon(true);
   };
   const handleClickCloseSearchShow = () => {
@@ -71,7 +71,7 @@ const Navbar = () => {
     setIsSearchShow(true);
   };
   const handClickCloseIcon = () => {
-    console.log("closeIconRun");
+    // console.log("closeIconRun");
     setSearchResult([]);
     setWordEntered("");
     setIsCloseIcon(false);
