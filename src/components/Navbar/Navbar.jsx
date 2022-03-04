@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const Navbar = () => {
+const Navbar = ({ handleOnFocus = (e) => {} }) => {
   // const [searchFocusColor, setsearchFocusColor] = useState({ color: "black" });
   // XỬ LÝ NAV_MENU_LINK
   // const options = ["Movies", "Series", "PeoPle", "News"];
@@ -77,6 +77,7 @@ const Navbar = () => {
     setIsCloseIcon(false);
   };
   const handBlurCloseIcon = () => {
+    handleOnFocus(false);
     const timeout = setTimeout(() => {
       setSearchResult([]);
     }, 200);
@@ -93,6 +94,8 @@ const Navbar = () => {
             className="input_search"
             style={{ display: "block" }}
             onKeyUp={(e) => handleOnkeyUpSearch(e)}
+            onFocus={(e) => handleOnFocus(true)}
+            onBlur={(e) => handleOnFocus(false)}
           />
           <CloseIcon
             className="icon_close"
@@ -128,6 +131,7 @@ const Navbar = () => {
               onKeyUp={(e) => handleOnkeyUpSearch(e)}
               onChange={(e) => handleOnChangeUpSearch(e)}
               onBlur={(e) => handBlurCloseIcon(e)}
+              onFocus={(e) => handleOnFocus(true)}
             />
             {isCloseIcon ? (
               <CloseIcon
@@ -149,6 +153,7 @@ const Navbar = () => {
                   : [];
                 return (
                   <Link
+                    key={index}
                     to={
                       "/" +
                       (item.media_type === "movie"

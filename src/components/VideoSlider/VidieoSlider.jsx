@@ -19,8 +19,8 @@ const VidieoSlider = ({ videoList, onHandleChangeMovieId }) => {
     dots: false,
     arrows: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     initialSlide: 1,
     infinite: true,
     responsive: [

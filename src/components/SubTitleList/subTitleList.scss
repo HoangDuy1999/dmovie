@@ -4,11 +4,12 @@
   overflow-y: scroll;
   box-sizing: border-box;
   z-index: 2;
-  max-height: 450px;
+  max-height: 400px;
   max-width: 100%;
   max-height: 100%;
   min-width: 100%;
   min-height: 100%;
+  display: block;
   .group {
     display: flex;
     cursor: pointer;
@@ -24,37 +25,44 @@
     padding: 0;
     hr {
       box-sizing: border-box;
-      border-top: thin solid #f5f5f5;
+      border-top: 0.1px solid lightblue;
       z-index: 9999;
       border-left: none;
       border-right: none;
       border-bottom: none;
-      min-height: 1px;
-      height: 1px;
-      max-height: 1px;
+      min-height: 0.1px;
+      height: 0.1px;
+      max-height: 0.1px;
       transform: scale(1);
       min-width: 100%;
       margin: 0;
       padding: 0;
     }
     .sub1 {
-      font-size: 16px;
-      padding-top: 15px;
+      font-size: 17px;
+      padding-top: 5px;
       white-space: normal;
       padding-left: 15px;
       padding-right: 15px;
       line-height: 1.4;
+      font-weight: 400;
       color: black;
     }
     .sub2 {
       line-height: 1.4;
-      padding-bottom: 15px;
-      padding-left: 14px;
+      // padding-bottom: 15px;
+      padding-left: 15px;
       padding-right: 15px;
-      font-size: 14px;
-      font-style: italic;
+      font-size: 16px;
+      // font-style: italic;
       white-space: normal;
-      color: gray;
+      color: #0000FF;
+      font-weight: 400;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      // display: flex !important;
+      // align-items: center;
+
     }
   }
   .group:hover {

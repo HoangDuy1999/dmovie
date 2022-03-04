@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -17,6 +17,8 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 // import Popover from "@mui/material/Popover";
 import "./playerControl.scss";
 import PropTypes from "prop-types";
+import ClosedCaptionIcon from "@mui/icons-material/ClosedCaption";
+import ClosedCaptionDisabledIcon from "@mui/icons-material/ClosedCaptionDisabled";
 
 const PlayerControl = (
   {
@@ -33,7 +35,8 @@ const PlayerControl = (
     onPlayBackRate,
     onHandleOpenPopover,
     onHandleClosePopover,
-    anchorEl,
+    handleOnClickHideSubTile,
+    hideSub,
     onToggleFullScreen,
     played,
     onSeek,
@@ -59,15 +62,7 @@ const PlayerControl = (
     children: PropTypes.element.isRequired,
     value: PropTypes.number.isRequired,
   };
-  //posterHover
-  // const open = Boolean(anchorEl);
-  // const popoverId = open ? "simple-popover" : undefined;
-  // console.log("update");
-  // console.log(played);
-  const handleSliderMouseOver = (e, value) => {
-    // console.log(e);
-    // console.log(value);
-  };
+
   return (
     <>
       <div className="controler_wrapper" ref={ref}>
@@ -194,7 +189,8 @@ const PlayerControl = (
               <Slider1
                 min={0}
                 max={100}
-                // ValueLabelComponent={ValueLabelComponent}
+                size="small"
+                valueLabelDisplay="auto"
                 onChange={onVolumechange}
                 onChangeCommitted={onVolumeSeekDown}
                 value={volume * 100}
@@ -213,45 +209,26 @@ const PlayerControl = (
           </Grid>
 
           <Grid>
-            {/* <Button
-            variant="text"
-            key="bottom3"
-            aria-describedby={popoverId}
-            className="bottom_icons"
-            onClick={onHandleOpenPopover}
-          >
-            <Typography>{playbackRate}X</Typography>
-          </Button>
-          <Popover
-            id={popoverId}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={onHandleClosePopover}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
-            }}
-          >
-            <Grid container direction="column-reverse">
-              {[0.5, 1, 1.5, 2].map((item, index) => (
-                <Button
-                  key={item}
-                  variant="text"
-                  onClick={() => onPlayBackRate(item)}
-                >
-                  <Typography
-                    color={playbackRate === item ? "primary" : "secondary"}
-                  >
-                    {item}x
-                  </Typography>
-                </Button>
-              ))}
-            </Grid>
-          </Popover> */}
+            {hideSub ? (
+              <IconButton
+                onClick={handleOnClickHideSubTile}
+                className="bottom_icons"
+                key="bottom10"
+                size="large"
+              >
+                <ClosedCaptionDisabledIcon fontSize="inherit" />
+              </IconButton>
+            ) : (
+              <IconButton
+                onClick={handleOnClickHideSubTile}
+                className="bottom_icons"
+                key="bottom11"
+                size="large"
+              >
+                <ClosedCaptionIcon fontSize="inherit" />
+              </IconButton>
+            )}
+
             <IconButton
               onClick={onToggleFullScreen}
               className="bottom_icons"

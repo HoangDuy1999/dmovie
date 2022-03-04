@@ -20,7 +20,7 @@ import SubTitleList from "../SubTitleList/SubTitleList";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
-const Watch = ({ cate, ep }) => {
+const Watch = ({ cate, ep, onFocus }) => {
   const navigate = useNavigate();
   const { id } = useParams() || undefined;
   const [movieInfo, setMovieInfor] = useState({});
@@ -31,16 +31,16 @@ const Watch = ({ cate, ep }) => {
   const [subTextSize, setSubTextSize] = useState("27px");
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
   const [subText1, setSubText1] = useState("");
-  // const [subText2, setSubText2] = useState("");
   const [countHiddenText, setCountHiddenText] = useState(0);
-
   const [arrSub, setArrSub] = useState([
     {
       value: "",
       label: "Off",
     },
   ]);
+
   const [listSubTitle, setListSubTitle] = useState({});
+  let position = 0;
   const [selectedSub1, setSelectedSub1] = useState({
     value: "",
     label: "Off",
@@ -64,6 +64,7 @@ const Watch = ({ cate, ep }) => {
   const playerContainerRef = useRef(null);
   const controlsRef = useRef(null);
   const [count, setCount] = useState(0);
+  const [hideSub, setHideSub] = useState(false);
 
   const formatTimeVideo = (seconds) => {
     if (isNaN(seconds)) {
@@ -166,8 +167,6 @@ const Watch = ({ cate, ep }) => {
   }, [id, cate, ep]);
 
   useEffect(() => {
-    // setDoneLoad(true);
-    // // lấy tạo mặc định : 1
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
@@ -198,7 +197,7 @@ const Watch = ({ cate, ep }) => {
       e.preventDefault();
       playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
     }
-    if (e.keyCode === 32) {
+    if (e.keyCode === 32 && onFocus === false) {
       e.preventDefault();
       setPlayerStates(() => ({
         ...playerStates,
@@ -207,11 +206,16 @@ const Watch = ({ cate, ep }) => {
     }
   };
   useEventListener("keydown", handleKeyBoard);
-  // useEventListener("dblclick", ()=>{
-  //   console.log("double click");
-  // });
 
   const handleClickChangeEpisode = (value) => {
+    setPlayerStates({
+      playing: false,
+      muted: false,
+      volume: 1,
+      playbackRate: 1.0,
+      played: 0,
+      seeking: false,
+    });
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
@@ -231,6 +235,14 @@ const Watch = ({ cate, ep }) => {
   };
 
   const onClickChangeServer = (val) => {
+    setPlayerStates({
+      playing: false,
+      muted: false,
+      volume: 1,
+      playbackRate: 1.0,
+      played: 0,
+      seeking: false,
+    });
     if (val !== displayResolution) {
       setDisPlayResoluton(() => val);
     }
@@ -239,9 +251,10 @@ const Watch = ({ cate, ep }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
-    // console.log(secondRoot);
-
-    if (selectedSub1.value !== "" || selectedSub2.value !== "") {
+    if (
+      hideSub === false &&
+      (selectedSub1.value !== "" || selectedSub2.value !== "")
+    ) {
       if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
         if (selectedSub2.value === "" && selectedSub1.value !== "") {
           setSubText1(listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$");
@@ -286,8 +299,6 @@ const Watch = ({ cate, ep }) => {
   };
 
   const handlePlayPause = (e) => {
-    // console.log(listSubTitle["vi"]);
-    // console.log(listSubTitle["en"]);
     setPlayerStates(() => ({
       ...playerStates,
       playing: !playerStates.playing,
@@ -378,8 +389,14 @@ const Watch = ({ cate, ep }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
-    // console.log(id);
-    // console.log(cate);
+    setPlayerStates({
+      playing: false,
+      muted: false,
+      volume: 1,
+      playbackRate: 1.0,
+      played: 0,
+      seeking: false,
+    });
     navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
     setSelectedSub1({
@@ -392,7 +409,10 @@ const Watch = ({ cate, ep }) => {
     });
   };
 
-  console.log(ReactPlayer.canPlay(videoUrl));
+  const handleOnClickHideSubTile = () => {
+    setHideSub(!hideSub);
+  };
+
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
     : "00:00";
@@ -404,9 +424,7 @@ const Watch = ({ cate, ep }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
-  const handleReactOnReady = (e) => {
-    console.log(e);
-  };
+
   return (
     <div
       className="watch_movie_container"
@@ -435,7 +453,6 @@ const Watch = ({ cate, ep }) => {
               ref={playerRef}
               volume={playerStates.volume}
               playbackRate={playerStates.playbackRate}
-              onReady={handleReactOnReady}
             />
 
             {/* play control */}
@@ -456,9 +473,8 @@ const Watch = ({ cate, ep }) => {
                 volume={playerStates.volume}
                 playbackRate={playerStates.playbackRate}
                 onPlayBackRate={(e) => handlePlayBackRateChange(e)}
-                // onHandleOpenPopover={handleClickOpenPopover}
-                // onHandleClosePopover={handleClickClosePopover}
-                // anchorEl={anchorEl}
+                hideSub={hideSub}
+                handleOnClickHideSubTile={handleOnClickHideSubTile}
                 onToggleFullScreen={handleToggleFullScreen}
                 played={playerStates.played}
                 onSeek={handleSeekChange}

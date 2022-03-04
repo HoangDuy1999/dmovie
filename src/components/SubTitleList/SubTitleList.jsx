@@ -9,6 +9,7 @@ const SubTitleList = ({
   selectedSub2,
   handleSetStart,
 }) => {
+  const messagesEndRef = useRef(null);
   const itemsRef = useRef([]);
   const [arrSub1, setArrSub1] = useState({});
   const [arrSub2, setArrSub2] = useState({});
@@ -22,10 +23,11 @@ const SubTitleList = ({
         ) {
           setSelectedSub(parseInt(second).toString());
         }
+        // itemsRef.current[second.toString()].scrollIntoViewIfNeeded(true);
+        // messagesEndRef.scrollIntoView(false);
         itemsRef.current[second.toString()].scrollIntoView({
           behavior: "smooth",
-          block: "end",
-          inline: "nearest",
+          block: "center",
         });
       } catch (e) {}
     }
@@ -88,10 +90,15 @@ const SubTitleList = ({
     "Item ",
   ];
 
-  const messagesEndRef = useRef(null);
-
+  const handleOnWheel = (e) => {
+    // console.log(e);
+  };
   return (
-    <div ref={messagesEndRef} className="list_sub_container">
+    <div
+      ref={messagesEndRef}
+      className="list_sub_container"
+      onWheel={(e) => handleOnWheel(e)}
+    >
       {_.isEmpty(arrSub1)
         ? Object.keys(arrSub2).map((key) => (
             <div
@@ -117,14 +124,41 @@ const SubTitleList = ({
                 className="sub2"
                 style={key === selectedSub ? { color: "lightgray" } : {}}
               >
-                {arrSub2[key] || ""}
+                <div style={{}}>{arrSub2[key] || ""}</div>
+                <div
+                  style={{
+                    color: "white",
+                    fontStyle: "normal",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      backgroundColor: "#333",
+                      maxWidth: "50px",
+                      padding: "1px 5px",
+                      marginBottom: "3px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {second < 3600
+                      ? new Date(parseInt(key) * 1000)
+                          .toISOString()
+                          .substr(14, 5)
+                      : new Date(parseInt(key) * 1000)
+                          .toISOString()
+                          .substr(11, 8)}
+                  </span>
+                </div>
               </div>
               <hr />
             </div>
           ))
         : Object.keys(arrSub1).map((key) => (
             <div
-            onClick={()=> handleSetStart(parseInt(key))}
+              onClick={() => handleSetStart(parseInt(key))}
               className="group"
               style={
                 key === selectedSub
@@ -146,7 +180,34 @@ const SubTitleList = ({
                 className="sub2"
                 style={key === selectedSub ? { color: "lightgray" } : {}}
               >
-                {arrSub2[key] || ""}
+                <div style={{}}>{arrSub2[key] || ""}</div>
+                <div
+                  style={{
+                    color: "white",
+                    fontStyle: "normal",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <span
+                    style={{
+                      backgroundColor: "#333",
+                      maxWidth: "50px",
+                      padding: "1px 5px",
+                      marginBottom: "3px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {second < 3600
+                      ? new Date(parseInt(key) * 1000)
+                          .toISOString()
+                          .substr(14, 5)
+                      : new Date(parseInt(key) * 1000)
+                          .toISOString()
+                          .substr(11, 8)}
+                  </span>
+                </div>
               </div>
               <hr />
             </div>
