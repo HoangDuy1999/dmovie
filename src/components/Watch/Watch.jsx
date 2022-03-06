@@ -40,7 +40,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   ]);
 
   const [listSubTitle, setListSubTitle] = useState({});
-  let position = 0;
   const [selectedSub1, setSelectedSub1] = useState({
     value: "",
     label: "Off",
@@ -157,6 +156,7 @@ const Watch = ({ cate, ep, onFocus }) => {
           })
           .catch((error) => console.log(error));
       }
+      return 0;
     });
   };
 
@@ -251,37 +251,69 @@ const Watch = ({ cate, ep, onFocus }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
-    if (
-      hideSub === false &&
-      (selectedSub1.value !== "" || selectedSub2.value !== "")
-    ) {
-      if (listSubTitle[selectedSub1.value][secondRoot] !== undefined) {
-        if (selectedSub2.value === "" && selectedSub1.value !== "") {
-          setSubText1(listSubTitle[selectedSub1.value][secondRoot] + "$$$$$$");
-          setCountHiddenText(0);
-        } else {
-          setSubText1(
-            listSubTitle[selectedSub1.value][secondRoot] +
-              "$$$$$$" +
-              listSubTitle[selectedSub2.value][secondRoot]
-          );
-          setCountHiddenText(0);
+    const arr = [secondRoot, secondRoot - 1, secondRoot - 2];
+    for (const val of arr) {
+      try {
+        if (
+          hideSub === false &&
+          (selectedSub1.value !== "" || selectedSub2.value !== "")
+        ) {
+          if (listSubTitle[selectedSub1.value][val] !== undefined) {
+            if (selectedSub2.value === "" && selectedSub1.value !== "") {
+              if (subText1 !== "") {
+                if (
+                  listSubTitle[selectedSub1.value][val] !==
+                  subText1.split("$$$$$$")[0]
+                ) {
+                  setSubText1(listSubTitle[selectedSub1.value][val] + "$$$$$$");
+                  setCountHiddenText(0);
+                }
+              } else {
+                setSubText1(listSubTitle[selectedSub1.value][val] + "$$$$$$");
+                setCountHiddenText(0);
+              }
+            } else {
+              if (subText1 !== "") {
+                if (
+                  listSubTitle[selectedSub1.value][val] !==
+                  subText1.split("$$$$$$")[0]
+                ) {
+                  setSubText1(
+                    listSubTitle[selectedSub1.value][val] +
+                      "$$$$$$" +
+                      listSubTitle[selectedSub2.value][val]
+                  );
+                  setCountHiddenText(0);
+                }
+              } else {
+                setSubText1(
+                  listSubTitle[selectedSub1.value][val] +
+                    "$$$$$$" +
+                    listSubTitle[selectedSub2.value][val]
+                );
+                setCountHiddenText(0);
+              }
+            }
+            break;
+          }
         }
+      } catch (e) {}
+    }
+    try {
+      if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
+      if (countHiddenText === 4) {
+        setSubText1(" $$$$$$ ");
       }
-    }
-    if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
-    if (countHiddenText === 4) {
-      setSubText1(" $$$$$$ ");
-    }
-    if (count >= 2) {
-      controlsRef.current.style.visibility = "hidden";
-    }
-    if (controlsRef.current.style.visibility === "visible") {
-      setCount(() => count + 1);
-    }
-    if (!playerStates.seeking) {
-      setPlayerStates({ ...playerStates, ...progress });
-    }
+      if (count >= 2) {
+        controlsRef.current.style.visibility = "hidden";
+      }
+      if (controlsRef.current.style.visibility === "visible") {
+        setCount(() => count + 1);
+      }
+      if (!playerStates.seeking) {
+        setPlayerStates({ ...playerStates, ...progress });
+      }
+    } catch (e) {}
   };
 
   const handleRewind = (e) => {
@@ -296,6 +328,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     if (playerStates.playing) {
       playerRef.current.seekTo(val);
     }
+    // setPlayerStates({ ...playerStates, seeking: false });
   };
 
   const handlePlayPause = (e) => {
@@ -373,7 +406,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       ...playerStates,
       playing: false,
       // played: parseFloat(newValue / 100),
-      seeking: true,
+      seeking: false,
     }));
   };
 

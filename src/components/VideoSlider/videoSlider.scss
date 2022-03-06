@@ -7,6 +7,7 @@
   }
   .slick-arrow {
     transform: scale(2);
+    // transition: "all 0.5s ease-in-out";
     height: 40px;
     width: 25px;
     display: flex !important;
@@ -28,6 +29,7 @@
       margin-left: 35px;
       margin-right: 35px;
       transform: scale(1.5);
+      // transition: "all 0.5s ease-in-out" 
     }
   }
   .slick-arrow.slick-next {
@@ -89,8 +91,8 @@
       text-overflow: ellipsis;
       word-wrap: break-word;
       overflow: hidden;
-      max-height: 3em;
-      line-height: 1.5em;
+      max-height: 3em  !important;
+      line-height: 1.5em !important;
     }
     .title:hover {
       text-decoration: underline;

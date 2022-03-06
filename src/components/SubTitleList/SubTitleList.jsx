@@ -16,20 +16,23 @@ const SubTitleList = ({
   const [selectedSub, setSelectedSub] = useState(0);
   useEffect(() => {
     if (selectedSub1.value !== "" || selectedSub2.value !== "") {
-      try {
-        if (
-          listSubTitle[selectedSub1.value][second] !== undefined ||
-          listSubTitle[selectedSub2.value][second] !== undefined
-        ) {
-          setSelectedSub(parseInt(second).toString());
+      const arr = [second, second - 1, second - 2];
+      for (const val of arr) {
+        try {
+          // itemsRef.current[val.toString()].scrollIntoView({
+          //   behavior: "smooth",
+          //   block: "center",
+          // });
+          messagesEndRef.current.scrollTo(
+            0,
+            itemsRef.current[val.toString()].offsetTop -250
+          );
+          setSelectedSub(parseInt(val).toString());
+          break;
+        } catch (e) {
+          // console.log(e);
         }
-        // itemsRef.current[second.toString()].scrollIntoViewIfNeeded(true);
-        // messagesEndRef.scrollIntoView(false);
-        itemsRef.current[second.toString()].scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      } catch (e) {}
+      }
     }
   }, [second]);
 
@@ -94,125 +97,127 @@ const SubTitleList = ({
     // console.log(e);
   };
   return (
-    <div
-      ref={messagesEndRef}
-      className="list_sub_container"
-      onWheel={(e) => handleOnWheel(e)}
-    >
-      {_.isEmpty(arrSub1)
-        ? Object.keys(arrSub2).map((key) => (
-            <div
-              onClick={handleSetStart(parseInt(key))}
-              className="group"
-              style={
-                key === selectedSub
-                  ? { backgroundColor: "#333333" }
-                  : { backgroundColor: "white" }
-              }
-              //style={{ backgroundColor: "red" }}
-              ref={(el) => (itemsRef.current[key] = el)}
-              id={key}
-              key={key}
-            >
+    <>
+      <div
+        ref={messagesEndRef}
+        className="list_sub_container"
+        onWheel={(e) => handleOnWheel(e)}
+      >
+        {_.isEmpty(arrSub1)
+          ? Object.keys(arrSub2).map((key) => (
               <div
-                className="sub1"
-                style={key === selectedSub ? { color: "white" } : {}}
+                onClick={handleSetStart(parseInt(key))}
+                className="group"
+                style={
+                  key === selectedSub
+                    ? { backgroundColor: "#333333" }
+                    : { backgroundColor: "white" }
+                }
+                //style={{ backgroundColor: "red" }}
+                ref={(el) => (itemsRef.current[key] = el)}
+                id={key}
+                key={key}
               >
-                {arrSub1[key] || ""}
-              </div>
-              <div
-                className="sub2"
-                style={key === selectedSub ? { color: "lightgray" } : {}}
-              >
-                <div style={{}}>{arrSub2[key] || ""}</div>
                 <div
-                  style={{
-                    color: "white",
-                    fontStyle: "normal",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                  }}
+                  className="sub1"
+                  style={key === selectedSub ? { color: "white" } : {}}
                 >
-                  <span
+                  {arrSub1[key] || ""}
+                </div>
+                <div
+                  className="sub2"
+                  style={key === selectedSub ? { color: "lightgray" } : {}}
+                >
+                  <div style={{}}>{arrSub2[key] || ""}</div>
+                  <div
                     style={{
-                      backgroundColor: "#333",
-                      maxWidth: "50px",
-                      padding: "1px 5px",
-                      marginBottom: "3px",
-                      fontSize: "14px",
+                      color: "white",
+                      fontStyle: "normal",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    {second < 3600
-                      ? new Date(parseInt(key) * 1000)
-                          .toISOString()
-                          .substr(14, 5)
-                      : new Date(parseInt(key) * 1000)
-                          .toISOString()
-                          .substr(11, 8)}
-                  </span>
+                    <span
+                      style={{
+                        backgroundColor: "#333",
+                        maxWidth: "50px",
+                        padding: "1px 5px",
+                        marginBottom: "3px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {second < 3600
+                        ? new Date(parseInt(key) * 1000)
+                            .toISOString()
+                            .substr(14, 5)
+                        : new Date(parseInt(key) * 1000)
+                            .toISOString()
+                            .substr(11, 8)}
+                    </span>
+                  </div>
                 </div>
+                <hr />
               </div>
-              <hr />
-            </div>
-          ))
-        : Object.keys(arrSub1).map((key) => (
-            <div
-              onClick={() => handleSetStart(parseInt(key))}
-              className="group"
-              style={
-                key === selectedSub
-                  ? { backgroundColor: "#333333" }
-                  : { backgroundColor: "white" }
-              }
-              //style={{ backgroundColor: "red" }}
-              ref={(el) => (itemsRef.current[key] = el)}
-              id={key}
-              key={key}
-            >
+            ))
+          : Object.keys(arrSub1).map((key) => (
               <div
-                className="sub1"
-                style={key === selectedSub ? { color: "white" } : {}}
+                onClick={() => handleSetStart(parseInt(key))}
+                className="group"
+                style={
+                  key === selectedSub
+                    ? { backgroundColor: "#333333" }
+                    : { backgroundColor: "white" }
+                }
+                //style={{ backgroundColor: "red" }}
+                ref={(el) => (itemsRef.current[key] = el)}
+                id={key}
+                key={key}
               >
-                {arrSub1[key] || ""}
-              </div>
-              <div
-                className="sub2"
-                style={key === selectedSub ? { color: "lightgray" } : {}}
-              >
-                <div style={{}}>{arrSub2[key] || ""}</div>
                 <div
-                  style={{
-                    color: "white",
-                    fontStyle: "normal",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                  }}
+                  className="sub1"
+                  style={key === selectedSub ? { color: "white" } : {}}
                 >
-                  <span
+                  {arrSub1[key] || ""}
+                </div>
+                <div
+                  className="sub2"
+                  style={key === selectedSub ? { color: "lightgray" } : {}}
+                >
+                  <div style={{}}>{arrSub2[key] || ""}</div>
+                  <div
                     style={{
-                      backgroundColor: "#333",
-                      maxWidth: "50px",
-                      padding: "1px 5px",
-                      marginBottom: "3px",
-                      fontSize: "14px",
+                      color: "white",
+                      fontStyle: "normal",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
                     }}
                   >
-                    {second < 3600
-                      ? new Date(parseInt(key) * 1000)
-                          .toISOString()
-                          .substr(14, 5)
-                      : new Date(parseInt(key) * 1000)
-                          .toISOString()
-                          .substr(11, 8)}
-                  </span>
+                    <span
+                      style={{
+                        backgroundColor: "#333",
+                        maxWidth: "50px",
+                        padding: "1px 5px",
+                        marginBottom: "3px",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {second < 3600
+                        ? new Date(parseInt(key) * 1000)
+                            .toISOString()
+                            .substr(14, 5)
+                        : new Date(parseInt(key) * 1000)
+                            .toISOString()
+                            .substr(11, 8)}
+                    </span>
+                  </div>
                 </div>
+                <hr />
               </div>
-              <hr />
-            </div>
-          ))}
-    </div>
+            ))}
+      </div>
+    </>
   );
 };
 export default SubTitleList;

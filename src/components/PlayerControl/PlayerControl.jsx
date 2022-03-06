@@ -31,10 +31,10 @@ const PlayerControl = (
     onVolumechange,
     onVolumeSeekDown,
     volume,
-    playbackRate,
-    onPlayBackRate,
-    onHandleOpenPopover,
-    onHandleClosePopover,
+    // playbackRate,
+    // onPlayBackRate,
+    // onHandleOpenPopover,
+    // onHandleClosePopover,
     handleOnClickHideSubTile,
     hideSub,
     onToggleFullScreen,
@@ -62,7 +62,7 @@ const PlayerControl = (
     children: PropTypes.element.isRequired,
     value: PropTypes.number.isRequired,
   };
-
+  // console.log(played);
   return (
     <>
       <div className="controler_wrapper" ref={ref}>

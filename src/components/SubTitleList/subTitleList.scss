@@ -19,7 +19,6 @@
     // background-color: white !important;
     flex-direction: column !important;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     margin: 0;
     padding: 0;
@@ -69,6 +68,9 @@
     background-color: #333333 !important;
     .sub1{
         color: white !important;
+    }
+    .sub2{
+      color: white !important;
     }
   }
 }

@@ -42,7 +42,7 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
           style={{ textDecoration: "none" }}
         >
           <LazyLoadImage
-            style={posterHover ? { transform: "scale(1.2)" } : {}}
+            style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
             className="cart_item_browse_image"
             onError={(event) => {
               event.target.src =

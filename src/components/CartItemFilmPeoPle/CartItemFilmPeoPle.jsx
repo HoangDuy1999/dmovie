@@ -35,7 +35,7 @@ const CartItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
           style={{ textDecoration: "none" }}
         >
           <img
-            style={posterHover ? { transform: "scale(1.2)" } : {}}
+            style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
             className="now_playing_image"
             onError={(event) => {
               event.target.src = {defaultImage}
