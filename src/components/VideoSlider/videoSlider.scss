@@ -23,7 +23,8 @@
     // filter: drop-shadow(0 0 10rem yellow);
     color: red !important;
     // border-radius: 40px;
-    z-index: 9999999999999;
+    // z-index: 1;
+    z-index: 1;
     @media screen and (max-width: 767px) {
       margin-top: -45px;
       margin-left: 35px;
@@ -33,6 +34,7 @@
     }
   }
   .slick-arrow.slick-next {
+
     padding-top: 3px;
   }
   .slick-arrow.slick-prev {

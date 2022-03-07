@@ -6,3 +6,19 @@
   height: auto;
   margin: 0 auto;
 }
+/* ***************
+ * FB on left side 
+ ******************/
+
+/* This is for the circle position */
+.fb_dialog.fb_dialog_advanced {
+  left: 18pt;
+}
+
+/* The following are for the chat box, on display and on hide */
+iframe.fb_customer_chat_bounce_in_v2 {
+  left: 9pt;
+}
+iframe.fb_customer_chat_bounce_out_v2 {
+  left: 9pt;
+}

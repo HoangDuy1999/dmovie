@@ -299,8 +299,8 @@ const MovieInfo = ({ category }) => {
               <div className="player-wrapper">
                 <ReactPlayer
                   className="react-player"
-                  width="100%"
-                  height="97%"
+                  width='100%'
+                  height='100%'
                   // muted={true}
                   // volume={1}
                   controls={true}

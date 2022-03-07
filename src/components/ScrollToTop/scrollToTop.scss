@@ -1,7 +1,8 @@
 .scroll-to-top-container {
   max-width: 1500px;
   margin: auto;
-  background-color: royalblue;
+  // background-color: royalblue;
+  box-sizing: border-box;
 }
 .scroll-to-top {
   position: fixed;

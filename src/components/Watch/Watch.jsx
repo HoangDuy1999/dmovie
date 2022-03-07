@@ -17,7 +17,7 @@ import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
 import SubTitleList from "../SubTitleList/SubTitleList";
-
+// import ChatBox from "../ChatBox/ChatBox";
 var { default: srtParser2 } = require("srt-parser-2");
 
 const Watch = ({ cate, ep, onFocus }) => {
@@ -464,7 +464,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       // onKeyDown={(e) => handlePlayControlClick(e)}
     >
       <PageLoadingEffeect doneLoad={doneLoad} />
-
+      
       <div className="watch_movie_wrapper">
         <div className="group">
           <div
