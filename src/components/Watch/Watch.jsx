@@ -40,6 +40,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   ]);
 
   const [listSubTitle, setListSubTitle] = useState({});
+  const { innerWidth: width, innerHeight: height } = window;
   const [selectedSub1, setSelectedSub1] = useState({
     value: "",
     label: "Off",
@@ -379,10 +380,20 @@ const Watch = ({ cate, ep, onFocus }) => {
     screenfull.toggle(playerContainerRef.current);
   };
 
-  if (screenfull.isFullscreen && subTextSize !== "34px") {
+  console.log(width);
+  if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
     setSubTextSize("34px");
-  } else if (screenfull.isFullscreen === false && subTextSize !== "27px") {
+  } else if (
+    screenfull.isFullscreen === false &&
+    subTextSize !== "27px" &&
+    width > 978
+  ) {
     setSubTextSize("27px");
+  } else if (width < 978 && width > 758 && subTextSize !== "24px") {
+    setSubTextSize("24px");
+  }
+  else if (width < 650 && subTextSize !== "16px") {
+    setSubTextSize("16px");
   }
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
@@ -464,7 +475,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       // onKeyDown={(e) => handlePlayControlClick(e)}
     >
       <PageLoadingEffeect doneLoad={doneLoad} />
-      
+
       <div className="watch_movie_wrapper">
         <div className="group">
           <div
@@ -683,7 +694,7 @@ const Watch = ({ cate, ep, onFocus }) => {
             onHandleChangeMovieId={handleChangeMovieId}
           />
         </div>
-        
+
         <div className="fb_comment">
           <FBComment width={100} dataHref={window.location.href} />
           {/* <h5>{videoUrl}</h5> */}

@@ -41,6 +41,7 @@
   display: flex;
   height: 100%;
   background-color: #333333;
+  // background-color: rgba(0,0,0,0.3);
   align-items: center;
   padding: 0 20px;
   // overflow-x: hidden;
@@ -72,9 +73,10 @@
           3px 3px 0px #c11a2b, 6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b,
           4px 4px 0px #c11a2b;
         @media all and (max-width: 420px) {
-          font-size: 25px;
+          font-size: 28px;
           text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032,
-            2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939;
+            2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939,
+            1px 1px 0px #c11a2b, 5px 5px 0px #c11a2b, 5px 5px 0px #c11a2b,
         }
       }
     }
