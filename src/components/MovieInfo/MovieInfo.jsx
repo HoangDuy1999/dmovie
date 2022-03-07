@@ -299,21 +299,18 @@ const MovieInfo = ({ category }) => {
               <div className="player-wrapper">
                 <ReactPlayer
                   className="react-player"
-                  width='100%'
-                  height='100%'
+                  // width='100%'
+                  // height='100%'
                   // muted={true}
                   // volume={1}
                   controls={true}
                   // url="https://ali-cdn-play.loklok.tv/b4dda15c655e4918a146e6961aa653ce/7d3e0d09c98a4dd5b15c2c5e5de0bc9c-80286400a5db0f65a99b17eeea8e339d-hd.m3u8?auth_key=1645371649-c6f9ba2e2c8a439790b160146fdc6753-0-327978a7afb5555a53c55400594d248b"
                   url={`http://www.youtube.com/embed/${selectedtrailerFilms.key}`}
-                  config={{
-                    youtube: {
-                      playerVars: { showinfo: 1 },
-                    },
-                    facebook: {
-                      appId: "12345",
-                    },
-                  }}
+                  // config={{
+                  //   youtube: {
+                  //     playerVars: {  modestbranding: 1 },
+                  //   },
+                  // }}
                 />
               </div>
               <div className="video_trainers">

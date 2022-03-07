@@ -195,6 +195,7 @@ const PlayerControl = (
                 onChangeCommitted={onVolumeSeekDown}
                 value={volume * 100}
                 className="volume_slider"
+                style={{marginLeft: "15px"}}
               />
               <Button
                 onClick={onChangeDisplayFormat}
@@ -215,6 +216,7 @@ const PlayerControl = (
                 className="bottom_icons"
                 key="bottom10"
                 size="large"
+                style={{marginRight: "10px"}}
               >
                 <ClosedCaptionDisabledIcon fontSize="inherit" />
               </IconButton>
@@ -224,6 +226,7 @@ const PlayerControl = (
                 className="bottom_icons"
                 key="bottom11"
                 size="large"
+                style={{marginRight: "10px"}}
               >
                 <ClosedCaptionIcon fontSize="inherit" />
               </IconButton>

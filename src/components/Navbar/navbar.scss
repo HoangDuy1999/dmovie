@@ -78,6 +78,9 @@
         }
       }
     }
+    @media screen and (max-width: 978px) {
+      margin-right: 10px;
+    }
   }
 
   .search {
@@ -88,7 +91,7 @@
     border-radius: 5px;
     position: relative;
     // margin-left: 10px;
-    @media screen and (max-width: 420px){
+    @media screen and (max-width: 420px) {
       margin-left: 10px;
     }
     color: white;

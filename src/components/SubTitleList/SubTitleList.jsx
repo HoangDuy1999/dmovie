@@ -25,7 +25,7 @@ const SubTitleList = ({
           // });
           messagesEndRef.current.scrollTo(
             0,
-            itemsRef.current[val.toString()].offsetTop -250
+            itemsRef.current[val.toString()].offsetTop -100
           );
           setSelectedSub(parseInt(val).toString());
           break;
@@ -107,7 +107,7 @@ const SubTitleList = ({
           ? Object.keys(arrSub2).map((key) => (
               <div
                 onClick={handleSetStart(parseInt(key))}
-                className="group"
+                className="group_list"
                 style={
                   key === selectedSub
                     ? { backgroundColor: "#333333" }
@@ -163,7 +163,7 @@ const SubTitleList = ({
           : Object.keys(arrSub1).map((key) => (
               <div
                 onClick={() => handleSetStart(parseInt(key))}
-                className="group"
+                className="group_list"
                 style={
                   key === selectedSub
                     ? { backgroundColor: "#333333" }

@@ -2,6 +2,7 @@
   width: 100%;
   margin: 0 auto;
   background-color: #02080f;
+  position: relative;
   //   background-color: red;
   .watch_movie_wrapper {
     padding-top: 50px;
@@ -9,11 +10,22 @@
     margin: 0 auto;
     width: 96%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+
     .group {
+      flex: 8;
       display: flex;
       flex-direction: row;
+      position: relative;
       // min-width: 100%;
       max-height: 450px;
+      @media screen and (max-width: 978px) {
+        flex-direction: column;
+        min-height: 450px;
+        max-height: 800px;
+      }
+
       .player-wrapper {
         flex: 5.5;
         background-color: black;
@@ -23,10 +35,15 @@
         margin: 0 auto;
         // background-color: red;
         width: 90%;
-        max-height: 50%;
+        min-height: 100%;
+        max-height: 450px;
         @media screen and (max-width: 978px) {
           width: 95%;
-          min-height: 225px;
+          min-height: 450px;
+        }
+        @media screen and (max-width: 700px) {
+          width: 95%;
+          min-height: 250px;
         }
         // height: 60%;
         /* Player ratio: 100 / (1280 / 720) */
@@ -71,235 +88,250 @@
           }
         }
       }
+
       .sub_list {
         flex: 2.5;
         color: white;
         // min-width: 30%;
+        position: relative;
+        @media screen and (max-width: 978px) {
+          position: relative;
+          // overflow: scroll;
+          width: 95%;
+          margin: 15px auto;
+        }
       }
     }
-  }
 
-  .player_sub_controls {
-    width: 90%;
-    margin: 15px auto;
-    box-sizing: border-box;
-    @media screen and (max-width: 978px) {
-      width: 95%;
-      // height: 70%;
-    }
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @media screen and (max-width: 758px) {
-      flex-direction: column;
-    }
-    .player_sub_controls_group {
+    .player_sub_controls {
+      z-index: 99999;
+      flex: 8;
+      width: 90%;
+      margin: 0px auto;
+      margin-top: 15px;
       box-sizing: border-box;
+      position: relative;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+        position: relative;
+        // height: 70%;
+      }
       display: flex;
-      // justify-content: space-between;
+      justify-content: space-between;
       align-items: center;
-      .label {
-        font-size: 18px;
-        font-weight: 600;
-        margin-right: 20px;
-        border: 0;
-        color: white;
-        min-width: 60px;
-        @media screen and (max-width: 978px) {
-          font-size: 16px;
-        }
-        @media screen and (max-width: 758px) {
-          min-width: 80px;
-        }
+      @media screen and (max-width: 758px) {
+        flex-direction: column;
       }
-      .speed_add_button {
-        height: 38px;
-        border-radius: 0 5px 5px 0;
-        border: 0;
-        background-color: white;
-        font-size: 20px;
+      .player_sub_controls_group {
+        position: relative;
+        box-sizing: border-box;
         display: flex;
+        // justify-content: space-between;
         align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: blue;
-      }
-
-      .speed_sub_button {
-        height: 38px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px 0px 0px 5px;
-        border: 0;
-        background-color: white;
-        color: red;
-        font-size: 20px;
-        cursor: pointer;
-      }
-
-      .speed_button:hover {
-        outline: none;
-        border: 0.5px solid blue;
-      }
-
-      .speed_input {
-        line-height: 36px;
-        background-color: #ebebe4;
-        text-align: center;
-        border: 0;
-        color: black;
-        font-size: 18px;
-        font-weight: 600;
-        max-width: 100px;
-        @media screen and (max-width: 978px) {
-          max-width: 50px;
+        .label {
+          font-size: 18px;
+          font-weight: 600;
+          margin-right: 20px;
+          border: 0;
+          color: white;
+          min-width: 60px;
+          @media screen and (max-width: 978px) {
+            font-size: 16px;
+          }
+          @media screen and (max-width: 758px) {
+            min-width: 80px;
+          }
         }
-        @media screen and (max-width: 767px) {
-          max-width: 124px;
+        .speed_add_button {
+          height: 38px;
+          border-radius: 0 5px 5px 0;
+          border: 0;
+          background-color: white;
+          font-size: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: blue;
         }
-      }
-      .select_custom {
-        min-width: 200px;
-        width: 200px;
-        @media screen and (max-width: 978px) {
-          min-width: 120px;
-          width: 120px;
+
+        .speed_sub_button {
+          height: 38px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 5px 0px 0px 5px;
+          border: 0;
+          background-color: white;
+          color: red;
+          font-size: 20px;
+          cursor: pointer;
         }
-        @media screen and (max-width: 767px) {
+
+        .speed_button:hover {
+          outline: none;
+          border: 0.5px solid blue;
+        }
+
+        .speed_input {
+          line-height: 36px;
+          background-color: #ebebe4;
+          text-align: center;
+          border: 0;
+          color: black;
+          font-size: 18px;
+          font-weight: 600;
+          max-width: 100px;
+          @media screen and (max-width: 978px) {
+            max-width: 50px;
+          }
+          @media screen and (max-width: 767px) {
+            max-width: 124px;
+          }
+        }
+        .select_custom {
           min-width: 200px;
-          margin-top: 10px;
           width: 200px;
+          @media screen and (max-width: 978px) {
+            min-width: 120px;
+            width: 120px;
+          }
+          @media screen and (max-width: 767px) {
+            min-width: 200px;
+            margin-top: 10px;
+            width: 200px;
+          }
         }
       }
     }
-  }
 
-  .server {
-    color: white;
-    display: flex;
-    width: 90%;
-    margin: 15px auto;
-    align-items: center;
-    margin-top: 30px;
-    @media screen and (max-width: 540px) {
-      flex-direction: column;
-    }
-    @media screen and (max-width: 978px) {
-      width: 95%;
-      // height: 70%;
-    }
-    .label {
-      margin-right: 20px;
-      font-size: 20px;
-      font-weight: 600;
-    }
-    .list {
-      display: flex;
-      @media screen and (max-width: 540px) {
-        margin-top: 10px;
-      }
-      button {
-        background-color: #3a3a3a;
-        color: white;
-        margin-right: 20px;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      button:focus {
-        outline: none;
-      }
-    }
-  }
-
-  .list_episode {
-    width: 90%;
-    @media screen and (max-width: 978px) {
-      width: 95%;
-    }
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    // max-width: 100%;
-
-    .episode {
-      margin-right: 10px;
-      button {
-        padding: 10px 10px;
-        margin-bottom: 10px;
-        color: white;
-        background-color: #3a3a3a;
-        border: none;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      button:focus {
-        outline: none;
-      }
-    }
-  }
-
-  .desc {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    @media screen and (max-width: 978px) {
-      width: 95%;
-    }
-    color: #da966e;
-    .name {
-      font-size: 25px;
-      font-weight: 600;
-    }
-    .name_root {
-      margin-top: 5px;
-      font: 20px;
-    }
-    .country {
-      margin-top: 5px;
-      font-size: 16px;
-      color: #b3b3b3;
-    }
-    .pilot {
-      margin-top: 10px;
-      color: #b3b3b3;
-    }
-  }
-
-  .similar {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 30px;
-    // display: flex;
-    // flex-direction: column;
-    @media screen and (max-width: 978px) {
-      width: 95%;
-    }
-    span {
+    .server {
       color: white;
-      font-size: 18px;
-      font-weight: 700;
-      margin: 10px 0px;
+      display: flex;
+      width: 90%;
+      margin: 15px auto;
+      align-items: center;
+      margin-top: 30px;
+      @media screen and (max-width: 540px) {
+        flex-direction: column;
+      }
+      @media screen and (max-width: 978px) {
+        width: 95%;
+        // height: 70%;
+      }
+      .label {
+        margin-right: 20px;
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .list {
+        display: flex;
+        @media screen and (max-width: 540px) {
+          margin-top: 10px;
+        }
+        button {
+          background-color: #3a3a3a;
+          color: white;
+          margin-right: 20px;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        button:focus {
+          outline: none;
+        }
+      }
     }
-  }
-  .fb_comment {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 30px;
-    // display: flex;
-    // flex-direction: column;
-    background-color: white;
-    @media screen and (max-width: 978px) {
-      width: 95%;
+
+    .list_episode {
+      width: 90%;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+      }
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      // max-width: 100%;
+
+      .episode {
+        margin-right: 10px;
+        button {
+          padding: 10px 10px;
+          margin-bottom: 10px;
+          color: white;
+          background-color: #3a3a3a;
+          border: none;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .desc {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+      }
+      color: #da966e;
+      .name {
+        font-size: 25px;
+        font-weight: 600;
+      }
+      .name_root {
+        margin-top: 5px;
+        font: 20px;
+      }
+      .country {
+        margin-top: 5px;
+        font-size: 16px;
+        color: #b3b3b3;
+      }
+      .pilot {
+        margin-top: 10px;
+        color: #b3b3b3;
+      }
+    }
+
+    .similar {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 30px;
+      // display: flex;
+      // flex-direction: column;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+      }
+      span {
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 10px 0px;
+      }
+    }
+
+    .fb_comment {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 30px;
+      // display: flex;
+      // flex-direction: column;
+      background-color: white;
+      @media screen and (max-width: 978px) {
+        width: 95%;
+      }
     }
   }
 }
