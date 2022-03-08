@@ -301,11 +301,11 @@ const Watch = ({ cate, ep, onFocus }) => {
       } catch (e) {}
     }
     try {
-      if (countHiddenText <= 4) setCountHiddenText(() => countHiddenText + 1);
-      if (countHiddenText === 4) {
+      if (countHiddenText <= 5) setCountHiddenText(() => countHiddenText + 1);
+      if (countHiddenText === 5) {
         setSubText1(" $$$$$$ ");
       }
-      if (count >= 2) {
+      if (count >= 3) {
         controlsRef.current.style.visibility = "hidden";
       }
       if (controlsRef.current.style.visibility === "visible") {
@@ -399,26 +399,34 @@ const Watch = ({ cate, ep, onFocus }) => {
     setPlayerStates(() => ({
       ...playerStates,
       played: parseFloat(newValue / 100),
-      playing: false,
+      playing: true,
+      seeking: true,
     }));
+    if(count !== 0)
+      setCount(0);
   };
 
   const handleSeekMouseDown = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
-      playing: false,
-      seeking: false,
+      // played: parseFloat(newValue / 100),
+      playing: true,
+      seeking: true,
     }));
+    if(count !== 0)
+    setCount(0);
   };
 
   const handleSeekMoveUp = (e, newValue) => {
     playerRef.current.seekTo(newValue / 100);
     setPlayerStates(() => ({
       ...playerStates,
-      playing: false,
+      playing: true,
       // played: parseFloat(newValue / 100),
       seeking: false,
     }));
+    if(count !== 0)
+    setCount(0);
   };
 
   const handleMouseMove = () => {

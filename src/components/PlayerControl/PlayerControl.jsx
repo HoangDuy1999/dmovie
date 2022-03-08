@@ -148,15 +148,10 @@ const PlayerControl = (
               // getAriaValueText={handleSliderMouseOver}
               onMouseDown={onSeekMouseDown}
               onChangeCommitted={onSeekMouseUp}
-              valueLabelDisplay="auto"
+              // valueLabelDisplay="auto"
               components={{
                 ValueLabel: ValueLabelComponent,
               }}
-              // components={{
-              //   ValueLabel: (
-              //     <ValueLabelComponent {...props} value={elapsedTime} />
-              //   ),
-              // }}
             />
           </Grid>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 // import Slider from "react-slick";
 // import defaultImage from "../../images/default_image.jpg";
@@ -16,6 +16,8 @@ import "slick-carousel/slick/slick-theme.css";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import axios from "axios";
 
+import YouTube from "react-youtube";
+
 const MovieInfo = ({ category }) => {
   // console.log(id);
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const MovieInfo = ({ category }) => {
   // If exist data films
   const [isWatchFilm, setIsWatchFilm] = useState(false);
   const [movieInfoLoklok, setMoviesInfoLokLok] = useState([]);
+  const { innerWidth: width } = window;
 
   const headers = {
     lang: "en",
@@ -55,7 +58,6 @@ const MovieInfo = ({ category }) => {
         try {
           const params = {};
           const response = await tmdbApi.detail(category, movieId, { params });
-          const { innerWidth: width } = window;
           if (width <= 768) {
             response.genres = response.genres
               ? response.genres.slice(0, 2)
@@ -178,8 +180,16 @@ const MovieInfo = ({ category }) => {
     setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
+  const opts = {
+    height: parseInt(width / 2.5),
+    width: parseInt(width * 0.8),
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 1,
+    },
+  };
 
-  // console.log(casts);
+  console.log(selectedtrailerFilms.key);
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
@@ -297,22 +307,18 @@ const MovieInfo = ({ category }) => {
             </div>
             <div className="content">
               <div className="player-wrapper">
-                <ReactPlayer
-                  className="react-player"
-                  // width='100%'
-                  // height='100%'
-                  // muted={true}
-                  // volume={1}
-                  controls={true}
-                  // url="https://ali-cdn-play.loklok.tv/b4dda15c655e4918a146e6961aa653ce/7d3e0d09c98a4dd5b15c2c5e5de0bc9c-80286400a5db0f65a99b17eeea8e339d-hd.m3u8?auth_key=1645371649-c6f9ba2e2c8a439790b160146fdc6753-0-327978a7afb5555a53c55400594d248b"
+                {/* <ReactPlayer
+                  // className="react-player"
                   url={`http://www.youtube.com/embed/${selectedtrailerFilms.key}`}
-                  // config={{
-                  //   youtube: {
-                  //     playerVars: {  modestbranding: 1 },
-                  //   },
-                  // }}
+                  controls
+                /> */}
+                <YouTube
+                  style={{ minWidth: "100%" }}
+                  opts={opts}
+                  videoId={selectedtrailerFilms.key}
                 />
               </div>
+
               <div className="video_trainers">
                 {trailerFilms.map((item, index) => {
                   if (item.key === selectedtrailerFilms.key) {
