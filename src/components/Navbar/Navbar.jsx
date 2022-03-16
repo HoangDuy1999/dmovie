@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 // import tmovie from "../../images/tmovie.png";
 import { Link } from "react-router-dom";
@@ -13,22 +13,37 @@ import { useNavigate } from "react-router-dom";
 // import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { RiArrowDownSFill } from "react-icons/ri";
 
 const Navbar = ({ handleOnFocus = (e) => {} }) => {
-  // const [searchFocusColor, setsearchFocusColor] = useState({ color: "black" });
-  // XỬ LÝ NAV_MENU_LINK
-  // const options = ["Movies", "Series", "PeoPle", "News"];
   const navigate = useNavigate();
   const [isCloseIcon, setIsCloseIcon] = useState(false);
   const [ancho, setAncho] = React.useState(null);
   const [anchorProfile, setAnchorProfile] = React.useState(null);
+  const [searchResult, setSearchResult] = useState([]);
+  const [isSearchShow, setIsSearchShow] = useState(false);
+  const [wordEntered, setWordEntered] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [accountInfo, setAccountInfo] = useState({});
+
+  useEffect(() => {
+    console.log(localStorage.getItem("access_token"));
+    if (localStorage.getItem("access_token") !== null) {
+      setIsLogin(true);
+    }
+    if (localStorage.getItem("account_info") !== null) {
+      setAccountInfo(JSON.parse(localStorage.getItem("account_info")));
+    }
+  }, []);
+  console.log(accountInfo);
+
   const openMenu = (event) => {
     setAncho(event.currentTarget);
     // console.log(event.currentTarget);
   };
+
   const openMenuProfile = (event) => {
     setAnchorProfile(event.currentTarget);
-    // console.log(event.currentTarget);
   };
 
   const handleClose = () => {
@@ -40,9 +55,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
   //
   // const { innerWidth: width } = window;
   // const [widthWindow, setWidthWindow] = useState(width || 1280);
-  const [searchResult, setSearchResult] = useState([]);
-  const [isSearchShow, setIsSearchShow] = useState(false);
-  const [wordEntered, setWordEntered] = useState("");
+
   const handClickSearch = () => {
     // console.log("clicked");
   };
@@ -84,6 +97,14 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
     setWordEntered("");
     setIsCloseIcon(false);
     return () => clearTimeout(timeout);
+  };
+
+  const handleLogout = () => {
+    console.log("dmmmm");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("account_info");
+    setIsLogin(false);
+    handleProfileMenuClose();
   };
   return (
     <div className="navbar">
@@ -285,50 +306,106 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
             </Link>
           </div>
         </div>
-        <div className="profile">
-          <div className="profile_items">
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/account?type=register"
-            >
-              {" "}
-              <span className="register">Register</span>
-            </Link>
 
-            <Link style={{ textDecoration: "none" }} to="/account?type=login">
-              {" "}
-              <button className="login">Login</button>
-            </Link>
-          </div>
-          <div className="nav_bar_profile">
-            <PersonIcon
-              onClick={openMenuProfile}
-              className="nav_bar_profile_icon"
-            />
-            <Menu
-              open={Boolean(anchorProfile)}
-              anchorEl={anchorProfile}
-              onClose={handleProfileMenuClose}
-              keepMounted
-            >
-              <MenuItem>
+        <div className="profile">
+          {isLogin ? (
+            <div className="nav_bar_profile_login">
+              <div
+                onClick={openMenuProfile}
+                style={{
+                  marginLeft: "10px",
+                  display: "flex",
+                  color: "white",
+                  alignItems: "center",
+                }}
+              >
+                {/* <PersonIcon style={{ fontSize: "25px" }} /> */}
+
+                <img
+                  src={accountInfo.avatar}
+                  alt=""
+                  style={{ width: "35px", height: "35px" }}
+                />
+                <RiArrowDownSFill
+                  style={{
+                    color: "white",
+                    fontSize: "25px",
+                    marginLeft: "-5px",
+                  }}
+                />
+              </div>
+              <Menu
+                open={Boolean(anchorProfile)}
+                anchorEl={anchorProfile}
+                onClose={handleProfileMenuClose}
+                keepMounted
+              >
+                <MenuItem>
+                  <Link
+                    to={`/watchlist/${accountInfo._id}`}
+                    style={{ textDecoration: "none", color: "#263238" }}
+                  >
+                    WatchList
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  {/* <Link
+                    to="/account?type=login"
+                    style={{ textDecoration: "none", color: "#263238" }}
+                  > */}
+                  Log out
+                  {/* </Link> */}
+                </MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <>
+              <div className="profile_items">
                 <Link
+                  style={{ textDecoration: "none" }}
                   to="/account?type=register"
-                  style={{ textDecoration: "none", color: "#263238" }}
                 >
-                  Register
+                  <span className="register">Register</span>
                 </Link>
-              </MenuItem>
-              <MenuItem>
                 <Link
+                  style={{ textDecoration: "none" }}
                   to="/account?type=login"
-                  style={{ textDecoration: "none", color: "#263238" }}
                 >
-                  Login
+                  <button className="login">Login</button>
                 </Link>
-              </MenuItem>
-            </Menu>
-          </div>
+              </div>
+
+              <div className="nav_bar_profile" style={{marginLeft: "10px"}}>
+                <PersonIcon
+                  onClick={openMenuProfile}
+                  className="nav_bar_profile_icon"
+                />
+                <Menu
+                  open={Boolean(anchorProfile)}
+                  anchorEl={anchorProfile}
+                  onClose={handleProfileMenuClose}
+                  keepMounted
+                >
+                  <MenuItem>
+                    <Link
+                      to="/account?type=register"
+                      style={{ textDecoration: "none", color: "#263238" }}
+                    >
+                      Register
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      to="/account?type=login"
+                      style={{ textDecoration: "none", color: "#263238" }}
+                    >
+                      Login
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

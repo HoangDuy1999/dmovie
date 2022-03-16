@@ -79,7 +79,7 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
               />
             </div>
           </Link>
-          <div className="add_icon">
+          {/* <div className="add_icon">
             <IoIosAddCircleOutline
               style={{
                 fontSize: "50px",
@@ -87,7 +87,7 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
                 cursor: "pointer",
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 

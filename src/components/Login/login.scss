@@ -5,8 +5,9 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #baffce;
-  background-image: url("https://wallpaperaccess.com/full/329583.jpg");
+  // background-color: #baffce;
+  // background-image: url("https://wallpaperaccess.com/full/329583.jpg");
+  // background-image: linear-gradient(120deg, #283040 0%, #333333 100%);
   background-position: cover;
   background-repeat: no-repeat;
   transition: 0.5s;
@@ -155,6 +156,12 @@
           padding: 10px 20px;
           border-radius: 5px;
         }
+        .login_container .formBx .form .form_login_info button {
+          border: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          min-width: auto !important;
+        }
       }
     }
     .signupForm {
@@ -196,12 +203,5 @@
       top: 150px;
     }
   }
-  .formBx.active .form.signinForm {
-    // left: -100%;
-    // transition-delay: 0s;
-  }
-  .formBx.active .form.signupForm {
-    // transition-delay: 0.25s;
-    // left: 0;
-  }
+
 }

@@ -1,11 +1,16 @@
 {
   "hosting": {
     "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [ {
+      "source": "/api/:path*",
+      "destination": "https://loa/:path",
+      "type": 301
+    },{
+      "source": "/secure/",
+      "destination": "https://tmovie.org/secure/",
+      "type": 301
+    }],
     "rewrites": [
       {
         "source": "**",

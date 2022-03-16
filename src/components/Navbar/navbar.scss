@@ -73,10 +73,11 @@
           3px 3px 0px #c11a2b, 6px 6px 0px #c11a2b, 8px 8px 0px #c11a2b,
           4px 4px 0px #c11a2b;
         @media all and (max-width: 420px) {
+          font-style: normal;
           font-size: 28px;
           text-shadow: 1px 1px 0px #eb452b, 2px 2px 0px #efa032,
             2px 2px 0px #46b59b, 4px 4px 0px #017e7f, 4px 4px 0px #052939,
-            1px 1px 0px #c11a2b, 5px 5px 0px #c11a2b, 5px 5px 0px #c11a2b,
+            1px 1px 0px #c11a2b, 5px 5px 0px #c11a2b, 5px 5px 0px #c11a2b;
         }
       }
     }
@@ -323,6 +324,26 @@
 
     .nav_bar_profile {
       display: none;
+      // margin-left: 30px;
+      text-decoration: none;
+      .link {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 400;
+      }
+      @media screen and (max-width: 820px) {
+        // margin-left: 30px;
+        display: flex;
+        // position: relative;
+        .nav_bar_profile_icon {
+          color: white;
+          font-size: 28px;
+        }
+      }
+    }
+
+    .nav_bar_profile_login {
       // margin-left: 30px;
       text-decoration: none;
       .link {

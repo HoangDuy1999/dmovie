@@ -76,7 +76,7 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
               />
             </div>
           </Link>
-          <div className="add_icon">
+          {/* <div className="add_icon">
             <IoIosAddCircleOutline
               style={{
                 fontSize: "50px",
@@ -84,7 +84,7 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
                 cursor: "pointer",
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -180,16 +180,24 @@ const MovieInfo = ({ category }) => {
     setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
-  const opts = {
+  const [opts, setOpts] = useState({
     height: parseInt(width / 2.5),
     width: parseInt(width * 0.8),
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
     },
-  };
-
-  console.log(selectedtrailerFilms.key);
+  });
+  useEffect(() => {
+    setOpts(() => ({
+      height: parseInt(width / 2.5),
+      width: parseInt(width * 0.8),
+      playerVars: {
+        // https://developers.google.com/youtube/player_parameters
+        autoplay: 1,
+      },
+    }));
+  }, [width]);
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
