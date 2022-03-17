@@ -17,7 +17,8 @@ import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
 import SubTitleList from "../SubTitleList/SubTitleList";
-// import ChatBox from "../ChatBox/ChatBox";
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
+
 var { default: srtParser2 } = require("srt-parser-2");
 
 const Watch = ({ cate, ep, onFocus }) => {
@@ -38,7 +39,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       label: "Off",
     },
   ]);
-
+  const [isDoneLoad, setIsDoneLoad] = useState(false);
   const [listSubTitle, setListSubTitle] = useState({});
   const { innerWidth: width, innerHeight: height } = window;
   const [selectedSub1, setSelectedSub1] = useState({
@@ -380,7 +381,6 @@ const Watch = ({ cate, ep, onFocus }) => {
     screenfull.toggle(playerContainerRef.current);
   };
 
-  console.log(width);
   if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
     setSubTextSize("34px");
   } else if (
@@ -391,10 +391,10 @@ const Watch = ({ cate, ep, onFocus }) => {
     setSubTextSize("27px");
   } else if (width < 978 && width > 758 && subTextSize !== "24px") {
     setSubTextSize("24px");
-  }
-  else if (width < 650 && subTextSize !== "16px") {
+  } else if (width < 650 && subTextSize !== "16px") {
     setSubTextSize("16px");
   }
+
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
@@ -402,8 +402,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       playing: true,
       seeking: true,
     }));
-    if(count !== 0)
-      setCount(0);
+    if (count !== 0) setCount(0);
   };
 
   const handleSeekMouseDown = (e, newValue) => {
@@ -413,8 +412,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       playing: true,
       seeking: true,
     }));
-    if(count !== 0)
-    setCount(0);
+    if (count !== 0) setCount(0);
   };
 
   const handleSeekMoveUp = (e, newValue) => {
@@ -425,8 +423,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       // played: parseFloat(newValue / 100),
       seeking: false,
     }));
-    if(count !== 0)
-    setCount(0);
+    if (count !== 0) setCount(0);
   };
 
   const handleMouseMove = () => {
@@ -441,6 +438,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
+    setIsDoneLoad(false);
     setPlayerStates({
       playing: false,
       muted: false,
@@ -464,6 +462,23 @@ const Watch = ({ cate, ep, onFocus }) => {
   const handleOnClickHideSubTile = () => {
     setHideSub(!hideSub);
   };
+  const handleOnEndedReactPlayer = () => {
+    console.log("chạy xong");
+  };
+  // CHECKED LOAD FILM
+  if (
+    playerRef?.current?.getCurrentTime() !== null &&
+    playerRef?.current?.getCurrentTime() !== undefined &&
+    isDoneLoad === false
+  ) {
+    console.log(playerRef?.current?.getCurrentTime());
+    console.log("tai được phim");
+    setIsDoneLoad(true);
+  } else {
+    // setIsDoneLoad(true);
+    console.log("chưa tải được phim");
+    console.log(playerRef?.current?.getCurrentTime());
+  }
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -482,6 +497,12 @@ const Watch = ({ cate, ep, onFocus }) => {
       className="watch_movie_container"
       // onKeyDown={(e) => handlePlayControlClick(e)}
     >
+      <ModalConfirm
+        title="Notification"
+        message="
+The system records the state as finishing watching this movie at<b> 01:31:52</b>. Do you want to continue watching?"
+        isOpen={true}
+      />
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">
@@ -498,6 +519,7 @@ const Watch = ({ cate, ep, onFocus }) => {
               className="react-player"
               width="100%"
               height="100%"
+              onEnded={handleOnEndedReactPlayer}
               playing={playerStates.playing}
               muted={playerStates.muted}
               onError={(error, data, hlsInstance, hlsGlobal) => {}}
@@ -696,7 +718,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         </div>
 
         <div className="similar">
-          <h2 style={{ color: "white" }}>Maybe you want to see</h2>
+          <h2 style={{ color: "white" }}>RECOMMENDED MOVIES</h2>
           <VideoSlider
             videoList={movieInfo?.likeList}
             onHandleChangeMovieId={handleChangeMovieId}

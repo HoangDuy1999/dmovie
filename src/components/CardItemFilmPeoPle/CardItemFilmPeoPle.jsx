@@ -1,5 +1,5 @@
 import { BsPlayCircle } from "react-icons/bs";
-import { IoIosAddCircleOutline } from "react-icons/io";
+// import { IoIosAddCircleOutline } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import "./cardItemFilmPeoPle.scss";
 import { Link } from "react-router-dom";
@@ -71,13 +71,13 @@ const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
             </div>
           </Link>
           <div className="add_icon">
-            <IoIosAddCircleOutline
+            {/* <IoIosAddCircleOutline
               style={{
                 fontSize: "50px",
                 color: "white",
                 cursor: "pointer",
               }}
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -7,7 +7,11 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { BsFillHeartFill } from "react-icons/bs";
 
-const CardWatchList = ({ item }) => {
+const CardWatchList = ({
+  item,
+  handleAddMovieToWatchList,
+  handleRemoveMovieToWatchList,
+}) => {
   const [isHover, setIshHover] = useState(false);
   const handleMouseOverImage = () => {
     console.log("===1==");
@@ -56,7 +60,12 @@ const CardWatchList = ({ item }) => {
           onMouseOut={(e) => handleMouseOutImage(e)}
         >
           <Link
-            to={"/" + "/detail/" + item.movie_id}
+            to={
+              "/" +
+              (item.movie_type === "movie" ? "movies" : item.movie_type) +
+              "/detail/" +
+              item.movie_id
+            }
             style={{ textDecoration: "none" }}
           >
             <BsPlayCircle
@@ -71,10 +80,27 @@ const CardWatchList = ({ item }) => {
 
       <div className="bottom">
         <div className="title_film">
-          <span>{item.movie_name}</span>
+          <Link
+            to={
+              "/" +
+              (item.movie_type === "movie" ? "movies" : item.movie_type) +
+              "/detail/" +
+              item.movie_id
+            }
+            style={{ textDecoration: "none" }}
+          >
+            <span>{item.movie_name}</span>
+          </Link>
         </div>
         <div className="heart">
-          <BsFillHeartFill />
+          {item.status === 1 ? (
+            <BsFillHeartFill
+              style={{ color: "red" }}
+              onClick={() => handleRemoveMovieToWatchList(item)}
+            />
+          ) : (
+            <BsFillHeartFill onClick={() => handleAddMovieToWatchList(item)} />
+          )}
         </div>
       </div>
     </div>

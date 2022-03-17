@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./videoSlider.scss";
 import Slider from "react-slick";
-import { BsFillPlayCircleFill } from "react-icons/bs";
+import { BsFillPlayFill } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -86,7 +86,7 @@ const VidieoSlider = ({ videoList, onHandleChangeMovieId }) => {
                     alt=""
                   />
                 </div>
-                <BsFillPlayCircleFill
+                <BsFillPlayFill
                   // ref={index}
                   onClick={() => onHandleChangeMovieId(item.id, item.category)}
                   style={
