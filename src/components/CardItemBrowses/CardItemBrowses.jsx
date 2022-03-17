@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const CartItemBrowses = ({ item, types, colorGroup }) => {
+const CardItemBrowses = ({ item, types, colorGroup }) => {
   const [name, setName] = useState("");
   const [posterHover, setPosterHover] = useState(false);
   const handleOnMoveOverPoster = (e) => {
@@ -35,15 +35,15 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
     };
   }, []);
   return (
-    <div className="cart_item_browse">
-      <div className="cart_item_browse_container">
+    <div className="card_item_browse">
+      <div className="card_item_browse_container">
         <Link
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
           <LazyLoadImage
             style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
-            className="cart_item_browse_image"
+            className="card_item_browse_image"
             onError={(event) => {
               event.target.src =
                 "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
@@ -105,4 +105,4 @@ const CartItemBrowses = ({ item, types, colorGroup }) => {
   );
 };
 
-export default CartItemBrowses;
+export default CardItemBrowses;

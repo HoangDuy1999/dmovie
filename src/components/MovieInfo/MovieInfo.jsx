@@ -443,7 +443,7 @@ const MovieInfo = ({ category }) => {
                   if (item.key === selectedtrailerFilms.key) {
                     return (
                       <div
-                        className="cart_video"
+                        className="card_video"
                         key={index}
                         style={{ backgroundColor: " #2b54e6" }}
                       >
@@ -457,7 +457,7 @@ const MovieInfo = ({ category }) => {
                     );
                   } else {
                     return (
-                      <div className="cart_video" key={index}>
+                      <div className="card_video" key={index}>
                         <img
                           className="react-player"
                           alt=""

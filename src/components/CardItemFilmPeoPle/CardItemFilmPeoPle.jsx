@@ -1,11 +1,11 @@
 import { BsPlayCircle } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import React, { useState, useEffect } from "react";
-import "./cartItemFilmPeoPle.scss";
+import "./cardItemFilmPeoPle.scss";
 import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
 
-const CartItemFilmPeoPle = ({ item, types, colorGroup, length, person = false }) => {
+const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false }) => {
   // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
   const [posterHover, setPosterHover] = useState(false);
   const [name, setName] = useState("");
@@ -28,8 +28,8 @@ const CartItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
     getName();
   }, []);
   return (
-    <div className="cart_item_people">
-      <div className="cart_item_people_container" title={name}>
+    <div className="card_item_people">
+      <div className="card_item_people_container" title={name}>
         <Link
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
@@ -96,4 +96,4 @@ const CartItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
   );
 };
 
-export default CartItemFilmPeoPle;
+export default CardItemFilmPeoPle;

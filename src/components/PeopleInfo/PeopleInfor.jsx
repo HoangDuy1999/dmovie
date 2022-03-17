@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import axios from "axios";
 import ShowMoreText from "react-show-more-text";
-import CartItemPeoPle from "../CartItemFilmPeoPle/CartItemFilmPeoPle";
+import CardItemBrowses from "../CardItemFilmPeoPle/CardItemFilmPeoPle";
 import { BsFillArrowDownSquareFill } from "react-icons/bs";
 import tmdbApi from "../../api/tmdbApi";
 import { Link } from "react-router-dom";
@@ -221,7 +221,7 @@ const PeopleInfo = () => {
             <div className="known_for_items">
               {knownFor?.length > 0
                 ? knownFor?.map((item, index) => (
-                    <CartItemPeoPle
+                    <CardItemBrowses
                       item={item}
                       key={index}
                       types={item.media_type === "movie" ? "movies" : "tv"}
