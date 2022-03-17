@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./watchListInfo.scss";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import watchlistApi from "../../api/dmovie/watchlist";
+import CardWatchList from "../CardWatchList/CardWatchList";
 
 const WatchListInfo = ({ id }) => {
   const [watchList, setWatchList] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
-
+  const [count, setCount] = useState(20);
   useEffect(() => {
     const getWatchList = async () => {
       const rs = await watchlistApi.getListByAccountId(id);
