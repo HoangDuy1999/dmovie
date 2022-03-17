@@ -1,7 +1,7 @@
 import { BsPlayCircle } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import React, { useState, useEffect } from "react";
-import "./cartItem.scss";
+import "./cardItem.scss";
 import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";

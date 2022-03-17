@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./highestRatingMovie.scss";
 import tmdbApi from "../../api/tmdbApi";
-import CarItem from "../CartItem/CartItem";
+import CarItem from "../CardItem/CardItem";
 const HighestRatingMovie = () => {
   const [highestRatingMovie, setHighestRatingMovie] = useState([]);
   // const [page, setPage] = useState(1);

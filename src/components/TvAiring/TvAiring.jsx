@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import tmdbApi from "../../api/tmdbApi";
-import CarItem from "../CartItem/CartItem";
+import CarItem from "../CardItem/CardItem";
 import "./tvAiring.scss";
 const TvAiring = () => {
   const [tvAirings, settvAirings] = useState([]);

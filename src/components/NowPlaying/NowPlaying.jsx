@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./nowPlaying.scss";
 import tmdbApi from "../../api/tmdbApi";
-import CarItem from "../CartItem/CartItem";
+import CarItem from "../CardItem/CardItem";
 const NowPlayings = () => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   // const [page, setPage] = useState(1);

@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-// import Slider from "react-slick";
-// import defaultImage from "../../images/default_image.jpg";
 import { useNavigate } from "react-router-dom";
 import tmdbApi from "../../api/tmdbApi";
-import ReactPlayer from "react-player";
 import "./movieInfo.scss";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import StarRateIcon from "@mui/icons-material/StarRate";
@@ -15,8 +12,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import VideoSlider from "../VideoSlider/VidieoSlider";
 import axios from "axios";
-
+import { BsFillHeartFill } from "react-icons/bs";
 import YouTube from "react-youtube";
+import watchlistApi from "../../api/dmovie/watchlist";
+import { success, error } from "../Toastify/Toastify";
 
 const MovieInfo = ({ category }) => {
   // console.log(id);
@@ -30,6 +29,11 @@ const MovieInfo = ({ category }) => {
   const [similarFilms, setSimilarFilms] = useState([]);
   const [reviewFilms, setReviewFilms] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
+
+  const [isLogin, setIsLogin] = useState();
+  const [accountInfo, setAccountInfo] = useState({});
+  const [isWatchList, setIsWatchList] = useState(false);
+
   // If exist data films
   const [isWatchFilm, setIsWatchFilm] = useState(false);
   const [movieInfoLoklok, setMoviesInfoLokLok] = useState([]);
@@ -43,8 +47,37 @@ const MovieInfo = ({ category }) => {
   // console.log(id);
 
   useEffect(() => {
+    if (localStorage.getItem("access_token") !== null) {
+      setIsLogin(true);
+    }
+    if (localStorage.getItem("account_info") !== null) {
+      setAccountInfo(JSON.parse(localStorage.getItem("account_info")));
+    }
+  }, []);
+
+  useEffect(() => {
     setMovieId(id);
-  }, [id]);
+    if (isLogin && accountInfo._id !== undefined) {
+      const findMoiveWatchList = async () => {
+        try {
+          const rs = await watchlistApi.findMovieByAccountId({
+            _id: accountInfo._id + "",
+            movie_id: parseInt(id),
+          });
+          console.log(rs);
+          if (rs.code === 200) {
+            if (rs.data.movie !== null) {
+              setIsWatchList(true);
+            } else {
+              setIsWatchList(false);
+            }
+          } else {
+          }
+        } catch (e) {}
+      };
+      findMoiveWatchList();
+    }
+  }, [id, accountInfo]);
 
   useEffect(() => {
     setDoneLoad(false);
@@ -180,6 +213,44 @@ const MovieInfo = ({ category }) => {
     setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
+  const handleAddWatchList = async () => {
+    setDoneLoad(false);
+    if (isWatchList) {
+      const rs = await watchlistApi.update({
+        account_id: accountInfo._id,
+        movie_id: id,
+        status: 0,
+      });
+      if(rs.code === 200){
+        success("Remove movie to watchlist successfully");
+        setDoneLoad(true);
+      }else{
+        error("Remove movie to watchlist unsuccessfully");
+        setDoneLoad(true);
+      }
+      console.log("hủy thích");
+      console.log(movieInfos);
+      setIsWatchList(false);
+    } else {
+      const rs = await watchlistApi.add({
+        account_id: accountInfo._id,
+        movie_id: id,
+        movie_name: movieInfos.name || movieInfos.title,
+        movie_backdrop: movieInfos.backdrop_path,
+        status: 1,
+      });
+      console.log(rs);
+      if(rs.code === 200){
+        success("Add movie to watchlist successfully");
+        setDoneLoad(true);
+      }else{
+        error("Add movie to watchlist unsuccessfully");
+        setDoneLoad(true);
+      }
+      console.log("đã thích");
+      setIsWatchList(true);
+    }
+  };
   const [opts, setOpts] = useState({
     height: parseInt(width / 2.5),
     width: parseInt(width * 0.8),
@@ -247,26 +318,66 @@ const MovieInfo = ({ category }) => {
                     );
                   })}
                 </div>
-                {isWatchFilm ? (
-                  <button
-                    onClick={(e) => {
-                      handleClickWatchFilm(e);
-                    }}
-                    className="btn_watch_film"
-                  >
-                    Watch film
-                  </button>
-                ) : (
-                  <button
-                    className="btn_watch_film"
-                    style={{
-                      backgroundColor: "#f1f1f1",
-                    }}
-                  >
-                    Watch film
-                  </button>
-                )}
-
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    position: "relative",
+                    marginTop: "10px",
+                    marginBottom: "-10px",
+                  }}
+                >
+                  <div>
+                    {isWatchFilm ? (
+                      <button
+                        onClick={(e) => {
+                          handleClickWatchFilm(e);
+                        }}
+                        className="btn_watch_film"
+                      >
+                        Watch film
+                      </button>
+                    ) : (
+                      <button
+                        className="btn_watch_film"
+                        style={{
+                          backgroundColor: "#f1f1f1",
+                        }}
+                      >
+                        Watch film
+                      </button>
+                    )}
+                  </div>
+                  <div>
+                    {isLogin ? (
+                      <>
+                        <BsFillHeartFill
+                          fontSize="30px"
+                          onClick={handleAddWatchList}
+                          style={
+                            isWatchList
+                              ? {
+                                  color: "red",
+                                  marginLeft: "15px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  cursor: "pointer",
+                                }
+                              : {
+                                  color: "black",
+                                  marginLeft: "15px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  cursor: "pointer",
+                                }
+                          }
+                        />
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
                 <div className="plot">
                   <span>{movieInfos.overview}</span>
                 </div>
