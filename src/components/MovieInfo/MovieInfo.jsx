@@ -64,7 +64,7 @@ const MovieInfo = ({ category }) => {
             _id: accountInfo._id + "",
             movie_id: parseInt(id),
           });
-          console.log(rs);
+          // console.log(rs);
           if (rs.code === 200) {
             if (rs.data.movie !== null) {
               setIsWatchList(true);
@@ -213,6 +213,7 @@ const MovieInfo = ({ category }) => {
     setCasts([]);
     navigate(`/movies/detail/${id}`);
   };
+
   const handleAddWatchList = async () => {
     setDoneLoad(false);
     if (isWatchList) {
@@ -221,10 +222,10 @@ const MovieInfo = ({ category }) => {
         movie_id: id,
         status: 0,
       });
-      if(rs.code === 200){
+      if (rs.code === 200) {
         success("Remove movie to watchlist successfully");
         setDoneLoad(true);
-      }else{
+      } else {
         error("Remove movie to watchlist unsuccessfully");
         setDoneLoad(true);
       }
@@ -237,13 +238,14 @@ const MovieInfo = ({ category }) => {
         movie_id: id,
         movie_name: movieInfos.name || movieInfos.title,
         movie_backdrop: movieInfos.backdrop_path,
+        movie_type: category,
         status: 1,
       });
       console.log(rs);
-      if(rs.code === 200){
+      if (rs.code === 200) {
         success("Add movie to watchlist successfully");
         setDoneLoad(true);
-      }else{
+      } else {
         error("Add movie to watchlist unsuccessfully");
         setDoneLoad(true);
       }
@@ -251,6 +253,7 @@ const MovieInfo = ({ category }) => {
       setIsWatchList(true);
     }
   };
+
   const [opts, setOpts] = useState({
     height: parseInt(width / 2.5),
     width: parseInt(width * 0.8),

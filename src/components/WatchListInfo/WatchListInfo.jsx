@@ -28,6 +28,13 @@ const WatchListInfo = ({ id }) => {
         <div className="title">
           <span>Watch List</span>
         </div>
+        <div className="card_watch_list">
+          {watchList?.slice(0, count).map((item) => (
+            <>
+              <CardWatchList item={item} key={item._id} />
+            </>
+          ))}
+        </div>
       </div>
     </>
   );

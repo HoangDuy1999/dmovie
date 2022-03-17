@@ -1,9 +1,24 @@
-.watchlist_container{
-    width: 80%;
-    background-color: yellow;
-    margin: 50px auto;
-    .title{
-        font-size: 35px;
-        font-weight: 600;
-    }
+.watchlist_container {
+  width: 82%;
+//   background-color: green;
+  margin: 50px auto;
+  overflow: hidden;
+  @media screen and (max-width: 350px){
+      width: 98%;
+  }
+  .title {
+    font-size: 35px;
+    font-weight: 700;
+    margin-left: 1%;
+  }
+  .card_watch_list {
+    width: 100%;
+    margin-top: 1.5%;
+    // background-color: red;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
 }
