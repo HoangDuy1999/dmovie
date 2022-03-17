@@ -27,7 +27,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
   const [accountInfo, setAccountInfo] = useState({});
 
   useEffect(() => {
-    console.log(localStorage.getItem("access_token"));
+    // console.log(localStorage.getItem("access_token"));
     if (localStorage.getItem("access_token") !== null) {
       setIsLogin(true);
     }
@@ -35,7 +35,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
       setAccountInfo(JSON.parse(localStorage.getItem("account_info")));
     }
   }, []);
-  console.log(accountInfo);
+  // console.log(accountInfo);
 
   const openMenu = (event) => {
     setAncho(event.currentTarget);

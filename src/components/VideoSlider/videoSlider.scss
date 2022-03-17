@@ -74,13 +74,13 @@
       }
       .play_icon {
         box-sizing: border-box;
-        font-size: 60px;
+        font-size: 45px;
         // padding: 50px;
         cursor: pointer;
         position: absolute;
         filter: drop-shadow(0 0 10rem yellow);
         z-index: 999999999999999999999;
-        color: red !important;
+        // color: white !important;
       }
     }
     .title {
