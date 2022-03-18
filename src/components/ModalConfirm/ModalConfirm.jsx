@@ -42,17 +42,28 @@ const ModalConfirm = ({ isOpen, title, message, handleConfirm }) => {
           <Typography
             id="modal-modal-title"
             variant="h6"
-            style={{ fontWeight: 700, padding: "10px 0"}}
+            style={{ fontWeight: 700, padding: "10px 0" }}
             component="h2"
           >
             {title}
           </Typography>
           <Divider />
-          <Typography id="modal-modal-description" component={'span'}  sx={{ mt: 1, mb:1 }}>
+          <Typography
+            id="modal-modal-description"
+            component={"span"}
+            sx={{ mt: 2, mb: 2 }}
+          >
             {parse(message)}
           </Typography>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button variant="contained" style={{ marginRight: "15px" }}>
+            <Button
+              variant="contained"
+              style={{ marginRight: "15px" }}
+              onClick={() => {
+                handleConfirm();
+                setOpen(false);
+              }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -66,7 +77,11 @@ const ModalConfirm = ({ isOpen, title, message, handleConfirm }) => {
                 <span>YES</span>
               </div>
             </Button>
-            <Button color="secondary" variant="outlined">
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => setOpen(false)}
+            >
               <div
                 style={{
                   display: "flex",

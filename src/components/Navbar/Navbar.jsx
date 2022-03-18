@@ -10,12 +10,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import tmdbApi from "../../api/tmdbApi";
 import { useNavigate } from "react-router-dom";
-// import defaultImage from "../../images/default_image.jpg";
+// import dmovieLogo from "../../images/dmovie_logo.png";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { RiArrowDownSFill } from "react-icons/ri";
 
-const Navbar = ({ handleOnFocus = (e) => {} }) => {
+const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
   const navigate = useNavigate();
   const [isCloseIcon, setIsCloseIcon] = useState(false);
   const [ancho, setAncho] = React.useState(null);
@@ -100,14 +100,13 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
   };
 
   const handleLogout = () => {
-    console.log("dmmmm");
     localStorage.removeItem("access_token");
     localStorage.removeItem("account_info");
     setIsLogin(false);
     handleProfileMenuClose();
   };
   return (
-    <div className="navbar">
+    <div className="navbar" style={home ? {}: {position: "relative"}}>
       {/* responsive mobile */}
       {isSearchShow ? (
         <div>
@@ -133,9 +132,10 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
         </div>
       )}
 
-      <div className="navbar_container">
+      <div className="navbar_container" style={home?{backgroundColor: "rgba(0,0,0,0.3)"}: {backgroundColor: "#333333"}}>
         <div className="logoContainer">
           <Link to="/" className="logo_link">
+            {/* <img src={dmovieLogo} alt="dmovie_logo" className="dmovie_logo" /> */}
             <span className="logoText">
               <span>D</span>
               movie
@@ -313,7 +313,6 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
               <div
                 onClick={openMenuProfile}
                 style={{
-                  marginLeft: "10px",
                   display: "flex",
                   color: "white",
                   alignItems: "center",
@@ -349,12 +348,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
-                  {/* <Link
-                    to="/account?type=login"
-                    style={{ textDecoration: "none", color: "#263238" }}
-                  > */}
                   Log out
-                  {/* </Link> */}
                 </MenuItem>
               </Menu>
             </div>
@@ -375,7 +369,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
                 </Link>
               </div>
 
-              <div className="nav_bar_profile" style={{marginLeft: "10px"}}>
+              <div className="nav_bar_profile" style={{ marginLeft: "10px" }}>
                 <PersonIcon
                   onClick={openMenuProfile}
                   className="nav_bar_profile_icon"
@@ -386,7 +380,7 @@ const Navbar = ({ handleOnFocus = (e) => {} }) => {
                   onClose={handleProfileMenuClose}
                   keepMounted
                 >
-                  <MenuItem>
+                  <MenuItem style={{zIndex: 3}}>
                     <Link
                       to="/account?type=register"
                       style={{ textDecoration: "none", color: "#263238" }}

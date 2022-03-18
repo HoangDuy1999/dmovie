@@ -11,7 +11,7 @@ import Footer from "../components/Footer/Footer";
 const Home = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar home={true} />
       <Carousel />
       <NowPlaying />
       <TvAiring />

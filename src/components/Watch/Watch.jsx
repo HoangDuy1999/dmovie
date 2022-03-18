@@ -18,6 +18,7 @@ import VideoSlider from "../VideoSlider/VidieoSlider";
 import FBComment from "../FBComment/FBComment";
 import SubTitleList from "../SubTitleList/SubTitleList";
 import ModalConfirm from "../ModalConfirm/ModalConfirm";
+import { useBeforeunload } from "react-beforeunload";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -66,6 +67,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const controlsRef = useRef(null);
   const [count, setCount] = useState(0);
   const [hideSub, setHideSub] = useState(false);
+  const [currentTimeBefore, setCurrentTimeBefore] = useState(null);
 
   const formatTimeVideo = (seconds) => {
     if (isNaN(seconds)) {
@@ -122,11 +124,8 @@ const Watch = ({ cate, ep, onFocus }) => {
       .then((res) => {
         if (res.data?.data) {
           setVideoUrl(() => res.data.data.mediaUrl);
-          setIsDoneLoad(false);
-          const timeout = setTimeout(() => {
-            checkLoadDonePlayer();
-          }, 2000);
-          return () => clearTimeout(timeout);
+        } else {
+          setDoneLoad(false);
         }
       })
       .catch((error) => console.log(error));
@@ -166,30 +165,98 @@ const Watch = ({ cate, ep, onFocus }) => {
       return 0;
     });
   };
-
-  const checkLoadDonePlayer = () => {
+  // leave tab browser
+  const onBlur = () => {
+    console.log(
+      `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
+    );
     if (
-      playerRef?.current?.getCurrentTime() !== null &&
-      playerRef?.current?.getCurrentTime() !== undefined
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
     ) {
-      setIsDoneLoad(true);
-    }
-    if (
-      playerRef?.current?.getCurrentTime() === null &&
-      playerRef?.current?.getCurrentTime() === undefined
-    ) {
-      setIsDoneLoad(false);
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
     }
   };
+  // forcus tab browser
+  const onFocusWindow = () => {
+    console.log(
+      `Focus: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
+    );
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
+  };
+  // get current timeBefore
+  const getCurrentTimeBefore = () => {
+    let timeBefore = localStorage.getItem(`${id}^^^${episodeId}`);
+    if (timeBefore !== undefined && timeBefore !== null) {
+      timeBefore = parseInt(timeBefore);
+      // timeBefore = formatTimeVideo(timeBefore);
+      setCurrentTimeBefore(timeBefore);
+    } else {
+      setCurrentTimeBefore(null);
+    }
+  };
+  const handleConfirm = () => {
+    playerRef.current.seekTo(currentTimeBefore);
+    setPlayerStates(() => ({
+      ...playerStates,
+      playing: true,
+      // played: parseFloat(newValue / 100),
+      //seeking: false,
+    }));
+  };
+
+  //tab close
+  useBeforeunload((event) => {
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
+    console.log(
+      `CloseTab: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
+    );
+  });
 
   useEffect(() => {
     getDetailMovies();
     setEpisodeId(ep);
+
+    // // set time start
+    // getCurrentTimeBefore();
+
     window.scrollTo(0, 0);
+    window.addEventListener("blur", onBlur);
+    window.addEventListener("focus", onFocusWindow);
+    return () => {
+      window.removeEventListener("blur", onBlur);
+      window.removeEventListener("focus", onFocusWindow);
+    };
   }, [id, cate, ep]);
 
   useEffect(() => {
     setDoneLoad(false);
+
+    // set time start
+    getCurrentTimeBefore();
+
     const timeout = setTimeout(() => {
       setDoneLoad(true);
     }, 5000);
@@ -230,6 +297,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEventListener("keydown", handleKeyBoard);
 
   const handleClickChangeEpisode = (value) => {
+    setIsDoneLoad(false);
     playerRef = null;
     setPlayerStates({
       playing: false,
@@ -258,6 +326,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const onClickChangeServer = (val) => {
+    setIsDoneLoad(false);
     setPlayerStates({
       playing: false,
       muted: false,
@@ -459,6 +528,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
+    setIsDoneLoad(false);
     setPlayerStates({
       playing: false,
       muted: false,
@@ -485,10 +555,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   const handleOnEndedReactPlayer = () => {
     console.log("chạy xong");
   };
-  // CHECKED LOAD FILM
-  console.log("isDoneLoad");
-  console.log(isDoneLoad);
-  console.log("isDoneLoad");
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -501,19 +567,19 @@ const Watch = ({ cate, ep, onFocus }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
-
   return (
     <div
       className="watch_movie_container"
       // onKeyDown={(e) => handlePlayControlClick(e)}
     >
-      {isDoneLoad ? (
+      {isDoneLoad && currentTimeBefore !== null ? (
         <ModalConfirm
+          handleConfirm={handleConfirm}
           title="Notification"
-          message="
-<div>The system records the state as finishing watching this movie at<b style='backgroundColor: yellow'> 
-01:31:52</b>. 
-Do you want to continue watching?</div>"
+          message={`
+<div>The system records the state as stopping watching this movie at<b style='backgroundColor: yellow'> 
+${formatTimeVideo(currentTimeBefore)}</b>. 
+Do you want to continue watching?</div>`}
           isOpen={isDoneLoad}
         />
       ) : (
@@ -530,6 +596,7 @@ Do you want to continue watching?</div>"
             ref={playerContainerRef}
           >
             <ReactPlayer
+              onReady={(e) => setIsDoneLoad(true)}
               onProgress={(progress) => {
                 handleProgressReactPlayer(progress);
               }}
@@ -539,7 +606,9 @@ Do you want to continue watching?</div>"
               onEnded={handleOnEndedReactPlayer}
               playing={playerStates.playing}
               muted={playerStates.muted}
-              onError={(error, data, hlsInstance, hlsGlobal) => {}}
+              onError={(error, data, hlsInstance, hlsGlobal) => {
+                setIsDoneLoad(false);
+              }}
               url={videoUrl}
               ref={playerRef}
               volume={playerStates.volume}

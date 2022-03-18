@@ -1,13 +1,20 @@
 .navbar {
-  min-width: 100%;
-  max-width: auto !important;
-  min-height: 60px;
-  height: 60px;
-  padding: 0;
-  margin: 0 auto;
-  z-index: 99999999999999999999;
-  // overflow-x: hidden;
+  position: absolute;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 65px;
+  top: 0;
+  overflow: hidden;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 2;
+  display: flex;
+  align-items: center;
   // background-color: red;
+  box-sizing: border-box;
   .input_search {
     position: absolute;
     box-sizing: border-box;
@@ -40,9 +47,15 @@
 .navbar_container {
   display: flex;
   height: 100%;
-  background-color: #333333;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  // background-color: #333333;
   // background-color: rgba(0,0,0,0.3);
   align-items: center;
+  margin: 0;
   padding: 0 20px;
   // overflow-x: hidden;
   justify-content: space-between;
@@ -52,14 +65,29 @@
   .logoContainer {
     cursor: pointer;
     display: inline;
+    z-index: 1;
     flex: 0.5;
     padding: 0 !important;
-    margin: 0 important;
+    margin: 0 !important;
     align-items: flex-start;
+    width: 100%;
     height: 100%;
+    box-sizing: border-box;
     .logo_link {
+      padding: 0 !important;
+      margin: 0 !important;
+      height: 60px;
       text-decoration: none;
-      height: 100%;
+      box-sizing: border-box;
+      width: 100%;
+      // height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .dmovie_logo {
+        width: 100%;
+        box-sizing: border-box;
+      }
       .logoText {
         font-weight: bold;
         font-size: 40px;
@@ -280,7 +308,7 @@
         color: white;
         text-decoration: none;
         font-size: 18px;
-        font-weight: 400;
+        font-weight: 500;
       }
 
       .link:hover {
@@ -290,6 +318,10 @@
   }
 
   .profile {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow:hidden;
     cursor: pointer;
     flex: 0.5;
     display: flex;
@@ -325,6 +357,8 @@
     .nav_bar_profile {
       display: none;
       // margin-left: 30px;
+      box-sizing: border-box;
+      overflow: hidden;
       text-decoration: none;
       .link {
         color: white;
@@ -344,7 +378,10 @@
     }
 
     .nav_bar_profile_login {
+      // background-color: red;
       // margin-left: 30px;
+      width: 60px;
+      overflow: hidden;
       text-decoration: none;
       .link {
         color: white;
