@@ -178,8 +178,12 @@ const PeopleInfo = () => {
               <div className="info_group">
                 <h5>Home page</h5>
                 <a href={peopleInfo?.homepage}>
-                  <span style={{ textTransform: "lowercase" }}>
-                    {peopleInfo?.homepage || "unknown"}
+                  <span
+                    style={
+                      peopleInfo?.homepage ? { textTransform: "lowercase" } : {}
+                    }
+                  >
+                    {peopleInfo?.homepage || "Unknown"}
                   </span>
                 </a>
               </div>
@@ -272,13 +276,13 @@ const PeopleInfo = () => {
                         <div className="items">
                           <div className="left">
                             <div className="movie_name">
-                              {item.name || "unknown"}
+                              {item.name || "Unknown"}
                             </div>
                             <div className="character">
-                              {item.pivot?.character || "unknown"}
+                              {item.pivot?.character || "Unknown"}
                             </div>
                           </div>
-                          <div className="right">{item.year || "unknown"}</div>
+                          <div className="right">{item.year || "Unknown"}</div>
                         </div>
                         {isHr ? (
                           <hr
@@ -354,18 +358,18 @@ const PeopleInfo = () => {
                               </div>
                             </Link>
                             <div className="character">
-                              {item.character || "unknown"}
+                              {item.character || "Unknown"}
                             </div>
                           </div>
                           <div className="right">
                             {item.release_date
                               ? item.release_date === ""
-                                ? "unknown"
+                                ? "Unknown"
                                 : item.release_date
                               : item.first_air_date === ""
-                              ? "unknown"
+                              ? "Unknown"
                               : item.first_air_date}
-                            {item.year === "1" ? "unknown" : ""}
+                            {item.year === "1" ? "Unknown" : ""}
                           </div>
                         </div>
                         {isHr ? (
@@ -442,18 +446,18 @@ const PeopleInfo = () => {
                               </div>
                             </Link>
                             <div className="character">
-                              {item.job || "unknown"}
+                              {item.job || "Unknown"}
                             </div>
                           </div>
                           <div className="right">
                             {item.release_date
                               ? item.release_date?.trim() === ""
-                                ? "unknown"
+                                ? "Unknown"
                                 : item.release_date
                               : item.first_air_date?.trim() === ""
-                              ? "unknown"
+                              ? "Unknown"
                               : item.first_air_date}
-                            {item.year === "1" ? "unknown" : ""}
+                            {item.year === "1" ? "Unknown" : ""}
                           </div>
                         </div>
                         {isHr ? (
@@ -517,10 +521,10 @@ const PeopleInfo = () => {
                         <div className="items">
                           <div className="left">
                             <div className="movie_name">
-                              {item.name || "unknown"}
+                              {item.name || "Unknown"}
                             </div>
                             <div className="character">
-                              {item.pivot?.character || "unknown"}
+                              {item.pivot?.character || "Unknown"}
                             </div>
                           </div>
                           <div className="right">
@@ -590,13 +594,13 @@ const PeopleInfo = () => {
                         <div className="items">
                           <div className="left">
                             <div className="movie_name">
-                              {item.name || "unknown"}
+                              {item.name || "Unknown"}
                             </div>
                             <div className="character">
-                              {item.pivot?.character || "unknown"}
+                              {item.pivot?.character || "Unknown"}
                             </div>
                           </div>
-                          <div className="right">{item.year || "unknown"}</div>
+                          <div className="right">{item.year || "Unknown"}</div>
                         </div>
                         {isHr ? (
                           <hr

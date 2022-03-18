@@ -16,6 +16,9 @@ import { BsFillHeartFill } from "react-icons/bs";
 import YouTube from "react-youtube";
 import watchlistApi from "../../api/dmovie/watchlist";
 import { success, error } from "../Toastify/Toastify";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import defaultImage from "../../images/default_image.jpg";
 
 const MovieInfo = ({ category }) => {
   // console.log(id);
@@ -276,7 +279,10 @@ const MovieInfo = ({ category }) => {
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
       <div className="movie_info">
-        <div className="movie_info_top">
+        <div
+          className="movie_info_top"
+          style={movieInfos?.overview?.length < 200 && width < 480 ? { minHeight: "45vh" } : {}}
+        >
           <div
             className="banner"
             style={
@@ -355,7 +361,7 @@ const MovieInfo = ({ category }) => {
                     {isLogin ? (
                       <>
                         <BsFillHeartFill
-                          fontSize="30px"
+                          className="heart_icon"
                           onClick={handleAddWatchList}
                           style={
                             isWatchList
@@ -391,28 +397,28 @@ const MovieInfo = ({ category }) => {
                         <Link
                           style={{
                             textDecoration: "none",
+                            margin: 0,
+                            padding: 0,
                             minHeight: "100%",
                             width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
                           }}
                           to={"/person/detail/" + item.id}
                         >
-                          <img
-                            style={{ width: "100%", minHeight: "100%" }}
-                            src={
-                              item?.profile_path
-                                ? process.env.REACT_APP_PATH_IMG +
-                                  item.profile_path
-                                : ""
-                            }
+                          <LazyLoadImage
+                            className="cast_img"
+                            title={item.original_name}
                             onError={(event) => {
-                              event.target.src =
-                                "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                              event.target.src = { defaultImage };
                               event.onerror = null;
                             }}
-                            // style={{ minWidth: "80px", minHeight: "100px" }}
-                            alt={item.original_name}
+                            effect="blur"
+                            src={
+                              process.env.REACT_APP_PATH_IMG + item.profile_path
+                            }
                           />
-                          <span>{item.original_name}</span>
+                          <span style={{textAlign: "center"}}>{item.original_name}</span>
                         </Link>
                       </div>
                     );

@@ -237,7 +237,7 @@ const PeopleList = () => {
                           >
                             {item.known_for[0].title || item.known_for[0].name}
                             {" ("}
-                            {date[0] || "unknown"}
+                            {date[0] || "Unknown"}
                             {")"}
                           </span>
                         ) : (

@@ -21,7 +21,7 @@ $black: #000;
       min-height: 60vh;
     }
     @media only screen and (min-width: 421px) and (max-width: 599px) {
-      min-height: 80vh;
+      min-height: 70vh;
     }
     @media only screen and (min-width: 390px) and (max-width: 420px) {
       min-height: 50vh;
@@ -169,6 +169,12 @@ $black: #000;
               margin-bottom: 5px;
             }
           }
+          .heart_icon{
+            font-size:30px;
+            @media screen and (max-width: 420px) {
+              font-size: 25px;
+            }
+          }
           .genres {
             display: flex;
             margin-top: 10px;
@@ -231,23 +237,42 @@ $black: #000;
               width: 100px;
               height: 125px;
               margin-right: 10px;
+              border-radius: 5px;
               background-image: url("../../images/default_image.jpg");
               background-size: cover;
               background-position: center;
+              @media screen and (max-width: 420px) {
+                width: 75px;
+                height: 90px;
+              }
+              @media screen and (max-width: 380px) {
+                width: 55px;
+                height:80px;
+              }
+            }
+            .cast_img {
+              margin-top: -2px;
+              padding: 0;
+              width: 100px;
+              height: 125.5px;
               border-radius: 5px;
               @media screen and (max-width: 420px) {
                 width: 75px;
                 height: 90px;
               }
+              @media screen and (max-width: 380px) {
+                width: 55px;
+                height:80px;
+              }
             }
-            .cast img {
-              width: 100%;
-              min-height: 100%;
+            // .cast img {
+            //   width: 100%;
+            //   min-height: 100%;
 
-              border-radius: 5px;
-              object-fit: cover;
-              // border: 1px solid #f1f1f1;
-            }
+            //   border-radius: 5px;
+            //   object-fit: cover;
+            //   // border: 1px solid #f1f1f1;
+            // }
             .cast span {
               position: relative;
               color: white;
