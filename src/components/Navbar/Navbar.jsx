@@ -31,29 +31,29 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
   const [accountInfo, setAccountInfo] = useState({});
   const [isOpenMenuProfile, setIsOpenMenuProfile] = useState(false);
 
-  const handleMouseClick = (e) => {
-    console.log(e);
-    console.log(isOpenMenuProfile);
-    // if (e.keyCode === 90) {
-    if (isOpenMenuProfile) {
-      setIsOpenMenuProfile(() => false);
-    }
-    // }
-  };
+  // const handleMouseClick = (e) => {
+  //   console.log(e);
+  //   console.log(isOpenMenuProfile);
+  //   // if (e.keyCode === 90) {
+  //   if (isOpenMenuProfile) {
+  //     setIsOpenMenuProfile(() => false);
+  //   }
+  //   // }
+  // };
   // useEventListener("keydown", handleKeyBoard);
 
   useEffect(() => {
     // console.log(localStorage.getItem("access_token"));
-    window.addEventListener("click", handleMouseClick);
+    // window.addEventListener("click", handleMouseClick);
     if (localStorage.getItem("access_token") !== null) {
       setIsLogin(true);
     }
     if (localStorage.getItem("account_info") !== null) {
       setAccountInfo(JSON.parse(localStorage.getItem("account_info")));
     }
-    return () => {
-      window.removeEventListener("click", handleMouseClick);
-    };
+    // return () => {
+    //   window.removeEventListener("click", handleMouseClick);
+    // };
   }, []);
   // console.log(accountInfo);
 
@@ -135,29 +135,17 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
         style={home ? { position: "absolute" } : { position: "relative" }}
       >
         {/* responsive mobile */}
-        {isSearchShow ? (
-          <div>
-            <input
-              className="input_search"
-              style={{ display: "block" }}
-              onKeyUp={(e) => handleOnkeyUpSearch(e)}
-              onFocus={(e) => handleOnFocus(true)}
-              onBlur={(e) => handleOnFocus(false)}
-            />
-            <CloseIcon
-              className="icon_close"
-              onClick={handleClickCloseSearchShow}
-            />
-          </div>
-        ) : (
-          <div style={{ display: "none" }}>
-            <input className="input_search" />
-            <CloseIcon
-              className="icon_close"
-              onClick={handleClickCloseSearchShow}
-            />
-          </div>
-        )}
+        {isSearchShow
+          ? ""
+          : ""
+            // <div style={{ display: "none" }}>
+            //   <input className="input_search" />
+            //   <CloseIcon
+            //     className="icon_close"
+            //     onClick={handleClickCloseSearchShow}
+            //   />
+            // </div>
+        }
 
         <div
           className="navbar_container"
@@ -454,6 +442,24 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
           </div>
         </div>
       </div>
+      {isSearchShow ? (
+        <div style={{ display: "block"}}>
+          <input
+            // style={{ display: "block", zIndex: 999999999999 }}
+            className="input_search"
+            onKeyUp={(e) => handleOnkeyUpSearch(e)}
+            onFocus={(e) => handleOnFocus(true)}
+            onBlur={(e) => handleOnFocus(false)}
+          />
+          <CloseIcon
+            style={{ display: "block" }}
+            className="icon_close"
+            onClick={handleClickCloseSearchShow}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

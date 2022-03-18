@@ -99,10 +99,6 @@ const Watch = ({ cate, ep, onFocus }) => {
         )
         .then((res) => {
           setMovieInfor(res.data.data);
-          // console.log(res.data.data);
-          // if(res.data.data.episodeVo?.length > 0){
-
-          // }
         })
         .catch((error) => console.log(error));
     }
@@ -167,9 +163,9 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
   // leave tab browser
   const onBlur = () => {
-    console.log(
-      `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
-    );
+    //console.log(
+    //   `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
+    // );
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -183,9 +179,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
   // forcus tab browser
   const onFocusWindow = () => {
-    console.log(
-      `Focus: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
-    );
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -209,6 +202,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     }
   };
   const handleConfirm = () => {
+    console.log("rung");
     playerRef.current.seekTo(currentTimeBefore);
     setPlayerStates(() => ({
       ...playerStates,
@@ -230,9 +224,6 @@ const Watch = ({ cate, ep, onFocus }) => {
         playerRef.current.getCurrentTime().toString()
       );
     }
-    console.log(
-      `CloseTab: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
-    );
   });
 
   useEffect(() => {
@@ -484,7 +475,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   } else if (width < 650 && subTextSize !== "16px") {
     setSubTextSize("16px");
   }
-
+ 
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
@@ -553,7 +544,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setHideSub(!hideSub);
   };
   const handleOnEndedReactPlayer = () => {
-    console.log("chạy xong");
+    // console.log("chạy xong");
   };
 
   const currentTime = playerRef.current

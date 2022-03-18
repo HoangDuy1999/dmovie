@@ -27,30 +27,24 @@
     min-height: 280px;
     max-height: 280px;
   }
-  @media only screen and (min-width: 540px) and (max-width: 600px) {
-    min-width: 48%;
-    max-width: 48%;
-    height: 250px;
-    min-height: 250px;
-    max-height: 250px;
+  @media only screen and (min-width: 540px) and (max-width: 659px) {
+    min-width: 31.33%;
+    max-width: 31.33%;
+    height: 210px;
+    min-height: 210px;
+    max-height: 210px;
   }
-  @media only screen and (min-width: 601px) and (max-width: 758px) {
-    min-width: 48%;
-    max-width: 48%;
-    height: 280px;
-    min-height: 280px;
-    max-height: 280px;
-  }
-  @media only screen and (min-width: 759px) and (max-width: 958px) {
+
+  @media only screen and (min-width: 650px) and (max-width: 820px) {
     min-width: 19%;
     max-width: 19%;
     height: 150px;
     min-height: 150px;
     max-height: 250px;
   }
-  @media only screen and (min-width: 959px) and (max-width: 1200px) {
-    min-width: 19%;
-    max-width: 19%;
+  @media only screen and (min-width: 821px) and (max-width: 1200px) {
+    min-width: 23%;
+    max-width: 23%;
     height: 240px;
     min-height: 240px;
     max-height: 240px;
@@ -89,6 +83,7 @@
     transition: transform 0.5s ease-in-out;
     object-fit: cover;
     @media only screen and (min-width: 0) and (max-width: 359px) {
+      width: 150%;
       height: 150px;
       min-height: 150px;
       max-height: 150px;
@@ -96,34 +91,33 @@
     @media only screen and (min-width: 360px) and (max-width: 420px) {
       height: 240px;
       min-height: 240px;
+      width: 112%;
       max-height: 240px;
     }
     @media only screen and (min-width: 421px) and (max-width: 539px) {
       height: 280px;
+      width: 150%;
       min-height: 280px;
       max-height: 280px;
     }
-    @media only screen and (min-width: 540px) and (max-width: 600px) {
-      height: 250px;
-      min-height: 250px;
-      max-height: 250px;
+    @media only screen and (min-width: 540px) and (max-width: 649px) {
+      height: 210px;
+      width:120%;
+      min-height: 210px;
+      max-height: 210px;
     }
-    @media only screen and (min-width: 601px) and (max-width: 758px) {
-      height: 280px;
-      min-height: 280px;
-      max-height: 280px;
-    }
-    @media only screen and (min-width: 759px) and (max-width: 958px) {
+    @media only screen and (min-width: 650px) and (max-width: 820px) {
       height: 150px;
       min-height: 150px;
       max-height: 250px;
     }
-    @media only screen and (min-width: 959px) and (max-width: 1200px) {
+    @media only screen and (min-width: 821px) and (max-width: 1200px) {
       height: 240px;
       min-height: 240px;
       max-height: 240px;
     }
     @media only screen and (min-width: 1201px) and (max-width: 1500px) {
+      width: 110%;
       height: 260px;
       min-height: 260px;
       max-height: 260px;

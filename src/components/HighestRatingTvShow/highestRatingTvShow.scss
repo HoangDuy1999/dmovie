@@ -1,7 +1,7 @@
 .high_rate_tv_show {
   width: 100%;
   position: relative;
-  margin: 100px auto;
+  margin: 50px auto;
   background-color: #fafafa;
   // margin-top: 20px;
   // overflow: hidden;
@@ -18,6 +18,6 @@
   margin-right: auto;
   padding-bottom: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }

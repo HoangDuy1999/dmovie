@@ -3,6 +3,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background-image: url("https://skillz4kidzmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg");
+  background-size: cover;
+  background-position: center;
   // background-color: green;
   margin-bottom: 5px !important;
   margin-right: 0;
@@ -28,9 +31,9 @@
 }
 
 .card_item_people_container {
-  background-image: url("../../images/default_image.jpg");
-  background-size: cover;
-  background-position: center;
+  // background-image: url("../../images/default_image.jpg");
+  // background-size: cover;
+  // background-position: center;
   flex: 1;
   // margin: 10px;
   padding: 0;
