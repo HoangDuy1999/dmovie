@@ -56,6 +56,7 @@ const CardItemBrowses = ({ item, types, colorGroup }) => {
         </Link>
         <div
           className="icon_group"
+          title={name}
           onMouseOver={(e) => {
             handleOnMoveOverPoster(e);
           }}

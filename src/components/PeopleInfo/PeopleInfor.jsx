@@ -179,7 +179,7 @@ const PeopleInfo = () => {
                 <h5>Home page</h5>
                 <a href={peopleInfo?.homepage}>
                   <span style={{ textTransform: "lowercase" }}>
-                    {peopleInfo?.homepage}
+                    {peopleInfo?.homepage || "unknown"}
                   </span>
                 </a>
               </div>

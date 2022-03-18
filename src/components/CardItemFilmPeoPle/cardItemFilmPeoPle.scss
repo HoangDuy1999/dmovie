@@ -4,57 +4,27 @@
   display: flex;
   flex-direction: column;
   // background-color: green;
-  margin-bottom: 15px;
+  margin-bottom: 5px !important;
   margin-right: 0;
   padding: 0;
   box-sizing: border-box;
-  @media only screen and (min-width: 0) and (max-width: 359px) {
-    min-width: 48%;
-    max-width: 48%;
-    height: 150px;
-    min-height: 150px;
-    max-height: 150px;
+  width: 23%;
+  height: 275px;
+  margin: 0 1%;
+  @media screen and (max-width: 978px) {
+    height: 225px;
   }
-  @media only screen and (min-width: 360px) and (max-width: 420px) {
-    min-width: 48%;
-    max-width: 48%;
-    height: 240px;
-    min-height: 240px;
-    max-height: 240px;
-  }
-  @media only screen and (min-width: 421px) and (max-width: 758px) {
-    min-width: 48%;
-    max-width: 48%;
-    height: 280px;
-    min-height: 280px;
-    max-height: 280px;
-  }
-  @media only screen and (min-width: 759px) and (max-width: 958px) {
-    min-width: 19%;
-    max-width: 19%;
-    height: 220px;
-    min-height: 220px;
-    max-height: 220px;
-  }
-  @media only screen and (min-width: 959px) and (max-width: 1200px) {
-    min-width: 19%;
-    max-width: 19%;
+  @media screen and (max-width: 600px) {
     height: 200px;
-    min-height: 200px;
-    max-height: 200px;
   }
-  @media only screen and (min-width: 1201px) and (max-width: 1500px) {
-    min-width: 19%;
-    max-width: 19%;
-    height: 250px;
-    min-height: 250px;
-    max-height: 250px;
+  @media screen and (max-width: 480px) {
+    height: 225px;
+    width: 48%;
   }
-  min-width: 19%;
-  max-width: 19%;
-  height: 250px;
-  min-height: 250px;
-  max-height: 250px;
+  @media screen and (max-width: 375px) {
+    height: 150px;
+    width: 48%;
+  }
 }
 
 .card_item_people_container {
@@ -65,11 +35,11 @@
   // margin: 10px;
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 100% !important;
   height: auto;
   display: flex;
   position: relative;
-  border-radius: 5px;
+  border-radius: 10px;
   box-sizing: border-box;
   overflow: hidden;
   .icon_group {
@@ -79,12 +49,12 @@
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.7);
     opacity: 1;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    .play_icon{
+    .play_icon {
       margin-right: 10px;
     }
   }
@@ -94,14 +64,27 @@
   }
 
   .now_playing_image {
-    width: 100%;
-    // height: 100%;
-    border-radius: 5px;
+    min-width: 120%;
     z-index: 0;
-    transition: transform 0.4s ease;
-    transform-origin: 50% 50%;
+    transition: transform 0.5s ease-in-out;
+    // transform-origin: 50% 50% !important;
     // box-sizing: border-box;
-    object-fit: fill;
+    object-fit: cover;
+    height: 275px;
+    @media screen and (max-width: 978px) {
+      height: 225px;
+    }
+    @media screen and (max-width: 600px) {
+      height: 200px;
+    }
+    @media screen and (max-width: 480px) {
+      height: 225px;
+      width: 120%;
+    }
+    @media screen and (max-width: 375px) {
+      height: 150px;
+     // width: 48%;
+    }
   }
 }
 
@@ -113,7 +96,7 @@
   padding: 0;
   margin: 0;
   @media only screen and (max-width: 15000px) {
-    width: 100%;
+    width: 100% !important;
   }
   // background-color: yellow;
   span {
@@ -125,16 +108,17 @@
     margin: 0;
     // background-color: cyan;
     overflow: hidden;
-    color: black;
+    color: #283040;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     line-clamp: 1;
-    text-align: left;
+    text-align: center;
+    font-weight: 600;
     -webkit-box-orient: vertical;
     cursor: pointer;
   }
-  .now_play_title:hover{
+  .now_play_title:hover {
     text-decoration: underline;
   }
 }
