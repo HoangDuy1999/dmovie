@@ -32,7 +32,7 @@ const SearchResult = ({ txtSearch }) => {
     return () => clearTimeout(timeout);
   }, [txtSearch]);
   return (
-    <div style={{ backgroundColor: "#dbdbdb" , marginBottom: "50px" }}>
+    <div style={{ marginBottom: "50px" }}>
       <PageLoadingEffeect doneLoad={doneLoad} />
       <div className="search_result_container">
         <div className="list_movies">

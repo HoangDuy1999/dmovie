@@ -7,7 +7,7 @@ import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const Login = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar home={true} />
       <LoginPage />
       <Footer />
       <ScrollToTop/>

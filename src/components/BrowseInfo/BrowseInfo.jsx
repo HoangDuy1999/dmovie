@@ -444,6 +444,7 @@ const BrowseInfo = () => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                alignItems: "flex-start",
                 flexWrap: "wrap",
               }}
             >

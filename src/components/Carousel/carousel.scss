@@ -2,11 +2,10 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  min-height: 95vh;
+  height: 95vh;
   overflow: hidden;
   @media all and (max-width: 978px) {
-    height: 60vh;
-    padding: 0;
+    height: 55vh;
     // background-color: red;
   }
 }
@@ -37,7 +36,7 @@
   width: 100%;
   height: 90vh;
   @media all and (max-width: 978px) {
-    height: 55vh;
+    height: 50vh;
     // background-color: red;
   }
   // box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25),
@@ -63,7 +62,7 @@
     color: #fe7516;
     padding: 0 !important;
     margin: 0 !important;
-    text-align: left;
+    text-align: left !important;
     cursor: pointer;
     @media all and (max-width: 420px) {
       font-size: 16px;
@@ -87,7 +86,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
-    text-align: justify;
+    text-align: left;
     margin-right: 10px;
     -webkit-box-orient: vertical;
     @media all and (max-width: 420px) {
