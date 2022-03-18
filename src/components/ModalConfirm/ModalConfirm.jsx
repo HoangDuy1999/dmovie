@@ -9,6 +9,7 @@ import { BsCheck } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import parse from "html-react-parser";
 
 const ModalConfirm = ({ isOpen, title, message, handleConfirm }) => {
   const [open, setOpen] = useState(false);
@@ -41,14 +42,14 @@ const ModalConfirm = ({ isOpen, title, message, handleConfirm }) => {
           <Typography
             id="modal-modal-title"
             variant="h6"
-            style={{ fontWeight: 700, padding: "10px 0" }}
+            style={{ fontWeight: 700, padding: "10px 0"}}
             component="h2"
           >
             {title}
           </Typography>
           <Divider />
-          <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-            {message}
+          <Typography id="modal-modal-description" component={'span'}  sx={{ mt: 1, mb:1 }}>
+            {parse(message)}
           </Typography>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button variant="contained" style={{ marginRight: "15px" }}>

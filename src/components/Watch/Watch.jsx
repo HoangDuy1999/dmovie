@@ -61,7 +61,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     seeking: false,
   });
 
-  const playerRef = useRef(null);
+  let playerRef = useRef(null);
   const playerContainerRef = useRef(null);
   const controlsRef = useRef(null);
   const [count, setCount] = useState(0);
@@ -122,6 +122,11 @@ const Watch = ({ cate, ep, onFocus }) => {
       .then((res) => {
         if (res.data?.data) {
           setVideoUrl(() => res.data.data.mediaUrl);
+          setIsDoneLoad(false);
+          const timeout = setTimeout(() => {
+            checkLoadDonePlayer();
+          }, 2000);
+          return () => clearTimeout(timeout);
         }
       })
       .catch((error) => console.log(error));
@@ -160,6 +165,21 @@ const Watch = ({ cate, ep, onFocus }) => {
       }
       return 0;
     });
+  };
+
+  const checkLoadDonePlayer = () => {
+    if (
+      playerRef?.current?.getCurrentTime() !== null &&
+      playerRef?.current?.getCurrentTime() !== undefined
+    ) {
+      setIsDoneLoad(true);
+    }
+    if (
+      playerRef?.current?.getCurrentTime() === null &&
+      playerRef?.current?.getCurrentTime() === undefined
+    ) {
+      setIsDoneLoad(false);
+    }
   };
 
   useEffect(() => {
@@ -210,6 +230,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEventListener("keydown", handleKeyBoard);
 
   const handleClickChangeEpisode = (value) => {
+    playerRef = null;
     setPlayerStates({
       playing: false,
       muted: false,
@@ -438,7 +459,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
-    setIsDoneLoad(false);
     setPlayerStates({
       playing: false,
       muted: false,
@@ -466,19 +486,9 @@ const Watch = ({ cate, ep, onFocus }) => {
     console.log("chạy xong");
   };
   // CHECKED LOAD FILM
-  if (
-    playerRef?.current?.getCurrentTime() !== null &&
-    playerRef?.current?.getCurrentTime() !== undefined &&
-    isDoneLoad === false
-  ) {
-    console.log(playerRef?.current?.getCurrentTime());
-    console.log("tai được phim");
-    setIsDoneLoad(true);
-  } else {
-    // setIsDoneLoad(true);
-    console.log("chưa tải được phim");
-    console.log(playerRef?.current?.getCurrentTime());
-  }
+  console.log("isDoneLoad");
+  console.log(isDoneLoad);
+  console.log("isDoneLoad");
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -497,12 +507,19 @@ const Watch = ({ cate, ep, onFocus }) => {
       className="watch_movie_container"
       // onKeyDown={(e) => handlePlayControlClick(e)}
     >
-      <ModalConfirm
-        title="Notification"
-        message="
-The system records the state as finishing watching this movie at<b> 01:31:52</b>. Do you want to continue watching?"
-        isOpen={true}
-      />
+      {isDoneLoad ? (
+        <ModalConfirm
+          title="Notification"
+          message="
+<div>The system records the state as finishing watching this movie at<b style='backgroundColor: yellow'> 
+01:31:52</b>. 
+Do you want to continue watching?</div>"
+          isOpen={isDoneLoad}
+        />
+      ) : (
+        ""
+      )}
+
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">

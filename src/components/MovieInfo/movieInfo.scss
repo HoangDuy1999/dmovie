@@ -11,6 +11,9 @@ $black: #000;
     min-height: 100vh;
     position: relative;
     background-image: linear-gradient(to bottom, #243b55, #141e30);
+    @media only screen and (min-width: 979px) and (max-width: 1280px) {
+      min-height: 75vh;
+    }
     @media only screen and (min-width: 821px) and (max-width: 978px) {
       min-height: 50vh;
     }
