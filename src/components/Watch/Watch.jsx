@@ -795,7 +795,7 @@ Do you want to continue watching?</div>`}
         </div>
 
         <div className="similar">
-          <h2 style={{ color: "white" }}>RECOMMENDED MOVIES</h2>
+          <h2 style={{ color: "white" }}>Recommend Movies</h2>
           <VideoSlider
             videoList={movieInfo?.likeList}
             onHandleChangeMovieId={handleChangeMovieId}

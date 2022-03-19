@@ -172,8 +172,8 @@ $black: #000;
               margin-bottom: 5px;
             }
           }
-          .heart_icon{
-            font-size:30px;
+          .heart_icon {
+            font-size: 30px;
             @media screen and (max-width: 420px) {
               font-size: 25px;
             }
@@ -250,7 +250,7 @@ $black: #000;
               }
               @media screen and (max-width: 380px) {
                 width: 55px;
-                height:80px;
+                height: 80px;
               }
             }
             .cast_img {
@@ -265,7 +265,7 @@ $black: #000;
               }
               @media screen and (max-width: 380px) {
                 width: 55px;
-                height:80px;
+                height: 80px;
               }
             }
             // .cast img {
@@ -474,6 +474,8 @@ $black: #000;
             img {
               width: 100px;
               height: 100px;
+              border-radius: 50%;
+              object-fit: cover;
             }
             @media screen and (max-width: 420px) {
               img {
@@ -492,7 +494,7 @@ $black: #000;
             max-width: 100%;
             box-sizing: border-box;
             .info_name {
-              color: #2b54e6;
+              color: rgb(3, 169, 244);
               // background-color: yellow;
               font-weight: 600;
               margin-bottom: 5px;
@@ -505,7 +507,7 @@ $black: #000;
               justify-content: space-between;
               .full_name {
                 flex: 5.5;
-                font-size: 15px;
+                font-size: 18px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 display: -webkit-box;

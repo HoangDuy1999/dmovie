@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { RiArrowDownSFill } from "react-icons/ri";
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+// import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 // import useEventListener from "@use-it/event-listener";
@@ -135,17 +135,16 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
         style={home ? { position: "absolute" } : { position: "relative" }}
       >
         {/* responsive mobile */}
-        {isSearchShow
-          ? ""
-          : ""
-            // <div style={{ display: "none" }}>
-            //   <input className="input_search" />
-            //   <CloseIcon
-            //     className="icon_close"
-            //     onClick={handleClickCloseSearchShow}
-            //   />
-            // </div>
-        }
+        {/* {
+          isSearchShow ? "" : ""
+          // <div style={{ display: "none" }}>
+          //   <input className="input_search" />
+          //   <CloseIcon
+          //     className="icon_close"
+          //     onClick={handleClickCloseSearchShow}
+          //   />
+          // </div>
+        } */}
 
         <div
           className="navbar_container"
@@ -443,7 +442,11 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
         </div>
       </div>
       {isSearchShow ? (
-        <div style={{ display: "block"}}>
+        <>
+          <CloseIcon
+            className="icon_close"
+            onClick={handleClickCloseSearchShow}
+          />
           <input
             // style={{ display: "block", zIndex: 999999999999 }}
             className="input_search"
@@ -451,12 +454,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
             onFocus={(e) => handleOnFocus(true)}
             onBlur={(e) => handleOnFocus(false)}
           />
-          <CloseIcon
-            style={{ display: "block" }}
-            className="icon_close"
-            onClick={handleClickCloseSearchShow}
-          />
-        </div>
+        </>
       ) : (
         ""
       )}

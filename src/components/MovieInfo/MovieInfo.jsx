@@ -454,7 +454,7 @@ const MovieInfo = ({ category }) => {
                       <div
                         className="card_video"
                         key={index}
-                        style={{ backgroundColor: " #2b54e6" }}
+                        style={{ backgroundColor: " rgb(3, 169, 244)" }}
                       >
                         <img
                           className="react-player"
