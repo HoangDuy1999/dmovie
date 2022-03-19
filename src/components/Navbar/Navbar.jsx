@@ -445,7 +445,8 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
             onClick={handleClickCloseSearchShow}
           />
           <input
-            // style={{ display: "block", zIndex: 999999999999 }}
+            autoFocus
+            placeholder="Search for movies, tv show and people..."
             className="input_search"
             onKeyUp={(e) => handleOnkeyUpSearch(e)}
             onFocus={(e) => handleOnFocus(true)}

@@ -53,8 +53,9 @@
   background-color: rgb(48, 48, 48, 0.52);
   text-transform: capitalize;
   padding: 10px;
-  @media all and (max-width: 420px) {
+  @media all and (max-width: 600px) {
     width: 50%;
+    height: 40%;
     padding: 5px;
     margin: 0 !important;
   }
@@ -64,7 +65,18 @@
     margin: 0 !important;
     text-align: left !important;
     cursor: pointer;
-    @media all and (max-width: 420px) {
+    @media screen and (max-width: 600px) {
+      font-size: 18px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      text-align: left;
+      -webkit-box-orient: vertical;
+    }
+    @media screen and (max-width: 420px) {
       font-size: 16px;
       text-align: left;
       overflow: hidden;
@@ -72,7 +84,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 1;
       line-clamp: 1;
-      text-align: justify;
+      text-align: left;
       -webkit-box-orient: vertical;
     }
   }
@@ -89,7 +101,18 @@
     text-align: left;
     margin-right: 10px;
     -webkit-box-orient: vertical;
-    @media all and (max-width: 420px) {
+    @media screen and (max-width: 600px) {
+      font-size: 16px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      text-align: left;
+      -webkit-box-orient: vertical;
+    }
+    @media screen and (max-width: 420px) {
       font-size: 12px;
       -webkit-line-clamp: 2;
       line-clamp: 2;
