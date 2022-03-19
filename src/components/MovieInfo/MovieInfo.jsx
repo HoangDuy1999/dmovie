@@ -333,7 +333,7 @@ const MovieInfo = ({ category }) => {
                     alignItems: "center",
                     position: "relative",
                     marginTop: "10px",
-                    marginBottom: "-10px",
+                    marginBottom: "-5px",
                   }}
                 >
                   <div>
