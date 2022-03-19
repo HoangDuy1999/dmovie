@@ -88,6 +88,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
       navigate("/search?query=" + e.target.value.trim());
     }
   };
+
   const handleOnChangeUpSearch = async (e) => {
     setWordEntered(e.target.value.toString());
     const response = await tmdbApi.searchMulties(
@@ -100,6 +101,8 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
     // console.log(response.results);
     setIsCloseIcon(true);
   };
+  console.log(searchResult);
+
   const handleClickCloseSearchShow = () => {
     setIsSearchShow(false);
   };
@@ -206,6 +209,8 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
                         textDecoration: "none",
                         color: "#263238",
                         marginTop: "10px",
+                        zIndex: 99999999999999999999999999999,
+                        backgrroundColor: "red",
                       }}
                     >
                       <div key={index} className="data_result">
@@ -449,9 +454,66 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
             placeholder="Search for movies, tv show and people..."
             className="input_search"
             onKeyUp={(e) => handleOnkeyUpSearch(e)}
+            onChange={(e) => handleOnChangeUpSearch(e)}
             onFocus={(e) => handleOnFocus(true)}
             onBlur={(e) => handleOnFocus(false)}
           />
+          <div className="list_box_result">
+            {searchResult.map((item, index) => {
+              const arrDate = item.release_date
+                ? item.release_date.split("-")
+                : [];
+              return (
+                <>
+                  <Link
+                    className="list_box_row"
+                    key={index}
+                    to={
+                      "/" +
+                      (item.media_type === "movie"
+                        ? item.media_type + "s"
+                        : item.media_type) +
+                      "/detail/" +
+                      item.id
+                    }
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <div className="left_row">
+                      <LazyLoadImage
+                        effect="blur"
+                        className="left_row_backdrop"
+                        src={
+                          item.media_type === "person"
+                            ? process.env.REACT_APP_PATH_IMG + item.profile_path
+                            : process.env.REACT_APP_PATH_IMG + item.poster_path
+                        }
+                        onError={(event) => {
+                          event.target.src =
+                            "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
+                          event.onerror = null;
+                        }}
+                        alt={item.name ? item.name : item.title}
+                      />
+                    </div>
+                    <div className="right_row">
+                      <div className="right_row_title">
+                        {(item.name ? item.name : item.title) +
+                          (arrDate[0] ? " (" + arrDate[0] + ")" : "")}
+                      </div>
+
+                      <div className="right_row_description">
+                        {item.overview
+                          ? item.overview
+                          : item.known_for_department}
+                      </div>
+                    </div>
+                  </Link>
+                </>
+              );
+            })}
+          </div>
         </>
       ) : (
         ""
