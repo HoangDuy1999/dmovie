@@ -460,7 +460,14 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
             onFocus={(e) => handleOnFocus(true)}
             onBlur={(e) => handleOnFocus(false)}
           />
-          <div className="list_box_result">
+          <div
+            className="list_box_result"
+            style={
+              searchResult.length > 0
+                ? {}
+                : { display: "none", width: 0, height: 0 }
+            }
+          >
             {searchResult.map((item, index) => {
               const arrDate = item.release_date
                 ? item.release_date.split("-")
