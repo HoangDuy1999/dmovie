@@ -431,12 +431,14 @@ const BrowseInfo = () => {
           <div className="right">
             <div className="label_top">
               <div className="label_left">Browse</div>
-              <AiOutlineMenuUnfold
-                className="filter_icon"
-                onClick={(e) => {
-                  handleClickOpenMenuLeft(e);
-                }}
-              />
+              <div style={{display: "flex", alignItems: "center" }}>
+                <AiOutlineMenuUnfold
+                  className="filter_icon"
+                  onClick={(e) => {
+                    handleClickOpenMenuLeft(e);
+                  }}
+                />
+              </div>
             </div>
 
             <div

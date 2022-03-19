@@ -151,7 +151,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
           style={
             home
               ? { backgroundColor: "rgba(0,0,0,0.2)" }
-              : { backgroundColor: "#263238" }
+              : { backgroundColor: "#2d2d2d" }
           }
         >
           <div className="logoContainer">

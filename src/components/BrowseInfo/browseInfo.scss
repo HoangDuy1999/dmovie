@@ -185,15 +185,17 @@
       flex-direction: column;
       .label_top {
         display: flex;
-        // align-items: center;
-        // margin-bottom: 50px;
+        align-items: center;
+        margin-bottom: 50px;
         @media screen and (min-width: 758px) and (max-width: 958px) {
           margin-bottom: 0;
         }
         .label_left {
           font-size: 28px;
           font-weight: 600;
-          margin-bottom: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .filter_icon {
           margin-left: 10px;
