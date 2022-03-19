@@ -10,7 +10,7 @@ import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 import tmdbApi from "../../api/tmdbApi";
 import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const PeopleList = () => {
   const [doneLoad, setDoneLoad] = useState(false);
@@ -64,7 +64,14 @@ const PeopleList = () => {
   //     label: "Name",
   //   },
   // ];
-
+  const getDetailPerson = async (p_id) => {
+    const rs = await tmdbApi.getDetailPerson(p_id);
+    // console.log(rs.biography);
+    if (rs) {
+      return rs.biography;
+    }
+    return "";
+  };
   useEffect(() => {
     // window.scrollTo(0, 0);
   }, []);
@@ -97,14 +104,33 @@ const PeopleList = () => {
     // };
     // getInfoPeople();
     const getPopularPeople = async () => {
-      const rs = await tmdbApi.getPopularPeople(page);
-      setListPeople(()=> [...listPeople, ...rs.results]);
-      setTotalPage(rs.total_pages);
+      let rs = await tmdbApi.getPopularPeople(page);
+      if (rs.total_pages !== totalPages) {
+        setTotalPage(rs.total_pages);
+      }
+      if (rs?.results.length > 0) {
+        rs = rs.results.map(async (item) => {
+          const overview = await getDetailPerson(item.id);
+          // console.log(overview);
+          return { ...item, overview: overview };
+        });
+        Promise.all(rs).then(function (results) {
+          console.log(results);
+          setListPeople(() => [...listPeople, ...results]);
+        });
+        // return tem;
+      }
     };
     getPopularPeople();
+    // .then((res) => {
+    //   console.log(res);
+    // })
+    // .then((res) => {
+    //   console.log(res);
+    // });
     return () => clearTimeout(timeout);
   }, [page]);
-  console.log(listPeople);
+  // console.log(listPeople);
   // console.log(selectedDirection);
   // console.log(selectedSortBy);
   const handleClickLoadMore = () => {
@@ -202,8 +228,7 @@ const PeopleList = () => {
                         src={process.env.REACT_APP_PATH_IMG + item.profile_path}
                         onError={({ currentTarget }) => {
                           currentTarget.onerror = null; // prevents looping
-                          currentTarget.src =
-                            {defaultImage}
+                          currentTarget.src = { defaultImage };
                         }}
                         effect="blur"
                         // onError={(event) => {
@@ -214,7 +239,7 @@ const PeopleList = () => {
                         alt={item.name}
                       />
                     </div>
-                    <div className="desc">
+                    <div className="description_people">
                       <Link
                         style={{ textDecoration: "none" }}
                         to={"/person/detail/" + item.id}
@@ -223,7 +248,7 @@ const PeopleList = () => {
                       </Link>
                       <div
                         className="type"
-                        style={{ marginBottom: "20px", marginTop: "5px" }}
+                        style={{ marginBottom: "10px", marginTop: "5px" }}
                       >
                         <span>{item.known_for_department}</span>
                         {item.known_for.length > 0 ? (
@@ -244,7 +269,7 @@ const PeopleList = () => {
                           ""
                         )}
                       </div>
-                      <div className="describe">{item.description}</div>
+                      <div className="describe">{item.overview}</div>
                     </div>
                   </div>
                 );

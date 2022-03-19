@@ -18,7 +18,7 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 // import useEventListener from "@use-it/event-listener";
-
+import dmovieLogo from "../../images/dmovie_logo.png";
 const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
   const navigate = useNavigate();
   const [isCloseIcon, setIsCloseIcon] = useState(false);
@@ -151,16 +151,12 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
           style={
             home
               ? { backgroundColor: "rgba(0,0,0,0.2)" }
-              : { backgroundColor: "#333333" }
+              : { backgroundColor: "#263238" }
           }
         >
           <div className="logoContainer">
             <Link to="/" className="logo_link">
-              {/* <img src={dmovieLogo} alt="dmovie_logo" className="dmovie_logo" /> */}
-              <span className="logoText">
-                <span>D</span>
-                movie
-              </span>
+              <img src={dmovieLogo} alt="dmovie_logo" className="dmovie_logo" />
             </Link>
           </div>
 
@@ -168,6 +164,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
             <div className="search_wrapper">
               <input
                 type="text"
+                style={home ? {} : { backgroundColor: "#37474f" }}
                 className="inputSearch"
                 placeholder="Search for movies, tv show and people..."
                 value={wordEntered}
