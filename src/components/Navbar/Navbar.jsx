@@ -477,6 +477,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
                   <Link
                     className="list_box_row"
                     key={index}
+                    onClick={() => setIsSearchShow(false)}
                     to={
                       "/" +
                       (item.media_type === "movie"

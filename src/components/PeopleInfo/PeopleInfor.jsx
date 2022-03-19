@@ -177,10 +177,14 @@ const PeopleInfo = () => {
               </div>
               <div className="info_group">
                 <h5>Home page</h5>
-                <a href={peopleInfo?.homepage}>
+                <a
+                  href={peopleInfo?.homepage}
+                >
                   <span
                     style={
-                      peopleInfo?.homepage ? { textTransform: "lowercase" } : {}
+                      peopleInfo?.homepage
+                        ? { textTransform: "lowercase", wordwrap: "break-word" }
+                        : { wordwrap: "break-word" }
                     }
                   >
                     {peopleInfo?.homepage || "Unknown"}
