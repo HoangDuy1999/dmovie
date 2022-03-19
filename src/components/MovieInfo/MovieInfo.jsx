@@ -176,30 +176,44 @@ const MovieInfo = ({ category }) => {
 
   useEffect(() => {
     if (movieInfos !== [] && movieInfos !== {}) {
-      const body = {
-        searchKeyWord: movieInfos.title ? movieInfos.title : movieInfos.name,
-        size: 1,
-        sort: "",
-        searchType: "",
-      };
-      axios
-        .post(
-          "https://ga-mobile-api.loklok.tv/cms/app/search/v1/searchWithKeyWord",
-          body,
-          { headers }
-        )
-        .then((response) => {
-          if (response.data.data.searchResults.length > 0) {
-            setIsWatchFilm(() => true);
-            setMoviesInfoLokLok(response.data.data.searchResults);
-          }
-        });
+      let keysearch = movieInfos.title
+        ? movieInfos.title
+        : movieInfos.name || "";
+      keysearch = keysearch.replace("&", "and");
+      if (keysearch !== "") {
+        const body = {
+          searchKeyWord:
+            keysearch + " " + (movieInfos?.release_date?.split("-")[0] || ""),
+          size: 1,
+          sort: "",
+          searchType: "",
+        };
+        console.log(body);
+        axios
+          .post(
+            "https://ga-mobile-api.loklok.tv/cms/app/search/v1/searchWithKeyWord",
+            body,
+            { headers }
+          )
+          .then((response) => {
+            console.log(response);
+            if (response.data.data.searchResults.length > 0) {
+              setIsWatchFilm(() => true);
+              setMoviesInfoLokLok(response.data.data.searchResults);
+            }
+          })
+          .catch(function (error) {
+            console.log("search error" + error);
+          });
+      }
     }
   }, [movieInfos]);
 
   const handleSelectedVideo = (item) => {
     setSelectedtrailerFilms(item);
   };
+
+  console.log(movieInfos);
 
   const handleClickWatchFilm = (e) => {
     // console.log("click");
@@ -281,7 +295,11 @@ const MovieInfo = ({ category }) => {
       <div className="movie_info">
         <div
           className="movie_info_top"
-          style={movieInfos?.overview?.length < 200 && width < 480 ? { minHeight: "45vh" } : {}}
+          style={
+            movieInfos?.overview?.length < 200 && width < 480
+              ? { minHeight: "45vh" }
+              : {}
+          }
         >
           <div
             className="banner"
@@ -316,7 +334,10 @@ const MovieInfo = ({ category }) => {
               </div>
               <div className="detail">
                 <span className="title">
-                  {category === "movie" ? movieInfos.title : movieInfos.name}
+                  {category === "movie" ? movieInfos.title : movieInfos.name}{" "}
+                  {movieInfos?.release_date
+                    ? `(${movieInfos?.release_date.split("-")[0]})`
+                    : ""}
                 </span>
                 <div className="genres">
                   {movieInfos.genres?.map((item, index) => {
@@ -418,7 +439,9 @@ const MovieInfo = ({ category }) => {
                               process.env.REACT_APP_PATH_IMG + item.profile_path
                             }
                           />
-                          <span style={{textAlign: "center"}}>{item.original_name}</span>
+                          <span style={{ textAlign: "center" }}>
+                            {item.original_name}
+                          </span>
                         </Link>
                       </div>
                     );

@@ -269,20 +269,22 @@ const Watch = ({ cate, ep, onFocus }) => {
   }, [movieInfo, displayResolution, episodeId]);
 
   const handleKeyBoard = (e) => {
-    if (e.keyCode === 37) {
-      e.preventDefault();
-      playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
-    }
-    if (e.keyCode === 39) {
-      e.preventDefault();
-      playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
-    }
-    if (e.keyCode === 32 && onFocus === false) {
-      e.preventDefault();
-      setPlayerStates(() => ({
-        ...playerStates,
-        playing: !playerStates.playing,
-      }));
+    if (onFocus === false) {
+      if (e.keyCode === 37) {
+        e.preventDefault();
+        playerRef.current.seekTo(playerRef.current.getCurrentTime() - 10);
+      }
+      if (e.keyCode === 39) {
+        e.preventDefault();
+        playerRef.current.seekTo(playerRef.current.getCurrentTime() + 10);
+      }
+      if (e.keyCode === 32) {
+        e.preventDefault();
+        setPlayerStates(() => ({
+          ...playerStates,
+          playing: !playerStates.playing,
+        }));
+      }
     }
   };
   useEventListener("keydown", handleKeyBoard);
@@ -475,7 +477,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   } else if (width < 650 && subTextSize !== "16px") {
     setSubTextSize("16px");
   }
- 
+
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
       ...playerStates,
@@ -785,7 +787,9 @@ Do you want to continue watching?</div>`}
 
         <div className="desc">
           <div className="name">
-            {movieInfo?.name} {"("} {movieInfo?.year} {")"}
+            {movieInfo?.name} {"("}
+            {movieInfo?.year}
+            {")"}
           </div>
           {/* <div className="name_root">{movieInfo?.aliasName}</div> */}
           <div className="country">
