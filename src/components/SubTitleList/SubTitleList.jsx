@@ -25,7 +25,7 @@ const SubTitleList = ({
           // });
           messagesEndRef.current.scrollTo(
             0,
-            itemsRef.current[val.toString()].offsetTop -100
+            itemsRef.current[val.toString()].offsetTop - 100
           );
           setSelectedSub(parseInt(val).toString());
           break;
@@ -37,8 +37,11 @@ const SubTitleList = ({
   }, [second]);
 
   useEffect(() => {
-    setArrSub1(listSubTitle[selectedSub1.value] || {});
-    setArrSub2(listSubTitle[selectedSub2.value] || {});
+    const timeout = setTimeout(() => {
+      setArrSub1(listSubTitle[selectedSub1.value] || {});
+      setArrSub2(listSubTitle[selectedSub2.value] || {});
+    }, 300);
+    return () => clearTimeout(timeout);
   }, [selectedSub1, selectedSub2, listSubTitle]);
 
   const items = [
