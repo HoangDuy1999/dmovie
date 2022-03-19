@@ -20,7 +20,7 @@
         font-size: 16px;
         text-align: left;
         .news_title {
-          margin-top: 100px;
+          margin-top: 50px;
           font-size: 30px;
           font-weight: 600;
           color: #67b8ef;
@@ -75,9 +75,10 @@
         .poster {
           flex: 1;
           img {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 100px;
             border-radius: 5px;
+            object-fit: fill;
           }
         }
         .desc {

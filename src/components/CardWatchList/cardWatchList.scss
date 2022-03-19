@@ -34,9 +34,10 @@
     // background-color: blue;
     position: relative;
     height: 80%;
-    // background-position: center;
-    // background-repeat: no-repeat;
-    // background-size: cover;
+    background-image: url("../../images/default_image.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     box-sizing: border-box;
 
     .movie_img {

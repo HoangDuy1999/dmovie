@@ -104,6 +104,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
 
   const handleClickCloseSearchShow = () => {
     setSearchResult([]);
+    setWordEntered("");
     setIsSearchShow(false);
   };
   const handleOpenShowSearch = () => {
@@ -451,6 +452,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
           />
           <input
             autoFocus
+            value={wordEntered}
             placeholder="Search for movies, tv show and people..."
             className="input_search"
             onKeyUp={(e) => handleOnkeyUpSearch(e)}
