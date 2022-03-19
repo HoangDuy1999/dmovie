@@ -95,11 +95,11 @@ const CardWatchList = ({
         <div className="heart">
           {item.status === 1 ? (
             <BsFillHeartFill
-              style={{ color: "red" }}
+              style={{ color: "red", cursor: "pointer"}}
               onClick={() => handleRemoveMovieToWatchList(item)}
             />
           ) : (
-            <BsFillHeartFill onClick={() => handleAddMovieToWatchList(item)} />
+            <BsFillHeartFill onClick={() => handleAddMovieToWatchList(item)} style={{cursor: "pointer"}} />
           )}
         </div>
       </div>
