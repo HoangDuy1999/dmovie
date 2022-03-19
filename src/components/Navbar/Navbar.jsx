@@ -101,9 +101,9 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
     // console.log(response.results);
     setIsCloseIcon(true);
   };
-  console.log(searchResult);
 
   const handleClickCloseSearchShow = () => {
+    setSearchResult([]);
     setIsSearchShow(false);
   };
   const handleOpenShowSearch = () => {
@@ -188,7 +188,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
                 />
               )}
             </div>
-            {searchResult.length > 0 ? (
+            {searchResult.length > 0 && isSearchShow === false ? (
               <div className="data_results">
                 {searchResult.map((item, index) => {
                   const arrDate = item.release_date
