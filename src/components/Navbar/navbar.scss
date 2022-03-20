@@ -537,7 +537,7 @@
   overflow-x: hidden;
   scrollbar-width: none;
   overflow-y: scroll;
-  z-index: 999999999999999999999999999;
+  z-index: 999999;
   margin-top: 62px;
   display: flex;
   flex-direction: column;
@@ -580,7 +580,7 @@
       color: black;
       margin: 0 5px !important;
       justify-content: center;
-      z-index:9999999999999999999999;
+      z-index:99999999;
       .right_row_title {
         font-size: 18px;
         font-weight: 600;
