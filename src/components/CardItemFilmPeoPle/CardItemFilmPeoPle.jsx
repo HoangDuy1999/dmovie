@@ -87,7 +87,7 @@ const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
-          <span className="now_play_title" title={name}>
+          <span className="now_play_title" title={name}  style={posterHover ? { textDecoration: "underline" } : {}}>
             {name}
           </span>
         </Link>

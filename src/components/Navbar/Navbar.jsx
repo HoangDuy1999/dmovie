@@ -138,18 +138,6 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
         className="navbar"
         style={home ? { position: "absolute" } : { position: "relative" }}
       >
-        {/* responsive mobile */}
-        {/* {
-          isSearchShow ? "" : ""
-          // <div style={{ display: "none" }}>
-          //   <input className="input_search" />
-          //   <CloseIcon
-          //     className="icon_close"
-          //     onClick={handleClickCloseSearchShow}
-          //   />
-          // </div>
-        } */}
-
         <div
           className="navbar_container"
           style={
@@ -179,6 +167,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
               />
               {isCloseIcon ? (
                 <CloseIcon
+                  style={{ color: "red"}}
                   className="iconSearch"
                   onClick={() => handClickCloseIcon()}
                 />

@@ -42,7 +42,14 @@ const CardItemBrowses = ({ item, types, colorGroup }) => {
           style={{ textDecoration: "none" }}
         >
           <LazyLoadImage
-            style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
+            style={
+              posterHover
+                ? {
+                    transform: "scale(1.2)",
+                    transition: "all 0.5s ease-in-out",
+                  }
+                : {}
+            }
             className="card_item_browse_image"
             onError={(event) => {
               event.target.src =
@@ -97,7 +104,11 @@ const CardItemBrowses = ({ item, types, colorGroup }) => {
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
-          <span className="now_play_title" title={name}>
+          <span
+            className="now_play_title"
+            title={name}
+            style={posterHover ? { textDecoration: "underline" } : {}}
+          >
             {name}
           </span>
         </Link>

@@ -209,6 +209,8 @@
           height: 120px;
           flex: 1;
           border-radius: 5%;
+          box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+          rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
           display: flex;
           align-items: center;
           background-image: url("../../images/default_image.jpg");
@@ -560,6 +562,9 @@
       width: 90px;
       height: 120px;
       margin-left: 5px;
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+      border-radius: 10px;
       // background-color: cyan;
       .left_row_backdrop {
         position: relative;
@@ -570,7 +575,7 @@
         height: 120px;
         object-fit: cover;
         border-radius: 10px;
-        border: 1px solid #3f51b5;
+        // border: 1px solid #3f51b5;
       }
     }
     .right_row {
@@ -583,7 +588,7 @@
       color: black;
       margin: 0 5px !important;
       justify-content: center;
-      z-index:99999999;
+      z-index: 99999999;
       .right_row_title {
         font-size: 18px;
         font-weight: 600;

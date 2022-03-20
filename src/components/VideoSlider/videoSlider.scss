@@ -15,7 +15,7 @@
     justify-content: center !important;
     overflow: hidden;
     margin-left: 41px;
-    margin-right: 41px;
+    margin-right: 37px;
     margin-top: -40px;
     background-color: rgba(0, 0, 0, 0.5) !important;
     // border-radius: 50px;
@@ -25,10 +25,17 @@
     // border-radius: 40px;
     // z-index: 1;
     z-index: 1;
+    @media screen and (max-width: 978px) {
+      margin-right: 40px;
+      margin-left: 42px;
+    }
+    @media screen and (max-width: 1024px) {
+      margin-right: 40px;
+    }
     @media screen and (max-width: 767px) {
       margin-top: -45px;
-      margin-left: 35px;
-      margin-right: 35px;
+      margin-left: 36px;
+      margin-right: 36px;
       transform: scale(1.5);
       // transition: "all 0.5s ease-in-out"
     }
