@@ -55,7 +55,7 @@ const SubTitleList = ({
         {_.isEmpty(arrSub1)
           ? Object.keys(arrSub2).map((key) => (
               <div
-                onClick={handleSetStart(parseInt(key))}
+                onClick={() => handleSetStart(parseInt(key))}
                 className="group_list"
                 style={
                   key === selectedSub

@@ -183,7 +183,8 @@ const MovieInfo = ({ category }) => {
       if (keysearch !== "") {
         const body = {
           searchKeyWord:
-            keysearch + " " + (movieInfos?.release_date?.split("-")[0] || ""),
+            keysearch.toLowerCase() +
+            "" /*+ (movieInfos?.release_date?.split("-")[0] || "")*/,
           size: 1,
           sort: "",
           searchType: "",

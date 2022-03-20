@@ -96,6 +96,7 @@ const Watch = ({ cate, ep, onFocus }) => {
           }
         )
         .then((res) => {
+          console.log(res.data.data);
           setMovieInfor(res.data.data);
         })
         .catch((error) => console.log(error));
@@ -105,7 +106,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const getVideos = (episode, resoluton = "SD") => {
     axios
       .get(
-        `https://ga-mobile-api.loklok.tv/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
+        `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
         {
           params: {},
           headers: {
@@ -153,17 +154,16 @@ const Watch = ({ cate, ep, onFocus }) => {
               return sub_temp;
             });
             listSubTitle[info.languageAbbr] = sub_temp;
+            //  setListSubTitle((pre)=> ({...pre, `a`: {}}));
           })
           .catch((error) => console.log(error));
       }
       return 0;
     });
   };
+
   // leave tab browser
   const onBlur = () => {
-    console.log(
-      `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
-    );
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -175,6 +175,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       );
     }
   };
+
   // forcus tab browser
   const onFocusWindow = () => {
     if (
@@ -243,14 +244,12 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEffect(() => {
     getDetailMovies();
     setEpisodeId(ep);
-
-    // // set time start
-    // getCurrentTimeBefore();
-
+    getCurrentTimeBefore();
     window.scrollTo(0, 0);
     window.addEventListener("blur", onBlur);
     window.addEventListener("focus", onFocusWindow);
     window.addEventListener("popstate", onGoBackPage);
+
     return () => {
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocusWindow);
@@ -262,7 +261,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
 
     // set time start
-    getCurrentTimeBefore();
+    // getCurrentTimeBefore();
 
     const timeout = setTimeout(() => {
       setDoneLoad(true);
@@ -278,11 +277,113 @@ const Watch = ({ cate, ep, onFocus }) => {
       list.push({ label: "Off", value: "" });
       // setListSubTitle(listCaption);
       setArrSub(list);
-      // console.log(movieInfo.episodeVo[episodeId]?.subtitlingList);
       getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
     }
     return () => clearTimeout(timeout);
   }, [movieInfo, displayResolution, episodeId]);
+
+  // PROCESS ....................
+  const handleProgressReactPlayer = (progress) => {
+    const secondRoot = parseInt(progress.playedSeconds);
+    const arr = [secondRoot, secondRoot - 1];
+    for (const val of arr) {
+      try {
+        if (hideSub === false) {
+          //CASE: SUB1 TURN ON
+          if (selectedSub1.value !== "" && selectedSub2.value === "") {
+            let txtSub1 = "!@#%^&*";
+            //check exist data
+            if (listSubTitle[selectedSub1.value] !== undefined) {
+              if (listSubTitle[selectedSub1.value][val] !== undefined) {
+                txtSub1 = listSubTitle[selectedSub1.value][val];
+              }
+            }
+            const isSameText1 = subText1
+              .toLowerCase()
+              .includes(txtSub1.toLowerCase());
+            console.log("sub1  on");
+            if (!isSameText1 && txtSub1 !== "!@#%^&*" && txtSub1.length > 0) {
+              setSubText1(txtSub1 + "$$$$$$");
+              setCountHiddenText(0);
+              break;
+            }
+          }
+
+          //CASE: SUB2 TURN ON
+          if (selectedSub1.value === "" && selectedSub2.value !== "") {
+            let txtSub2 = "!@#$%^&*";
+            //check exist data
+            if (listSubTitle[selectedSub2.value] !== undefined) {
+              if (listSubTitle[selectedSub2.value][val] !== undefined) {
+                txtSub2 = listSubTitle[selectedSub2.value][val];
+              }
+            }
+            const isSameText2 = subText1
+              .toLowerCase()
+              .includes(txtSub2.toLowerCase());
+            console.log("sub2  on " + txtSub2);
+            if (!isSameText2 && txtSub2 !== "!@#$%^&*" && txtSub2.length > 0) {
+              setSubText1("$$$$$$" + txtSub2);
+              setCountHiddenText(0);
+              break;
+            }
+          }
+          // SUB1 AND SUB 2
+          if (selectedSub1.value !== "" && selectedSub2.value !== "") {
+            // let txtSpecial = "!@#$%^&*";
+            let txtSub = "";
+            //check sub 1
+            if (listSubTitle[selectedSub1.value] !== undefined) {
+              if (listSubTitle[selectedSub1.value][val] !== undefined) {
+                txtSub += listSubTitle[selectedSub1.value][val] + "$$$$$$";
+              } else {
+                txtSub += (subText1.split("$$$$$$")[0] || "") + "$$$$$$";
+              }
+            }
+            //check sub 2
+            if (listSubTitle[selectedSub2.value] !== undefined) {
+              if (listSubTitle[selectedSub2.value][val] !== undefined) {
+                if (txtSub.includes("$$$$$$")) {
+                  txtSub +=
+                    listSubTitle[selectedSub2.value][val] ||
+                    listSubTitle[selectedSub2.value][val - 1];
+                }
+              } else {
+                txtSub += subText1.split("$$$$$$")[1] || "";
+              }
+            }
+            const isSameText = subText1
+              .toLowerCase()
+              .includes(txtSub.toLowerCase());
+            if (txtSub.length > 0 && isSameText === false) {
+              setSubText1(txtSub);
+              setCountHiddenText(0);
+              break;
+            }
+            console.log("sub 1 and 2  on");
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        break;
+      }
+    }
+    try {
+      if (countHiddenText <= 10) setCountHiddenText((pre) => pre + 1);
+      if (countHiddenText === 10) {
+        setSubText1("");
+      }
+      if (count >= 3) {
+        controlsRef.current.style.visibility = "hidden";
+      }
+      if (controlsRef.current.style.visibility === "visible") {
+        setCount(() => count + 1);
+      }
+      if (!playerStates.seeking) {
+        setPlayerStates({ ...playerStates, ...progress });
+      }
+    } catch (e) {}
+  };
 
   const handleKeyBoard = (e) => {
     if (onFocus === false) {
@@ -303,9 +404,12 @@ const Watch = ({ cate, ep, onFocus }) => {
       }
     }
   };
+
+  // useEventListener
   useEventListener("keydown", handleKeyBoard);
 
   const handleClickChangeEpisode = (value) => {
+    setSubText1("");
     setIsDoneLoad(false);
     playerRef = null;
     setPlayerStates({
@@ -335,6 +439,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const onClickChangeServer = (val) => {
+    setSubText1("");
     setIsDoneLoad(false);
     setPlayerStates({
       playing: false,
@@ -349,73 +454,27 @@ const Watch = ({ cate, ep, onFocus }) => {
     }
   };
 
-  // PROCESS ....................
-  const handleProgressReactPlayer = (progress) => {
-    const secondRoot = parseInt(progress.playedSeconds);
-    const arr = [secondRoot, secondRoot - 1];
-    for (const val of arr) {
-      try {
-        if (
-          hideSub === false &&
-          (selectedSub1.value !== "" || selectedSub2.value !== "")
-        ) {
-          if (listSubTitle[selectedSub1.value][val] !== undefined) {
-            if (selectedSub2.value === "" && selectedSub1.value !== "") {
-              if (subText1 !== "") {
-                if (
-                  listSubTitle[selectedSub1.value][val] !==
-                  subText1.split("$$$$$$")[0]
-                ) {
-                  setSubText1(listSubTitle[selectedSub1.value][val] + "$$$$$$");
-                  setCountHiddenText(0);
-                }
-              } else {
-                setSubText1(listSubTitle[selectedSub1.value][val] + "$$$$$$");
-                setCountHiddenText(0);
-              }
-            } else {
-              if (subText1 !== "") {
-                if (
-                  listSubTitle[selectedSub1.value][val] !==
-                  subText1.split("$$$$$$")[0]
-                ) {
-                  setSubText1(
-                    listSubTitle[selectedSub1.value][val] +
-                      "$$$$$$" +
-                      listSubTitle[selectedSub2.value][val]
-                  );
-                  setCountHiddenText(0);
-                }
-              } else {
-                setSubText1(
-                  listSubTitle[selectedSub1.value][val] +
-                    "$$$$$$" +
-                    listSubTitle[selectedSub2.value][val]
-                );
-                setCountHiddenText(0);
-              }
-            }
-            break;
-          }
-        }
-      } catch (e) {}
-    }
-
-    try {
-      if (countHiddenText <= 5) setCountHiddenText(() => countHiddenText + 1);
-      if (countHiddenText === 5) {
-        setSubText1(" $$$$$$ ");
-      }
-      if (count >= 3) {
-        controlsRef.current.style.visibility = "hidden";
-      }
-      if (controlsRef.current.style.visibility === "visible") {
-        setCount(() => count + 1);
-      }
-      if (!playerStates.seeking) {
-        setPlayerStates({ ...playerStates, ...progress });
-      }
-    } catch (e) {}
+  const handleChangeMovieId = (_id, category) => {
+    setSubText1("");
+    setIsDoneLoad(false);
+    setPlayerStates({
+      playing: false,
+      muted: false,
+      volume: 1,
+      playbackRate: 1.0,
+      played: 0,
+      seeking: false,
+    });
+    navigate(`/watch/${_id}?type=${category}&ep=0`);
+    setArrSub([]);
+    setSelectedSub1({
+      value: "",
+      label: "Off",
+    });
+    setSelectedSub2({
+      value: "",
+      label: "Off",
+    });
   };
 
   const handleRewind = (e) => {
@@ -479,25 +538,38 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleToggleFullScreen = () => {
     screenfull.toggle(playerContainerRef.current);
-    const timeout = setTimeout(() => {
-      console.log(screenfull.isFullscreen);
-      //set font size subtitle
-      if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
-        setSubTextSize("34px");
-      } else if (
-        screenfull.isFullscreen === false &&
-        subTextSize !== "27px" &&
-        width > 978
-      ) {
-        setSubTextSize("27px");
-      } else if (width < 978 && width > 758 && subTextSize !== "24px") {
-        setSubTextSize("24px");
-      } else if (width < 650 && subTextSize !== "16px") {
-        setSubTextSize("16px");
-      }
-    }, 500);
-    return () => clearTimeout(timeout);
+    // const timeout = setTimeout(() => {
+    //   //set font size subtitle
+    //   if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
+    //     setSubTextSize("34px");
+    //   } else if (
+    //     screenfull.isFullscreen === false &&
+    //     subTextSize !== "27px" &&
+    //     width > 978
+    //   ) {
+    //     setSubTextSize("27px");
+    //   } else if (width < 978 && width > 758 && subTextSize !== "24px") {
+    //     setSubTextSize("24px");
+    //   } else if (width < 650 && subTextSize !== "16px") {
+    //     setSubTextSize("16px");
+    //   }
+    // }, 500);
+    // return () => clearTimeout(timeout);
   };
+
+  if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
+    setSubTextSize("34px");
+  } else if (
+    screenfull.isFullscreen === false &&
+    subTextSize !== "27px" &&
+    width > 978
+  ) {
+    setSubTextSize("27px");
+  } else if (width < 978 && width > 758 && subTextSize !== "24px") {
+    setSubTextSize("24px");
+  } else if (width < 650 && subTextSize !== "16px") {
+    setSubTextSize("16px");
+  }
 
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
@@ -541,33 +613,13 @@ const Watch = ({ cate, ep, onFocus }) => {
     );
   };
 
-  const handleChangeMovieId = (_id, category) => {
-    setIsDoneLoad(false);
-    setPlayerStates({
-      playing: false,
-      muted: false,
-      volume: 1,
-      playbackRate: 1.0,
-      played: 0,
-      seeking: false,
-    });
-    navigate(`/watch/${_id}?type=${category}&ep=0`);
-    setArrSub([]);
-    setSelectedSub1({
-      value: "",
-      label: "Off",
-    });
-    setSelectedSub2({
-      value: "",
-      label: "Off",
-    });
-  };
-
   const handleOnClickHideSubTile = () => {
+    setSubText1("");
     setHideSub(!hideSub);
   };
+
   const handleOnEndedReactPlayer = () => {
-    // console.log("chạy xong");
+    localStorage.removeItem(`${id}^^^${episodeId}`);
   };
 
   const currentTime = playerRef.current
@@ -663,10 +715,10 @@ Do you want to continue watching?</div>`}
             <div className="sub_title">
               <div className="wrapper">
                 <span style={{ fontSize: subTextSize }}>
-                  {subText1?.split("$$$$$$")[0]}
+                  {subText1?.split("$$$$$$")[0] || ""}
                 </span>
                 <span style={{ color: "white", fontSize: subTextSize }}>
-                  {subText1?.split("$$$$$$")[1]}
+                  {subText1?.split("$$$$$$")[1] || ""}
                   {/* {subText1} */}
                 </span>
               </div>

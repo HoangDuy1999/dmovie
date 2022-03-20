@@ -8,6 +8,12 @@ module.exports = (app) => {
     }),
   );
   app.use(
+    createProxyMiddleware("/cms/app/media/previewInfo", {
+      target: "https://ga-mobile-api.loklok.tv",
+      changeOrigin: true,
+    }),
+  );
+  app.use(
     createProxyMiddleware("/secure/people", {
       target: "https://tmovie.org",
       changeOrigin: true,
