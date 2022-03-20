@@ -10,8 +10,6 @@ import screenfull from "screenfull";
 import AddIcon from "@mui/icons-material/Add";
 import SubIcon from "@mui/icons-material/Remove";
 import Select from "react-select";
-// import videojs from "video.js";
-// import "video.js/dist/video-js.css";
 import { useNavigate } from "react-router-dom";
 import useEventListener from "@use-it/event-listener";
 import VideoSlider from "../VideoSlider/VidieoSlider";
@@ -42,7 +40,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   ]);
   const [isDoneLoad, setIsDoneLoad] = useState(false);
   const [listSubTitle, setListSubTitle] = useState({});
-  const { innerWidth: width, innerHeight: height } = window;
+  const { innerWidth: width } = window;
   const [selectedSub1, setSelectedSub1] = useState({
     value: "",
     label: "Off",
@@ -163,9 +161,9 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
   // leave tab browser
   const onBlur = () => {
-    //console.log(
-    //   `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
-    // );
+    console.log(
+      `Blur: movie_id: ${id} - episode: ${episodeId}second: ${playerRef.current.getCurrentTime()}`
+    );
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -190,6 +188,22 @@ const Watch = ({ cate, ep, onFocus }) => {
       );
     }
   };
+
+  // forcus tab browser
+  const onGoBackPage = () => {
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
+    navigate(-1);
+  };
+
   // get current timeBefore
   const getCurrentTimeBefore = () => {
     let timeBefore = localStorage.getItem(`${id}^^^${episodeId}`);
@@ -201,8 +215,8 @@ const Watch = ({ cate, ep, onFocus }) => {
       setCurrentTimeBefore(null);
     }
   };
+
   const handleConfirm = () => {
-    console.log("rung");
     playerRef.current.seekTo(currentTimeBefore);
     setPlayerStates(() => ({
       ...playerStates,
@@ -236,9 +250,11 @@ const Watch = ({ cate, ep, onFocus }) => {
     window.scrollTo(0, 0);
     window.addEventListener("blur", onBlur);
     window.addEventListener("focus", onFocusWindow);
+    window.addEventListener("popstate", onGoBackPage);
     return () => {
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocusWindow);
+      window.removeEventListener("popstate", onGoBackPage);
     };
   }, [id, cate, ep]);
 
@@ -336,7 +352,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
-    const arr = [secondRoot, secondRoot - 1, secondRoot - 2];
+    const arr = [secondRoot, secondRoot - 1];
     for (const val of arr) {
       try {
         if (
@@ -384,6 +400,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         }
       } catch (e) {}
     }
+
     try {
       if (countHiddenText <= 5) setCountHiddenText(() => countHiddenText + 1);
       if (countHiddenText === 5) {
@@ -462,21 +479,25 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleToggleFullScreen = () => {
     screenfull.toggle(playerContainerRef.current);
+    const timeout = setTimeout(() => {
+      console.log(screenfull.isFullscreen);
+      //set font size subtitle
+      if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
+        setSubTextSize("34px");
+      } else if (
+        screenfull.isFullscreen === false &&
+        subTextSize !== "27px" &&
+        width > 978
+      ) {
+        setSubTextSize("27px");
+      } else if (width < 978 && width > 758 && subTextSize !== "24px") {
+        setSubTextSize("24px");
+      } else if (width < 650 && subTextSize !== "16px") {
+        setSubTextSize("16px");
+      }
+    }, 500);
+    return () => clearTimeout(timeout);
   };
-
-  if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
-    setSubTextSize("34px");
-  } else if (
-    screenfull.isFullscreen === false &&
-    subTextSize !== "27px" &&
-    width > 978
-  ) {
-    setSubTextSize("27px");
-  } else if (width < 978 && width > 758 && subTextSize !== "24px") {
-    setSubTextSize("24px");
-  } else if (width < 650 && subTextSize !== "16px") {
-    setSubTextSize("16px");
-  }
 
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({

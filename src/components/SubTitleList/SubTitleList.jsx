@@ -16,7 +16,7 @@ const SubTitleList = ({
   const [selectedSub, setSelectedSub] = useState(0);
   useEffect(() => {
     if (selectedSub1.value !== "" || selectedSub2.value !== "") {
-      const arr = [second, second - 1, second - 2];
+      const arr = [second, second - 1];
       for (const val of arr) {
         try {
           // itemsRef.current[val.toString()].scrollIntoView({
@@ -44,61 +44,7 @@ const SubTitleList = ({
     return () => clearTimeout(timeout);
   }, [selectedSub1, selectedSub2, listSubTitle]);
 
-  const items = [
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-    "Item ",
-  ];
-
-  const handleOnWheel = (e) => {
-    // console.log(e);
-  };
+  const handleOnWheel = (e) => {};
   return (
     <>
       <div

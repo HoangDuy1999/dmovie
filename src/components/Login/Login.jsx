@@ -27,25 +27,6 @@ const Login = () => {
     setActiveBody("");
   };
   const [searchParams, setSearchParams] = useSearchParams();
-  // useEffect(() => {
-  //   const fetchProductList = async () => {
-  //     try {
-  //       const response = await accountApi.addAccount({
-  //         // _id: "623015f8f44350f03413a368",
-  //         full_name: "hades2",
-  //         email: "hades@gmail.com",
-  //         pass_word: "123456",
-  //       });
-  //       const response2 = await accountApi.gellAllAccount({});
-  //       console.log(response);
-  //       console.log(response2);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchProductList();
-  // }, []);
 
   useEffect(() => {
     if (searchParams.get("type") === "register") {
@@ -84,7 +65,8 @@ const Login = () => {
         success("Login successfull");
         setDoneLoad(true);
         console.log(response);
-        navigate(`/`);
+        // navigate(`/`);
+        navigate(-1);
       }
     } catch (e) {
       console.log(e);
