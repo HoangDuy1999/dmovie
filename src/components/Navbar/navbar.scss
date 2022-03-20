@@ -533,12 +533,12 @@
   width: 100%;
   left: 0;
   right: 0;
-  height: 60vh;
+  height: 65vh;
   overflow-x: hidden;
   scrollbar-width: none;
   overflow-y: scroll;
   z-index: 999999;
-  margin-top: 62px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -551,13 +551,15 @@
     box-sizing: border-box;
     flex-direction: row;
     // align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
+    margin-top: 8px;
     position: relative;
     .left_row {
       position: relative;
       flex: 1.5;
       width: 90px;
       height: 120px;
+      margin-left: 5px;
       // background-color: cyan;
       .left_row_backdrop {
         position: relative;
@@ -568,6 +570,7 @@
         height: 120px;
         object-fit: cover;
         border-radius: 10px;
+        border: 1px solid #3f51b5;
       }
     }
     .right_row {

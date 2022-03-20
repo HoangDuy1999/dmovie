@@ -5,7 +5,7 @@ import "./cardItem.scss";
 import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
   // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
@@ -40,15 +40,25 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
           style={{ textDecoration: "none" }}
         >
           <LazyLoadImage
-            style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
+            style={
+              posterHover
+                ? {
+                    transform: "scale(1.2)",
+                    transition: "all 0.5s ease-in-out",
+                  }
+                : {}
+            }
             className="now_playing_image"
             alt={name}
             onError={(event) => {
-              event.target.src = {defaultImage}
+              event.target.src = { defaultImage };
               event.onerror = null;
             }}
             effect="blur"
-            src={process.env.REACT_APP_PATH_IMG + item.poster_path}
+            src={
+              process.env.REACT_APP_PATH_IMG +
+              (item.poster_path || item.profile_path)
+            }
           />
         </Link>
         <div

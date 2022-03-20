@@ -520,6 +520,23 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
                       </div>
                     </div>
                   </Link>
+                  <div>
+                    <hr
+                      style={{
+                        borderTop: "thin solid gray",
+                        borderLeft: "none",
+                        borderRight: "none",
+                        borderBottom: "none",
+                        // color: "gray",
+                        // backgroundColor: "gray",
+                        minHeight: "1px",
+                        height: "1px",
+                        maxHeight: "1px",
+                        transform: "scale(1)",
+                        marginBottom: 0,
+                      }}
+                    />
+                  </div>
                 </>
               );
             })}
