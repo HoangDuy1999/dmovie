@@ -153,8 +153,10 @@ const Watch = ({ cate, ep, onFocus }) => {
               sub_temp[seconds] = item.text;
               return sub_temp;
             });
-            listSubTitle[info.languageAbbr] = sub_temp;
-            //  setListSubTitle((pre)=> ({...pre, `a`: {}}));
+            // listSubTitle[info.languageAbbr] = sub_temp;
+            const obj = {};
+            obj[info.languageAbbr] = sub_temp;
+            setListSubTitle((pre) => ({ ...pre, ...obj }));
           })
           .catch((error) => console.log(error));
       }
@@ -206,8 +208,8 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   // get current timeBefore
-  const getCurrentTimeBefore = () => {
-    let timeBefore = localStorage.getItem(`${id}^^^${episodeId}`);
+  const getCurrentTimeBefore = (ep) => {
+    let timeBefore = localStorage.getItem(`${id}^^^${ep}`);
     if (timeBefore !== undefined && timeBefore !== null) {
       timeBefore = parseInt(timeBefore);
       // timeBefore = formatTimeVideo(timeBefore);
@@ -244,7 +246,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEffect(() => {
     getDetailMovies();
     setEpisodeId(ep);
-    getCurrentTimeBefore();
+    getCurrentTimeBefore(ep);
     window.scrollTo(0, 0);
     window.addEventListener("blur", onBlur);
     window.addEventListener("focus", onFocusWindow);
@@ -260,12 +262,9 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEffect(() => {
     setDoneLoad(false);
 
-    // set time start
-    // getCurrentTimeBefore();
-
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 6000);
     if (!_.isEmpty(movieInfo)) {
       getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
       //lấy phiên dịch
@@ -285,7 +284,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
-    const arr = [secondRoot, secondRoot - 1];
+    const arr = [secondRoot, secondRoot - 1, secondRoot - 2];
     for (const val of arr) {
       try {
         if (hideSub === false) {
@@ -371,13 +370,16 @@ const Watch = ({ cate, ep, onFocus }) => {
     try {
       if (countHiddenText <= 10) setCountHiddenText((pre) => pre + 1);
       if (countHiddenText === 10) {
+        console.log("HIDDEN TEXT");
         setSubText1("");
       }
       if (count >= 3) {
         controlsRef.current.style.visibility = "hidden";
       }
       if (controlsRef.current.style.visibility === "visible") {
-        setCount(() => count + 1);
+        if (count <= 3) {
+          setCount(() => count + 1);
+        }
       }
       if (!playerStates.seeking) {
         setPlayerStates({ ...playerStates, ...progress });
@@ -409,8 +411,18 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEventListener("keydown", handleKeyBoard);
 
   const handleClickChangeEpisode = (value) => {
-    setSubText1("");
     setIsDoneLoad(false);
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
+    setSubText1("");
     playerRef = null;
     setPlayerStates({
       playing: false,
@@ -423,24 +435,34 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 6000);
     // getVideos(movieInfo.episodeVo[value].id);
-    setSelectedSub1({
-      value: "",
-      label: "Off",
-    });
-    setSelectedSub2({
-      value: "",
-      label: "Off",
-    });
+    // setSelectedSub1({
+    //   value: "",
+    //   label: "Off",
+    // });
+    // setSelectedSub2({
+    //   value: "",
+    //   label: "Off",
+    // });
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
     return () => clearTimeout(timeout);
   };
 
   const onClickChangeServer = (val) => {
-    setSubText1("");
     setIsDoneLoad(false);
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
+    setSubText1("");
     setPlayerStates({
       playing: false,
       muted: false,
@@ -455,8 +477,17 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
-    setSubText1("");
     setIsDoneLoad(false);
+    if (
+      playerRef.current.getCurrentTime() !== null &&
+      playerRef.current.getCurrentTime() !== undefined &&
+      playerRef.current.getCurrentTime() > 0
+    ) {
+      localStorage.setItem(
+        `${id}^^^${episodeId}`,
+        playerRef.current.getCurrentTime().toString()
+      );
+    }
     setPlayerStates({
       playing: false,
       muted: false,
@@ -467,14 +498,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     });
     navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
-    setSelectedSub1({
-      value: "",
-      label: "Off",
-    });
-    setSelectedSub2({
-      value: "",
-      label: "Off",
-    });
+    setSubText1("");
   };
 
   const handleRewind = (e) => {

@@ -37,10 +37,17 @@ const SubTitleList = ({
   }, [second]);
 
   useEffect(() => {
+    if (arrSub1.length > 0) {
+      setArrSub1([]);
+    }
+    if (arrSub2.length > 0) {
+      setArrSub2([]);
+    }
+    messagesEndRef.current.scrollTo(0, 0);
     const timeout = setTimeout(() => {
       setArrSub1(listSubTitle[selectedSub1.value] || {});
       setArrSub2(listSubTitle[selectedSub2.value] || {});
-    }, 300);
+    }, 200);
     return () => clearTimeout(timeout);
   }, [selectedSub1, selectedSub2, listSubTitle]);
 
