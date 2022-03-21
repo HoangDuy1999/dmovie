@@ -691,7 +691,16 @@ Do you want to continue watching?</div>`}
       <PageLoadingEffeect doneLoad={doneLoad} />
 
       <div className="watch_movie_wrapper">
-        <div className="group">
+        <div
+          className="group"
+          style={
+            width < 600 &&
+            selectedSub1.value === "" &&
+            selectedSub2.value === ""
+              ? { minHeight: "250px" }
+              : {}
+          }
+        >
           <div
             className="player-wrapper"
             onMouseMove={handleMouseMove}
@@ -722,7 +731,7 @@ Do you want to continue watching?</div>`}
             {/* play control */}
             <div
               className="player_control"
-              style={{ backgroundColor: "yellow" }}
+              style={isDoneLoad ? {} : { display: "none", width: 0, height: 0 }}
             >
               <PlayerControl
                 onLoaded={onLoaded}
@@ -767,7 +776,9 @@ Do you want to continue watching?</div>`}
           <div
             className="sub_list"
             style={
-              width < 600 && selectedSub1.value === "" &&  selectedSub2.value === ""
+              width < 600 &&
+              selectedSub1.value === "" &&
+              selectedSub2.value === ""
                 ? { display: "none", width: 0, height: 0 }
                 : {}
             }
