@@ -250,6 +250,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleConfirm = () => {
     playerRef.current.seekTo(currentTimeBefore);
+    setIsDoneLoad(true);
     setPlayerStates(() => ({
       ...playerStates,
       playing: true,
