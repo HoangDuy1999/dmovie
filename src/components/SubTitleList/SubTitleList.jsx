@@ -136,7 +136,7 @@ const SubTitleList = ({
                 >
                   {arrSub1[key] ||
                     arrSub1[(parseInt(key) - 1).toString()] ||
-                    arrSub1[(parseInt(key) - 2).toString()] ||
+                    arrSub1[(parseInt(key) + 1).toString()] ||
                     ""}
                 </div>
                 <div
@@ -146,7 +146,7 @@ const SubTitleList = ({
                   <div style={{}}>
                     {arrSub2[key] ||
                       arrSub2[(parseInt(key) - 1).toString()] ||
-                      arrSub2[(parseInt(key) - 2).toString()] ||
+                      arrSub2[(parseInt(key) + 1).toString()] ||
                       ""}
                   </div>
                   <div
