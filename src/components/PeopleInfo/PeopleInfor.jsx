@@ -27,7 +27,7 @@ const PeopleInfo = () => {
     window.scrollTo(0, 0);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 4000);
+    }, 2500);
     // api trả kết quả sai
     setKnowFor(() => []);
     setPeopleInfo(() => {});

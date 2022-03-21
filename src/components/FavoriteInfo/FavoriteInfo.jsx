@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import "./watchListInfo.scss";
+import "./favoriteInfo.scss";
 import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
-import watchlistApi from "../../api/dmovie/watchlist";
-import CardWatchList from "../CardWatchList/CardWatchList";
+import favoritelistApi from "../../api/dmovie/favoriteList";
+import CardFavoriteInfo from "../CardFavoriteInfo/CardFavoriteInfo";
 import Button from "@mui/material/Button";
 import { success, error } from "../Toastify/Toastify";
 
-const WatchListInfo = ({ id }) => {
+const FavoriteInfo = ({ id }) => {
   const [watchList, setWatchList] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);
   const [count, setCount] = useState(20);
 
   useEffect(() => {
     const getWatchList = async () => {
-      const rs = await watchlistApi.getListByAccountId(id);
+      const rs = await favoritelistApi.getListByAccountId(id);
       if (rs.code === 200) {
         setDoneLoad(true);
         setWatchList(rs.data);
@@ -26,13 +26,13 @@ const WatchListInfo = ({ id }) => {
 
   const handleRemoveMovieToWatchList = async (item) => {
     setDoneLoad(false);
-    const rs = await watchlistApi.update({
+    const rs = await favoritelistApi.update({
       account_id: item.account_id,
       movie_id: item.movie_id,
       status: 0,
     });
     if (rs.code === 200) {
-      success("Remove movie to watchlist successfully");
+      success("Remove movie to favorite list successfully");
       const arr_temp = watchList.map((i) => {
         if (i.movie_id === item.movie_id) {
           i.status = 0;
@@ -42,13 +42,13 @@ const WatchListInfo = ({ id }) => {
       setWatchList(arr_temp);
       setDoneLoad(true);
     } else {
-      error("Remove movie to watchlist unsuccessfully");
+      error("Remove movie to favorite list unsuccessfully");
       setDoneLoad(true);
     }
   };
   const handleAddMovieToWatchList = async (item) => {
     setDoneLoad(false);
-    const rs = await watchlistApi.add({
+    const rs = await favoritelistApi.add({
       account_id: item.account_id,
       movie_id: item.movie_id,
       movie_name: item.movie_name,
@@ -65,10 +65,10 @@ const WatchListInfo = ({ id }) => {
         return i;
       });
       setWatchList(arr_temp);
-      success("Add movie to watchlist successfully");
+      success("Add movie to favorite list successfully");
       setDoneLoad(true);
     } else {
-      error("Add movie to watchlist unsuccessfully");
+      error("Add movie to favorite list unsuccessfully");
       setDoneLoad(true);
     }
   };
@@ -77,14 +77,14 @@ const WatchListInfo = ({ id }) => {
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />
-      <div className="watchlist_container">
+      <div className="favoritelist_container">
         <div className="title">
-          <span>Watch List</span>
+          <span>Favorite List</span>
         </div>
         <div className="card_watch_list">
           {watchList?.slice(0, count).map((item) => (
             <>
-              <CardWatchList
+              <CardFavoriteInfo
                 item={item}
                 key={item._id}
                 handleAddMovieToWatchList={handleAddMovieToWatchList}
@@ -117,4 +117,4 @@ const WatchListInfo = ({ id }) => {
   );
 };
 
-export default WatchListInfo;
+export default FavoriteInfo;

@@ -4,8 +4,19 @@ import React, { useState, useEffect } from "react";
 import "./cardItemFilmPeoPle.scss";
 import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
-const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false }) => {
+const CardItemFilmPeoPle = ({
+  item,
+  types,
+  colorGroup,
+  length,
+  person = false,
+}) => {
   // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
   const [posterHover, setPosterHover] = useState(false);
   const [name, setName] = useState("");
@@ -35,16 +46,61 @@ const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
           style={{ textDecoration: "none" }}
         >
           <img
-            style={posterHover ? { transform: "scale(1.2)", transition: "all 0.5s ease-in-out" } : {}}
+            style={
+              posterHover
+                ? {
+                    transform: "scale(1.2)",
+                    transition: "all 0.5s ease-in-out",
+                  }
+                : {}
+            }
             className="now_playing_image"
             onError={(event) => {
-              event.target.src = {defaultImage}
+              event.target.src = { defaultImage };
               event.onerror = null;
             }}
             src={process.env.REACT_APP_PATH_IMG + item.poster_path}
             alt={name}
           />
         </Link>
+        <div className="vote_group">
+          <CircularProgressbarWithChildren
+            value={item.vote_average * 10 || 60}
+            // text={`${item.vote_average * 10 || 10}%`}
+            background
+            backgroundPadding={1}
+            styles={buildStyles({
+              backgroundColor: "#081c22",
+              textColor: "#fff",
+              pathColor:
+                item.vote_average >= 6
+                  ? "#20ca76"
+                  : item.vote_average || 6 > 5
+                  ? "#868e29"
+                  : "red",
+              trailColor:
+                item.vote_average >= 6
+                  ? "#1d4028"
+                  : item.vote_average || 6 > 5
+                  ? "#3d3a10"
+                  : "#f19293",
+            })}
+          >
+            <div
+              style={{
+                fontSize: "16px",
+                position: "relative",
+                color: "white",
+                zIndex: 99999999999,
+              }}
+            >
+              <span>{(item.vote_average || 6) * 10}</span>
+              <span style={{ fontSize: "10px", verticalAlign: "text-top" }}>
+                %
+              </span>
+            </div>
+          </CircularProgressbarWithChildren>
+        </div>
         <div
           className="icon_group"
           onMouseOver={(e) => {
@@ -87,7 +143,11 @@ const CardItemFilmPeoPle = ({ item, types, colorGroup, length, person = false })
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
         >
-          <span className="now_play_title" title={name}  style={posterHover ? { textDecoration: "underline" } : {}}>
+          <span
+            className="now_play_title"
+            title={name}
+            style={posterHover ? { textDecoration: "underline" } : {}}
+          >
             {name}
           </span>
         </Link>

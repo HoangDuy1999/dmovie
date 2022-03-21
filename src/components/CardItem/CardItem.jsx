@@ -89,6 +89,7 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
             })}
           >
             <div
+            className="title_group"
               style={{
                 fontSize: "16px",
                 position: "relative",

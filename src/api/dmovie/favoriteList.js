@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 
-const watchlistApi = {
+const favoriteListApi = {
   getListByAccountId(id) {
     const url = `watchlist?account_id=${id}`;
     return axiosClient.get(url);
@@ -19,4 +19,4 @@ const watchlistApi = {
   },
 };
 
-export default watchlistApi;
+export default favoriteListApi;

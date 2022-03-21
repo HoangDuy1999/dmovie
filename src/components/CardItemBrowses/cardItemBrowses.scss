@@ -125,6 +125,19 @@
         max-height: 260px;
       }
     }
+    .vote_group {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 5px 5px 0 0;
+      color: white;
+      width: 40px;
+      height: 40px;
+      @media screen and (max-width: 600px) {
+        width: 35px;
+        height: 35px;
+      }
+    }
     .icon_group {
       position: absolute;
       top: 0;
@@ -157,8 +170,8 @@
       // background-color: #181818;
       text-align: left !important;
       overflow: hidden;
-      color: #283040;
-      font-weight: 600;
+      color: #000000;
+      font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;

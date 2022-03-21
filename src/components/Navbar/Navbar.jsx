@@ -411,12 +411,12 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
       >
         <div className="menu_item" onClick={() => setIsOpenMenuProfile(false)}>
           <Link
-            to={`/watchlist/${accountInfo._id}`}
+            to={`/favoritelist/${accountInfo._id}`}
             style={{ textDecoration: "none", color: "#263238" }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <AiOutlineUnorderedList style={{ marginRight: "5px" }} />
-              <span className="menu_item_title">Wath list</span>
+              <span className="menu_item_title">Favorite list</span>
             </div>
           </Link>
         </div>

@@ -14,7 +14,7 @@ import VideoSlider from "../VideoSlider/VidieoSlider";
 import axios from "axios";
 import { BsFillHeartFill } from "react-icons/bs";
 import YouTube from "react-youtube";
-import watchlistApi from "../../api/dmovie/watchlist";
+import FavoriteListApi from "../../api/dmovie/favoriteList";
 import { success, error } from "../Toastify/Toastify";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -63,7 +63,7 @@ const MovieInfo = ({ category }) => {
     if (isLogin && accountInfo._id !== undefined) {
       const findMoiveWatchList = async () => {
         try {
-          const rs = await watchlistApi.findMovieByAccountId({
+          const rs = await FavoriteListApi.findMovieByAccountId({
             _id: accountInfo._id + "",
             movie_id: parseInt(id),
           });
@@ -235,23 +235,23 @@ const MovieInfo = ({ category }) => {
   const handleAddWatchList = async () => {
     setDoneLoad(false);
     if (isWatchList) {
-      const rs = await watchlistApi.update({
+      const rs = await FavoriteListApi.update({
         account_id: accountInfo._id,
         movie_id: id,
         status: 0,
       });
       if (rs.code === 200) {
-        success("Remove movie to watchlist successfully");
+        success("Remove movie to favorite list successfully");
         setDoneLoad(true);
       } else {
-        error("Remove movie to watchlist unsuccessfully");
+        error("Remove movie to favorite list unsuccessfully");
         setDoneLoad(true);
       }
       console.log("hủy thích");
       console.log(movieInfos);
       setIsWatchList(false);
     } else {
-      const rs = await watchlistApi.add({
+      const rs = await FavoriteListApi.add({
         account_id: accountInfo._id,
         movie_id: id,
         movie_name: movieInfos.name || movieInfos.title,
@@ -261,10 +261,10 @@ const MovieInfo = ({ category }) => {
       });
       console.log(rs);
       if (rs.code === 200) {
-        success("Add movie to watchlist successfully");
+        success("Add movie to favorite list successfully");
         setDoneLoad(true);
       } else {
-        error("Add movie to watchlist unsuccessfully");
+        error("Add movie to favorite list unsuccessfully");
         setDoneLoad(true);
       }
       console.log("đã thích");
@@ -383,6 +383,7 @@ const MovieInfo = ({ category }) => {
                     {isLogin ? (
                       <>
                         <BsFillHeartFill
+                        title="Watch list"
                           className="heart_icon"
                           onClick={handleAddWatchList}
                           style={

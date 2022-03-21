@@ -1,7 +1,7 @@
 export const languages = [
   {
     value: "",
-    label: "All languge",
+    label: "All languges",
   },
   {
     value: "an",

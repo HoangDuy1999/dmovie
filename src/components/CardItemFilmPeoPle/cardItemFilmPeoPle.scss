@@ -45,6 +45,15 @@
     border-radius: 10px 10px 0 0;
     box-sizing: border-box;
     overflow: hidden;
+    .vote_group {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 5px 5px 0 0;
+      color: white;
+      width: 40px;
+      height: 40px;
+    }
     .icon_group {
       position: absolute;
       top: 0;
@@ -105,13 +114,13 @@
     .now_play_title {
       box-sizing: border-box;
       overflow: hidden;
-      color: #283040;
+      color: #000000;
       text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       line-clamp: 1;
       text-align: left;
-      font-weight: 600;
+      font-weight: 500;
       -webkit-box-orient: vertical;
       cursor: pointer;
     }

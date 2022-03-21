@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./cardWatchList.scss";
+import "./cardFavoriteInfo.scss";
 import { BsPlayCircle } from "react-icons/bs";
 import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";

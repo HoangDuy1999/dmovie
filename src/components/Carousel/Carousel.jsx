@@ -94,11 +94,7 @@ const Carousel = () => {
                     <h2 className="title">{item.title}</h2>{" "}
                   </Link>
                   <p className="description">{item.overview}</p>
-                  <span className="type">{`${
-                    item.genres_name.split(" / ")[0] || ""
-                  } / ${item.genres_name.split(" / ")[1] || 0} / ${
-                    item.genres_name.split(" / ")[2] || 0
-                  }`}</span>
+                  <span className="type">{`${item.genres_name}`}</span>
                 </div>
               </div>
             </div>
