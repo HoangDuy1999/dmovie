@@ -625,10 +625,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleSeekMoveUp = (e, newValue) => {
-    // console.log(newValue);
-    // const loaded =
-    //   playerRef?.current?.getSecondsLoaded() /
-    //     playerRef?.current?.getDuration() || 0;
     if (onLoaded === false) {
       setOnLoaded(true);
     }
@@ -768,7 +764,14 @@ Do you want to continue watching?</div>`}
             </div>
           </div>
 
-          <div className="sub_list">
+          <div
+            className="sub_list"
+            style={
+              width < 600 && selectedSub1.value === "" &&  selectedSub2.value === ""
+                ? { display: "none", width: 0, height: 0 }
+                : {}
+            }
+          >
             <SubTitleList
               listSubTitle={listSubTitle}
               selectedSub1={selectedSub1}
