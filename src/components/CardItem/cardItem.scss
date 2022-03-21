@@ -28,6 +28,7 @@
   @media screen and (max-width: 480px) {
     height: 200px;
     width: 31.33%;
+    margin-bottom: 15px !important;
   }
   @media screen and (max-width: 420px) {
     height: 225px;
@@ -49,6 +50,20 @@
     border-radius: 10px 10px 0 0;
     box-sizing: border-box;
     overflow: hidden;
+
+    .vote_group {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 5px 5px 0 0;
+      color: white;
+      width: 50px;
+      height: 50px;
+      @media screen and (max-width: 600px) {
+        width: 40px;
+        height: 40px;
+      }
+    }
     .icon_group {
       position: absolute;
       top: 0;

@@ -264,7 +264,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 6000);
+    }, 4000);
     if (!_.isEmpty(movieInfo)) {
       getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
       //lấy phiên dịch
@@ -435,7 +435,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 6000);
+    }, 4000);
     // getVideos(movieInfo.episodeVo[value].id);
     // setSelectedSub1({
     //   value: "",

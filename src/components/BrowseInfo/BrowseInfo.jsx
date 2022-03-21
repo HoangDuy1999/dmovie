@@ -75,7 +75,7 @@ const BrowseInfo = () => {
     setSideBarLeft(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 3500);
     const params = {
       "release_date.gte": releaseIn[0] + "-01-01",
       "release_date.lte": releaseIn[1] + "-01-01",
@@ -158,7 +158,7 @@ const BrowseInfo = () => {
     setDoneLoad(!doneLoad);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 3500);
     // setSubDoneLoad(false);
     const params = {
       "release_date.gte": releaseIn[0] + "-01-01",

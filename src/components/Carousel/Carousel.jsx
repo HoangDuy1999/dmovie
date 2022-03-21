@@ -16,7 +16,7 @@ const Carousel = () => {
         setDoneLoad(false);
         const timeout = setTimeout(() => {
           setDoneLoad(true);
-        }, 5000);
+        }, 4000);
 
         const response = await tmdbApi.getTrending();
         setTrendMovieItems(response.slice(0, 5));
@@ -28,7 +28,6 @@ const Carousel = () => {
     getMovies();
   }, []);
 
-  console.log(movieTrendItems);
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />

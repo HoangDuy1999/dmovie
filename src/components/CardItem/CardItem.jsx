@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 import defaultImage from "../../images/default_image.jpg";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
   // const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
@@ -60,6 +65,44 @@ const NowPlaying = ({ item, types, colorGroup, length, person = false }) => {
             }
           />
         </Link>
+        <div className="vote_group">
+          <CircularProgressbarWithChildren
+            value={item.vote_average * 10 || 60}
+            // text={`${item.vote_average * 10 || 10}%`}
+            background
+            backgroundPadding={1}
+            styles={buildStyles({
+              backgroundColor: "#081c22",
+              textColor: "#fff",
+              pathColor:
+                item.vote_average >= 6
+                  ? "#20ca76"
+                  : item.vote_average || 6 > 5
+                  ? "#868e29"
+                  : "red",
+              trailColor:
+                item.vote_average >= 6
+                  ? "#1d4028"
+                  : item.vote_average || 6 > 5
+                  ? "#3d3a10"
+                  : "#f19293",
+            })}
+          >
+            <div
+              style={{
+                fontSize: "16px",
+                position: "relative",
+                color: "white",
+                zIndex: 99999999999,
+              }}
+            >
+              <span>{(item.vote_average || 6) * 10}</span>
+              <span style={{ fontSize: "10px", verticalAlign: "text-top" }}>
+                %
+              </span>
+            </div>
+          </CircularProgressbarWithChildren>
+        </div>
         <div
           className="icon_group"
           onMouseOver={(e) => {

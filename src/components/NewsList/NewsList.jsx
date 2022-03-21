@@ -24,7 +24,7 @@ const NewsList = () => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 3000);
+    }, 2500);
     axios
       .get(`/secure/news`, {
         params: {

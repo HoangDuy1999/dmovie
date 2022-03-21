@@ -13,7 +13,7 @@ const SearchResult = ({ txtSearch }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 4000);
     const searchMovies = async () => {
       const response = await tmdbApi.search("movie", {
         params: { page: 1, query: txtSearch },

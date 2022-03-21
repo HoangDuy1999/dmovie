@@ -20,7 +20,7 @@ const NowPlayings = () => {
       setNowPlayingMovies([]); // This worked for me
     };
   }, []);
-  // console.log(nowPlayingMovies);
+  console.log(nowPlayingMovies);
   return (
     <div className="now_playings">
       <div className="now_play_top">

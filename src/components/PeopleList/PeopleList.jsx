@@ -80,7 +80,7 @@ const PeopleList = () => {
     const timeout = setTimeout(() => {
       setDoneLoad(true);
       // window.scrollTo(0, 0);
-    }, 4000);
+    }, 3000);
     // const getInfoPeople = () => {
     //   axios
     //     .get(`/secure/people`, {
