@@ -40,7 +40,7 @@ const HighestRatingMovie = () => {
             marginRight: "1%",
           }}
         >
-          <span>Highest Rated Movies</span>
+          <span style={{marginRight: "10px"}}>Highest Rated Movies</span>
           <Button
             variant="text"
             style={{
