@@ -4,14 +4,7 @@ import MovieInfo from "../components/MovieInfo/MovieInfo";
 import Footer from "../components/Footer/Footer";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const MovieDetail = () => {
-  // const [movieId, setMovieId] = useState(useParams().movieId);
-  // const handleChangeMovieId = function (id) {
-  //   console.log("set lại movieid");
-  //   console.log("cái qq j v: " + id);
-  //   setMovieId(() => id);
-  // };
-
-  // console.log(useParams().movieId);
+  
   return (
     <div>
       <Navbar />

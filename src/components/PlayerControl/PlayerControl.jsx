@@ -19,6 +19,7 @@ import "./playerControl.scss";
 import PropTypes from "prop-types";
 import ClosedCaptionIcon from "@mui/icons-material/ClosedCaption";
 import ClosedCaptionDisabledIcon from "@mui/icons-material/ClosedCaptionDisabled";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const PlayerControl = (
   {
@@ -31,10 +32,7 @@ const PlayerControl = (
     onVolumechange,
     onVolumeSeekDown,
     volume,
-    // playbackRate,
-    // onPlayBackRate,
-    // onHandleOpenPopover,
-    // onHandleClosePopover,
+    onLoaded,
     handleOnClickHideSubTile,
     hideSub,
     onToggleFullScreen,
@@ -91,42 +89,58 @@ const PlayerControl = (
           </Grid>
         </Grid>
         {/* MIDDLE */}
-        <Grid
-          key="keymiddle"
-          container
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <IconButton
-            onClick={onRewind}
-            className="controlIcons"
-            aria-label="requind"
-            size="large"
+        {onLoaded ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}
           >
-            <FastRewindIcon fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            onClick={(e) => onPlayPause(e)}
-            className="controlIcons"
-            aria-label="requind"
-            size="large"
+            <CircularProgress
+              style={{ color: "#1976d2", width: "50px", height: "50px" }}
+            />
+          </div>
+        ) : (
+          <Grid
+            key="keymiddle"
+            container
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
           >
-            {playing ? (
-              <PauseIcon fontSize="inherit" />
-            ) : (
-              <PlayArrowIcon fontSize="inherit" />
-            )}
-          </IconButton>
-          <IconButton
-            onClick={onFastForward}
-            className="controlIcons"
-            aria-label="requind"
-            size="large"
-          >
-            <FastForwardIcon fontSize="inherit" />
-          </IconButton>
-        </Grid>
+            <IconButton
+              onClick={onRewind}
+              className="controlIcons"
+              aria-label="requind"
+              size="large"
+            >
+              <FastRewindIcon fontSize="inherit" />
+            </IconButton>
+            <IconButton
+              onClick={(e) => onPlayPause(e)}
+              className="controlIcons"
+              aria-label="requind"
+              size="large"
+            >
+              {playing ? (
+                <PauseIcon fontSize="inherit" />
+              ) : (
+                <PlayArrowIcon fontSize="inherit" />
+              )}
+            </IconButton>
+            <IconButton
+              onClick={onFastForward}
+              className="controlIcons"
+              aria-label="requind"
+              size="large"
+            >
+              <FastForwardIcon fontSize="inherit" />
+            </IconButton>
+          </Grid>
+        )}
+
         {/* BOTTOM */}
         <Grid
           key="keybottom"
@@ -190,7 +204,7 @@ const PlayerControl = (
                 onChangeCommitted={onVolumeSeekDown}
                 value={volume * 100}
                 className="volume_slider"
-                style={{marginLeft: "15px"}}
+                style={{ marginLeft: "15px" }}
               />
               <Button
                 onClick={onChangeDisplayFormat}
@@ -211,7 +225,7 @@ const PlayerControl = (
                 className="bottom_icons"
                 key="bottom10"
                 size="large"
-                style={{marginRight: "10px"}}
+                style={{ marginRight: "10px" }}
               >
                 <ClosedCaptionDisabledIcon fontSize="inherit" />
               </IconButton>
@@ -221,7 +235,7 @@ const PlayerControl = (
                 className="bottom_icons"
                 key="bottom11"
                 size="large"
-                style={{marginRight: "10px"}}
+                style={{ marginRight: "10px" }}
               >
                 <ClosedCaptionIcon fontSize="inherit" />
               </IconButton>

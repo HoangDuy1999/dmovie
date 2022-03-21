@@ -20,7 +20,7 @@ const MovieUpcoming = () => {
       setNowMovieUpcomings([]); // This worked for me
     };
   }, []);
-  // console.log(nowMovieUpcomings);
+
   return (
     <div className="movie_up_coming">
       <div className="movie_up_coming_top">

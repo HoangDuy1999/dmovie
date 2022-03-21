@@ -46,7 +46,6 @@ const Login = () => {
     const rs = response.profileObj;
     try {
       setDoneLoad(false);
-      console.log(rs.email);
       const response = await accountApi.loginAccount({
         email: rs.email,
         // pass_word: event.target.pass_word.value,
@@ -64,7 +63,7 @@ const Login = () => {
         );
         success("Login successfull");
         setDoneLoad(true);
-        console.log(response);
+
         // navigate(`/`);
         navigate(-1);
       }
@@ -76,7 +75,6 @@ const Login = () => {
 
   const responseGoogleSuccessedSignUp = async (response) => {
     const rs = response.profileObj;
-    console.log(rs);
     try {
       setDoneLoad(false);
       console.log({
@@ -89,7 +87,7 @@ const Login = () => {
         full_name: rs.full_name,
         pass_word: "123456",
       });
-      console.log(response);
+      // console.log(response);
       if (response.code === 400) {
         error(response.message.message);
         setDoneLoad(true);
@@ -102,7 +100,7 @@ const Login = () => {
         );
         success("Login successfull");
         setDoneLoad(true);
-        console.log(response);
+        // console.log(response);
         navigate(`/`);
       }
     } catch (e) {
@@ -113,7 +111,7 @@ const Login = () => {
   const responseGoogleFailed = (response) => {
     // const rs = JSON.stringify(response);
     error("Login with google unsuccessfull");
-    console.log(JSON.stringify(response));
+    // console.log(JSON.stringify(response));
   };
 
   const handleRegisterSubmit = async (event) => {
@@ -139,7 +137,7 @@ const Login = () => {
       email: event.target.email.value,
       pass_word: event.target.pass_word.value,
     };
-    console.log(params);
+
     const response = await accountApi.addAccount({
       // _id: "623015f8f44350f03413a368",
       full_name: event.target.full_name.value,
@@ -171,7 +169,7 @@ const Login = () => {
         email: event.target.email.value,
         pass_word: event.target.pass_word.value,
       });
-      console.log(response);
+      // console.log(response);
       if (response.code === 400) {
         error(response.message.message);
         setDoneLoad(true);
@@ -184,7 +182,7 @@ const Login = () => {
         );
         success("Login successfull");
         setDoneLoad(true);
-        console.log(response);
+        // console.log(response);
         navigate(`/`);
       }
     } catch (e) {

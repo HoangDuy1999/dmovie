@@ -32,6 +32,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
   const [subText1, setSubText1] = useState("");
   const [countHiddenText, setCountHiddenText] = useState(0);
+  const [onLoaded, setOnLoaded] = useState(false);
   const [arrSub, setArrSub] = useState([
     {
       value: "",
@@ -96,7 +97,7 @@ const Watch = ({ cate, ep, onFocus }) => {
           }
         )
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setMovieInfor(res.data.data);
         })
         .catch((error) => console.log(error));
@@ -162,6 +163,22 @@ const Watch = ({ cate, ep, onFocus }) => {
       }
       return 0;
     });
+  };
+
+  const screenfullPlayer = () => {
+    if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
+      setSubTextSize("34px");
+    } else if (
+      screenfull.isFullscreen === false &&
+      subTextSize !== "27px" &&
+      width > 978
+    ) {
+      setSubTextSize("27px");
+    } else if (width < 978 && width > 758 && subTextSize !== "24px") {
+      setSubTextSize("24px");
+    } else if (width < 650 && subTextSize !== "16px") {
+      setSubTextSize("16px");
+    }
   };
 
   // leave tab browser
@@ -264,7 +281,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 4000);
+    }, 5000);
     if (!_.isEmpty(movieInfo)) {
       getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
       //lấy phiên dịch
@@ -284,6 +301,15 @@ const Watch = ({ cate, ep, onFocus }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
+    // hide loading
+    const loaded = playerRef?.current?.getSecondsLoaded();
+    if (loaded >= secondRoot && onLoaded === true) {
+      setOnLoaded(false);
+    }
+
+    //setTextSub size
+    screenfullPlayer();
+
     const arr = [secondRoot, secondRoot - 1, secondRoot - 2];
     for (const val of arr) {
       try {
@@ -435,7 +461,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 4000);
+    }, 5000);
     // getVideos(movieInfo.episodeVo[value].id);
     // setSelectedSub1({
     //   value: "",
@@ -562,38 +588,9 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleToggleFullScreen = () => {
     screenfull.toggle(playerContainerRef.current);
-    // const timeout = setTimeout(() => {
-    //   //set font size subtitle
-    //   if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
-    //     setSubTextSize("34px");
-    //   } else if (
-    //     screenfull.isFullscreen === false &&
-    //     subTextSize !== "27px" &&
-    //     width > 978
-    //   ) {
-    //     setSubTextSize("27px");
-    //   } else if (width < 978 && width > 758 && subTextSize !== "24px") {
-    //     setSubTextSize("24px");
-    //   } else if (width < 650 && subTextSize !== "16px") {
-    //     setSubTextSize("16px");
-    //   }
-    // }, 500);
-    // return () => clearTimeout(timeout);
   };
 
-  if (screenfull.isFullscreen && subTextSize !== "34px" && width > 978) {
-    setSubTextSize("34px");
-  } else if (
-    screenfull.isFullscreen === false &&
-    subTextSize !== "27px" &&
-    width > 978
-  ) {
-    setSubTextSize("27px");
-  } else if (width < 978 && width > 758 && subTextSize !== "24px") {
-    setSubTextSize("24px");
-  } else if (width < 650 && subTextSize !== "16px") {
-    setSubTextSize("16px");
-  }
+  //screenfullPlayer();
 
   const handleSeekChange = (e, newValue) => {
     setPlayerStates(() => ({
@@ -616,6 +613,13 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleSeekMoveUp = (e, newValue) => {
+    console.log(newValue);
+    const loaded =
+      playerRef?.current?.getSecondsLoaded() /
+        playerRef?.current?.getDuration() || 0;
+    if (loaded < newValue / 100 && onLoaded === false) {
+      setOnLoaded(true);
+    }
     playerRef.current.seekTo(newValue / 100);
     setPlayerStates(() => ({
       ...playerStates,
@@ -645,6 +649,11 @@ const Watch = ({ cate, ep, onFocus }) => {
   const handleOnEndedReactPlayer = () => {
     localStorage.removeItem(`${id}^^^${episodeId}`);
   };
+
+  console.log(
+    playerRef?.current?.getSecondsLoaded() /
+      playerRef?.current?.getDuration() || 0
+  );
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -686,7 +695,9 @@ Do you want to continue watching?</div>`}
             ref={playerContainerRef}
           >
             <ReactPlayer
-              onReady={(e) => setIsDoneLoad(true)}
+              onReady={(e) => {
+                setIsDoneLoad(true);
+              }}
               onProgress={(progress) => {
                 handleProgressReactPlayer(progress);
               }}
@@ -711,6 +722,7 @@ Do you want to continue watching?</div>`}
               style={{ backgroundColor: "yellow" }}
             >
               <PlayerControl
+                onLoaded={onLoaded}
                 ref={controlsRef}
                 onPlayPause={(e) => handlePlayPause(e)}
                 playing={playerStates.playing}

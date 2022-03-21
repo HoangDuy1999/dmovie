@@ -59,10 +59,8 @@ const BrowseInfo = () => {
   useEffect(() => {
     const getGenresLists = async () => {
       if (selectedType.value !== undefined) {
-        // console.log(selectedType.value);
         const cate = selectedType.value;
         const response = await tmdbApi.genresList(cate);
-        // console.log(response);
         setGenresLists(response.genres.slice(0, 8));
       }
     };
@@ -93,11 +91,8 @@ const BrowseInfo = () => {
     const getData = async () => {
       try {
         if (selectedType.value !== undefined) {
-          // console.log("==========================");
-          // console.log(selectedType.value);
           const response = await tmdbApi.discover(selectedType.value, params);
           setTotalPage(response.total_pages || 1);
-          // console.log(response);
           setDataLists(response.results);
           // if(response.results !== undefined){
 
@@ -110,16 +105,6 @@ const BrowseInfo = () => {
     getData();
     return () => clearTimeout(timeout);
   }, [selectMovieGenres, selectedType, score, releaseIn, selectedLanguege]);
-
-  // const handleChangeSetSelectedType = (e) => {
-  //   // setSelectedType(e);
-  //   // console.log(`/browse?type=${e.value}`);
-  //   // console.log(e);
-  //   // setSelectMovieGenres("");
-  //   // setGenresLists([]);
-  //   // setSearchParams({type: e.value});
-  //   navigate(`/browse?type=${e.value}`);
-  // };
 
   const handleChangeReleaseIn = (e) => {
     setReleaseIn(e);
@@ -134,8 +119,6 @@ const BrowseInfo = () => {
   };
 
   const handleChangeGenres = (e) => {
-    // console.log(e.target.value.toString());
-    // console.log(e.target.checked);
     if (e.target.checked) {
       if (selectMovieGenres.length < 1) {
         setSelectMovieGenres(e.target.value.toString());
@@ -174,17 +157,13 @@ const BrowseInfo = () => {
       page: page + 1,
     };
     setPage(page + 1);
-    // console.log("page: " + page);
+
     if (page + 1 <= totalPages) {
       const getData = async () => {
         try {
           if (selectedType.value !== undefined) {
-            // console.log("==========================");
-            // console.log(selectedType.value);
-            // console.log(params);
             const response = await tmdbApi.discover(selectedType.value, params);
             setTotalPage(response.total_pages || 1);
-            // console.log(response);
             setDataLists([...dataLists, ...response.results]);
           }
         } catch (e) {

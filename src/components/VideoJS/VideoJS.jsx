@@ -9,13 +9,12 @@ export const VideoJS = (props) => {
 //   console.log(options);
   React.useEffect(() => {
     // make sure Video.js player is only initialized once
-console.log("VIDEOJS RERUN");
     if (!playerRef.current) {
       const videoElement = videoRef.current;
       if (!videoElement) return;
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
-        console.log("player is ready");
+        // console.log("player is ready");
         onReady && onReady(player);
       }));
     } else {

@@ -7,9 +7,6 @@ import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 const TvDetail = () => {
   const [movieId, setMovieId] = useState(useParams().movieId);
   const handleChangeMovieId = function (id) {
-    console.log("set lại tvid");
-    console.log("cái qq j v: " + id);
-    setMovieId(() => id);
   };
 
   console.log(useParams().movieId);

@@ -20,7 +20,7 @@ const HighestRatingTvShow = () => {
       setHighestRatingTvShow([]); // This worked for me
     };
   }, []);
-  // console.log(highestRatingTvShow);
+ 
 
   return (
     <div className="high_rate_tv_show">

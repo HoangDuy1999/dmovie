@@ -56,7 +56,7 @@ const FavoriteInfo = ({ id }) => {
       movie_type: item.movie_type,
       status: 1,
     });
-    console.log(rs);
+    // console.log(rs);
     if (rs.code === 200) {
       const arr_temp = watchList.map((i) => {
         if (i.movie_id === item.movie_id) {
@@ -72,8 +72,7 @@ const FavoriteInfo = ({ id }) => {
       setDoneLoad(true);
     }
   };
-  console.log(watchList);
-  console.log(count);
+
   return (
     <>
       <PageLoadingEffeect doneLoad={doneLoad} />

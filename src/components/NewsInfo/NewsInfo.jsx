@@ -9,7 +9,6 @@ import PageLoadingEffeect from "../PageLoadingEffect/PageLoadingEffeect";
 const NewsInfo = () => {
   const { id } = useParams();
   const [newsId, setNewId] = useState(id);
-  console.log(id);
   const [newsInfo, setNewsInfo] = useState({});
   const [listNews, setListNews] = useState([]);
   const [doneLoad, setDoneLoad] = useState(false);

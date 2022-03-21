@@ -41,11 +41,9 @@ const tmdbApi = {
         return item["name"];
       });
       genres_name = genres_name.join(" / ");
-      // console.log(genres_name);
       return { ...item, genres_name };
     });
     return Promise.all(response).then(function (results) {
-      // console.log(results);
       return results ? results : [];
     });
   },

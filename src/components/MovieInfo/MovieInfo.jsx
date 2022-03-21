@@ -19,6 +19,7 @@ import { success, error } from "../Toastify/Toastify";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import defaultImage from "../../images/default_image.jpg";
+import Button from '@mui/material/Button';
 
 const MovieInfo = ({ category }) => {
   // console.log(id);
@@ -189,7 +190,7 @@ const MovieInfo = ({ category }) => {
           sort: "",
           searchType: "",
         };
-        console.log(body);
+
         axios
           .post(
             "https://ga-mobile-api.loklok.tv/cms/app/search/v1/searchWithKeyWord",
@@ -217,8 +218,6 @@ const MovieInfo = ({ category }) => {
   console.log(movieInfos);
 
   const handleClickWatchFilm = (e) => {
-    // console.log("click");
-    // console.log(movieInfoLoklok);
     navigate(
       `/watch/${movieInfoLoklok[0].id}?type=${movieInfoLoklok[0].domainType}&ep=0`
     );
@@ -247,8 +246,7 @@ const MovieInfo = ({ category }) => {
         error("Remove movie to favorite list unsuccessfully");
         setDoneLoad(true);
       }
-      console.log("hủy thích");
-      console.log(movieInfos);
+
       setIsWatchList(false);
     } else {
       const rs = await FavoriteListApi.add({
@@ -360,30 +358,32 @@ const MovieInfo = ({ category }) => {
                 >
                   <div>
                     {isWatchFilm ? (
-                      <button
+                      <Button
+                      variant="contained"
                         onClick={(e) => {
                           handleClickWatchFilm(e);
                         }}
                         className="btn_watch_film"
                       >
                         Watch film
-                      </button>
+                      </Button>
                     ) : (
-                      <button
+                      <Button
+                      variant="contained"
                         className="btn_watch_film"
                         style={{
                           backgroundColor: "#f1f1f1",
                         }}
                       >
                         Watch film
-                      </button>
+                      </Button>
                     )}
                   </div>
                   <div>
                     {isLogin ? (
                       <>
                         <BsFillHeartFill
-                        title="Watch list"
+                        title="Favorite list"
                           className="heart_icon"
                           onClick={handleAddWatchList}
                           style={

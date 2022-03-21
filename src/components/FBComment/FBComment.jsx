@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import "./fbComment.scss";
 const FBComment = ({ width, dataHref, numPost }) => {
     useEffect(() => {
-        console.log(process.env.REACT_APP_FACEBOOK_APP_ID);
-        console.log(dataHref);
       if (window.FB) {
         window.FB.XFBML.parse();
       }

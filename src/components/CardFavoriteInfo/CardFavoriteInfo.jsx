@@ -14,18 +14,12 @@ const CardWatchList = ({
 }) => {
   const [isHover, setIshHover] = useState(false);
   const handleMouseOverImage = () => {
-    console.log("===1==");
-    console.log("hover");
-    console.log("===1==");
     if (!isHover) setIshHover(() => true);
   };
   const handleMouseOutImage = () => {
-    console.log("===2==");
-    console.log("move out");
-    console.log("===2F==");
     if (isHover) setIshHover(() => false);
   };
-  console.log(isHover);
+  
   return (
     <div className="card_watch_list_container" key={item._id}>
       <div
