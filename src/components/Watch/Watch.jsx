@@ -731,7 +731,7 @@ Do you want to continue watching?</div>`}
             {/* play control */}
             <div
               className="player_control"
-              style={isDoneLoad ? {} : { display: "none", width: 0, height: 0 }}
+              // style={isDoneLoad ? {} : { display: "none", width: 0, height: 0 }}
             >
               <PlayerControl
                 onLoaded={onLoaded}
