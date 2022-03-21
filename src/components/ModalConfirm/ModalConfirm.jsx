@@ -42,7 +42,7 @@ const ModalConfirm = ({ isOpen, title, message, handleConfirm }) => {
           <Typography
             id="modal-modal-title"
             variant="h6"
-            style={{ fontWeight: 700, padding: "10px 0" }}
+            style={{ fontWeight: 600, padding: "10px 0" }}
             component="h2"
           >
             {title}

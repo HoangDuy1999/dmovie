@@ -17,6 +17,7 @@ import WatchMovie from "./pages/WatchMovie";
 import FavoriteList from "./pages/FavoriteList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ListMovie from "./pages/ListMovie";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   return (
@@ -45,6 +46,8 @@ const App = () => {
           <Route path="/watch/:id" element={<WatchMovie />} />
 
           <Route path="/favoritelist/:id" element={<FavoriteList />} />
+
+          <Route path="/list" element={<ListMovie />} />
 
           {/*HOME */}
           <Route path="/" element={<Home />} />

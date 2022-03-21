@@ -47,6 +47,11 @@ const tmdbApi = {
       return results ? results : [];
     });
   },
+  getList: async (cate, type, params) => {
+    const url = `${cate}/${type}`;
+    let response = await axiosClient.get(url, { params });
+    return response;
+  },
   getNowPlaying: async (params) => {
     const url = `movie/now_playing`;
     let response = await axiosClient.get(url, { params });
@@ -117,17 +122,17 @@ const tmdbApi = {
     const url = "/person/" + id;
     return axiosClient.get(url, { params: {} });
   },
-  getPopularPeople: (page=1) => {
+  getPopularPeople: (page = 1) => {
     const url = "/person/popular";
-    return axiosClient.get(url, { params: {page: page} });
+    return axiosClient.get(url, { params: { page: page } });
   },
   getCombineCreditsPerson: (id) => {
-    const url = "/person/" + id +"/combined_credits";
+    const url = "/person/" + id + "/combined_credits";
     return axiosClient.get(url, { params: {} });
   },
   searchMulties: (txtSearch) => {
     const url = "/search/multi";
-    return axiosClient.get(url, { params: { query: txtSearch, page: 1} });
+    return axiosClient.get(url, { params: { query: txtSearch, page: 1 } });
   },
 };
 

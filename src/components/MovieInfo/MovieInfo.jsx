@@ -19,7 +19,7 @@ import { success, error } from "../Toastify/Toastify";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import defaultImage from "../../images/default_image.jpg";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 const MovieInfo = ({ category }) => {
   // console.log(id);
@@ -359,7 +359,7 @@ const MovieInfo = ({ category }) => {
                   <div>
                     {isWatchFilm ? (
                       <Button
-                      variant="contained"
+                        variant="contained"
                         onClick={(e) => {
                           handleClickWatchFilm(e);
                         }}
@@ -369,7 +369,7 @@ const MovieInfo = ({ category }) => {
                       </Button>
                     ) : (
                       <Button
-                      variant="contained"
+                        variant="contained"
                         className="btn_watch_film"
                         style={{
                           backgroundColor: "#f1f1f1",
@@ -383,7 +383,7 @@ const MovieInfo = ({ category }) => {
                     {isLogin ? (
                       <>
                         <BsFillHeartFill
-                        title="Favorite list"
+                          title="Favorite list"
                           className="heart_icon"
                           onClick={handleAddWatchList}
                           style={
@@ -515,15 +515,7 @@ const MovieInfo = ({ category }) => {
         <div className="movie_info_similar">
           <div className="container">
             <div style={{ margin: "50px 0px" }}>
-              <span
-                style={{
-                  fontSize: "30px",
-                  fontWeight: "700",
-                  color: "white",
-                }}
-              >
-                Similar
-              </span>
+              <span>Similar</span>
             </div>
             <div className="content">
               <VideoSlider

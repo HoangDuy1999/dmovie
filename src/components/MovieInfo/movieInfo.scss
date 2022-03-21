@@ -136,7 +136,7 @@ $black: #000;
             color: white;
             // background-color: blue;
             font-size: 40px;
-            font-weight: 700;
+            font-weight: 600;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -314,8 +314,13 @@ $black: #000;
         margin-bottom: 50px;
         margin-top: 0px;
         span {
-          font-size: 30px;
-          font-weight: 700;
+          font-size: 35px;
+          font-weight: 600;
+        }
+        @media screen and (max-width: 600px) {
+          span {
+            font-size: 28px;
+          }
         }
       }
       .content {
@@ -422,6 +427,14 @@ $black: #000;
         display: flex;
         flex-direction: column;
       }
+      .span {
+        font-size: 35px;
+        font-weight: 600;
+        color: white;
+      }
+      @media screen and (max-width: 600px) {
+        font-size: 28px;
+      }
     }
   }
 
@@ -446,10 +459,13 @@ $black: #000;
       .title {
         color: white;
         // background-color: blue;
-        font-size: 30px;
+        font-size: 35px;
         margin-top: 40px;
         margin-bottom: 50px;
-        font-weight: 700;
+        font-weight: 600;
+        @media screen and (max-width: 600px) {
+          font-size: 28px;
+        }
       }
       .content {
         width: 100%;

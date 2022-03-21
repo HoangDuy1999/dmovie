@@ -550,6 +550,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleSetStart = (val) => {
     if (playerStates.playing) {
+      setIsDoneLoad(false);
       playerRef.current.seekTo(val);
     }
     // setPlayerStates({ ...playerStates, seeking: false });
