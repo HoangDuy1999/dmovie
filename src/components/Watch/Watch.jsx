@@ -128,6 +128,18 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const getSubtitle = (list) => {
+    if (list?.length < 1) {
+      setListSubTitle({});
+      setSelectedSub1({
+        value: "",
+        label: "Off",
+      });
+      setSelectedSub2({
+        value: "",
+        label: "Off",
+      });
+      return;
+    }
     list.map((info, index) => {
       if (true) {
         axios
@@ -503,7 +515,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleChangeMovieId = (_id, category) => {
-    setIsDoneLoad(false);
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -522,9 +533,10 @@ const Watch = ({ cate, ep, onFocus }) => {
       played: 0,
       seeking: false,
     });
-    navigate(`/watch/${_id}?type=${category}&ep=0`);
     setArrSub([]);
+    setIsDoneLoad(false);
     setSubText1("");
+    navigate(`/watch/${_id}?type=${category}&ep=0`);
   };
 
   const handleRewind = (e) => {
@@ -613,11 +625,11 @@ const Watch = ({ cate, ep, onFocus }) => {
   };
 
   const handleSeekMoveUp = (e, newValue) => {
-    console.log(newValue);
-    const loaded =
-      playerRef?.current?.getSecondsLoaded() /
-        playerRef?.current?.getDuration() || 0;
-    if (loaded < newValue / 100 && onLoaded === false) {
+    // console.log(newValue);
+    // const loaded =
+    //   playerRef?.current?.getSecondsLoaded() /
+    //     playerRef?.current?.getDuration() || 0;
+    if (onLoaded === false) {
       setOnLoaded(true);
     }
     playerRef.current.seekTo(newValue / 100);
@@ -649,11 +661,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   const handleOnEndedReactPlayer = () => {
     localStorage.removeItem(`${id}^^^${episodeId}`);
   };
-
-  console.log(
-    playerRef?.current?.getSecondsLoaded() /
-      playerRef?.current?.getDuration() || 0
-  );
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()

@@ -37,10 +37,10 @@ const SubTitleList = ({
   }, [second]);
 
   useEffect(() => {
-    if (arrSub1.length > 0) {
+    if (arrSub1.length >= 0 || _.isEmpty(listSubTitle)) {
       setArrSub1([]);
     }
-    if (arrSub2.length > 0) {
+    if (arrSub2.length >= 0 || _.isEmpty(listSubTitle)) {
       setArrSub2([]);
     }
     messagesEndRef.current.scrollTo(0, 0);
@@ -134,13 +134,21 @@ const SubTitleList = ({
                   className="sub1"
                   style={key === selectedSub ? { color: "white" } : {}}
                 >
-                  {arrSub1[key] || ""}
+                  {arrSub1[key] ||
+                    arrSub1[(parseInt(key) - 1).toString()] ||
+                    arrSub1[(parseInt(key) - 2).toString()] ||
+                    ""}
                 </div>
                 <div
                   className="sub2"
                   style={key === selectedSub ? { color: "lightgray" } : {}}
                 >
-                  <div style={{}}>{arrSub2[key] || ""}</div>
+                  <div style={{}}>
+                    {arrSub2[key] ||
+                      arrSub2[(parseInt(key) - 1).toString()] ||
+                      arrSub2[(parseInt(key) - 2).toString()] ||
+                      ""}
+                  </div>
                   <div
                     style={{
                       color: "white",
