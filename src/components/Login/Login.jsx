@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import { AiFillGoogleSquare } from "react-icons/ai";
-// import { FaFacebookSquare } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 import "./login.scss";
 import accountApi from "../../api/dmovie/accounts";
 import { GoogleLogin } from "react-google-login";
@@ -18,6 +18,12 @@ const Login = () => {
   const [isFocusPassword, setIsFocusPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
   const [doneLoad, setDoneLoad] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log("handle route change here", location);
+  }, [location]);
+  
   const handleClickSigUp = (e) => {
     setActiveFormBx("active");
     setActiveBody("active");

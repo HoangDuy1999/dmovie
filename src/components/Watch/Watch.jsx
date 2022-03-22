@@ -104,27 +104,37 @@ const Watch = ({ cate, ep, onFocus }) => {
     }
   };
 
-  const getVideos = (episode, resoluton = "SD") => {
-    axios
-      .get(
-        `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
-        {
-          params: {},
-          headers: {
-            lang: "en",
-            versioncode: 11,
-            clienttype: "ios_jike_default",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data?.data) {
-          setVideoUrl(res.data.data.mediaUrl);
-        } else {
-          setDoneLoad(false);
-        }
-      })
-      .catch((error) => console.log(error));
+  const getVideos = async (episode, resoluton = "SD") => {
+    const arr = ["SD", "LD", "HD"];
+    for (const item of arr) {
+      const rs = await axios
+        .get(
+          `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${item}`,
+          {
+            params: {},
+            headers: {
+              lang: "en",
+              versioncode: 11,
+              clienttype: "ios_jike_default",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data?.data) {
+            // console.log(res.data.data);
+            return res.data.data.mediaUrl;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          return null;
+        });
+      if (rs !== null) {
+        setVideoUrl(rs);
+        controlsRef.current.style.visibility = "visible";
+        break;
+      }
+    }
   };
 
   const getSubtitle = (list) => {
@@ -233,7 +243,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         playerRef.current.getCurrentTime().toString()
       );
     }
-    navigate(-1);
+    navigate(2);
   };
 
   // get current timeBefore
@@ -339,7 +349,6 @@ const Watch = ({ cate, ep, onFocus }) => {
             const isSameText1 = subText1
               .toLowerCase()
               .includes(txtSub1.toLowerCase());
-            console.log("sub1  on");
             if (!isSameText1 && txtSub1 !== "!@#%^&*" && txtSub1.length > 0) {
               setSubText1(txtSub1 + "$$$$$$");
               setCountHiddenText(0);
@@ -359,7 +368,6 @@ const Watch = ({ cate, ep, onFocus }) => {
             const isSameText2 = subText1
               .toLowerCase()
               .includes(txtSub2.toLowerCase());
-            console.log("sub2  on " + txtSub2);
             if (!isSameText2 && txtSub2 !== "!@#$%^&*" && txtSub2.length > 0) {
               setSubText1("$$$$$$" + txtSub2);
               setCountHiddenText(0);
@@ -398,7 +406,6 @@ const Watch = ({ cate, ep, onFocus }) => {
               setCountHiddenText(0);
               break;
             }
-            console.log("sub 1 and 2  on");
           }
         }
       } catch (e) {
@@ -409,7 +416,6 @@ const Watch = ({ cate, ep, onFocus }) => {
     try {
       if (countHiddenText <= 10) setCountHiddenText((pre) => pre + 1);
       if (countHiddenText === 10) {
-        console.log("HIDDEN TEXT");
         setSubText1("");
       }
       if (count >= 3) {
@@ -475,15 +481,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     const timeout = setTimeout(() => {
       setDoneLoad(true);
     }, 5000);
-    // getVideos(movieInfo.episodeVo[value].id);
-    // setSelectedSub1({
-    //   value: "",
-    //   label: "Off",
-    // });
-    // setSelectedSub2({
-    //   value: "",
-    //   label: "Off",
-    // });
+
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
     return () => clearTimeout(timeout);
@@ -712,6 +710,7 @@ Do you want to continue watching?</div>`}
             <ReactPlayer
               onReady={(e) => {
                 setIsDoneLoad(true);
+                controlsRef.current.style.visibility = "visible";
               }}
               onProgress={(progress) => {
                 handleProgressReactPlayer(progress);
@@ -724,6 +723,7 @@ Do you want to continue watching?</div>`}
               muted={playerStates.muted}
               onError={(error, data, hlsInstance, hlsGlobal) => {
                 setIsDoneLoad(false);
+                controlsRef.current.style.visibility = "hidden";
               }}
               url={videoUrl}
               ref={playerRef}
