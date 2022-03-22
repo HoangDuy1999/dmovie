@@ -1,5 +1,4 @@
-// import tmdbApi, { category, movieType } from "./api/tmdbApi";
-// import apiConfig from "./api/tmdbApi";
+import {Helmet} from "react-helmet";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -18,10 +17,14 @@ import FavoriteList from "./pages/FavoriteList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListMovie from "./pages/ListMovie";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import VipSearch from "./pages/VipSearch";
 const App = () => {
   return (
     <div className="app">
+      <Helmet>
+        <title>Dmovie - Home</title>
+        <meta name="description" content="Home dmovie" />
+      </Helmet>
       <ToastContainer />
       <BrowserRouter>
         <Routes>
@@ -45,10 +48,11 @@ const App = () => {
           {/* watch movie*/}
           <Route path="/watch/:id" element={<WatchMovie />} />
 
-          <Route path="/favoritelist/:id" element={<FavoriteList />} />
+          <Route path="/favorite-list/:id" element={<FavoriteList />} />
 
           <Route path="/list" element={<ListMovie />} />
-
+          
+          <Route path="/vip-search" element={<VipSearch />} />
           {/*HOME */}
           <Route path="/" element={<Home />} />
         </Routes>

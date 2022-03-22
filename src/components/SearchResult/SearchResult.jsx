@@ -125,6 +125,7 @@ const SearchResult = ({ txtSearch }) => {
             {listPeoples.map((item) => (
               <CarItem
                 // length={listSeries.length}
+                person={true}
                 item={item}
                 key={item.id}
                 types="person"

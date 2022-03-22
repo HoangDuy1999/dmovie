@@ -38,9 +38,21 @@ const CardItemFilmPeoPle = ({
     };
     getName();
   }, []);
+  console.log(item);
   return (
     <div className="card_item_people">
-      <div className="card_item_people_container" title={name}>
+      <div
+        className="card_item_people_container"
+        title={`${name} ${
+          item.releaseTime
+            ? `(${item.releaseTime})`
+            : item?.release_date
+            ? `(${item?.release_date?.split("-")[0]})`
+            : item?.first_air_date
+            ? `(${item?.first_air_date?.split("-")[0]})`
+            : ""
+        }`}
+      >
         <Link
           to={"/" + types + "/detail/" + item.id}
           style={{ textDecoration: "none" }}
@@ -145,10 +157,23 @@ const CardItemFilmPeoPle = ({
         >
           <span
             className="now_play_title"
-            title={name}
+            title={`${name} ${
+              item.releaseTime
+                ? `(${item.releaseTime})`
+                : item?.release_date
+                ? `(${item?.release_date?.split("-")[0]})`
+                : item?.first_air_date
+                ? `(${item?.first_air_date?.split("-")[0]})`
+                : ""
+            }`}
             style={posterHover ? { textDecoration: "underline" } : {}}
           >
             {name}
+            {item?.release_date
+              ? ` (${item?.release_date?.split("-")[0]})`
+              : item?.first_air_date
+              ? ` (${item?.first_air_date?.split("-")[0]})`
+              : ""}
           </span>
         </Link>
       </div>

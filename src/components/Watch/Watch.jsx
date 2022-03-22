@@ -119,7 +119,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       )
       .then((res) => {
         if (res.data?.data) {
-          setVideoUrl(() => res.data.data.mediaUrl);
+          setVideoUrl(res.data.data.mediaUrl);
         } else {
           setDoneLoad(false);
         }

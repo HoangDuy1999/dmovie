@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./navbar.scss";
 import { AiOutlineUnorderedList } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
+import { IoIosLogOut } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { Search } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,10 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { RiArrowDownSFill } from "react-icons/ri";
-// import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import { VscSearch } from "react-icons/vsc";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-// import useEventListener from "@use-it/event-listener";
+
 import dmovieLogo from "../../images/dmovie_logo.png";
 const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
   const navigate = useNavigate();
@@ -167,7 +167,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
               />
               {isCloseIcon ? (
                 <CloseIcon
-                  style={{ color: "red"}}
+                  style={{ color: "red" }}
                   className="iconSearch"
                   onClick={() => handClickCloseIcon()}
                 />
@@ -411,7 +411,18 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
       >
         <div className="menu_item" onClick={() => setIsOpenMenuProfile(false)}>
           <Link
-            to={`/favoritelist/${accountInfo._id}`}
+            to={`/vip-search`}
+            style={{ textDecoration: "none", color: "#263238" }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <VscSearch style={{ marginRight: "5px" }} />
+              <span className="menu_item_title">Vip search</span>
+            </div>
+          </Link>
+        </div>
+        <div className="menu_item" onClick={() => setIsOpenMenuProfile(false)}>
+          <Link
+            to={`/favorite-list/${accountInfo._id}`}
             style={{ textDecoration: "none", color: "#263238" }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -428,7 +439,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center" }}>
-            <FiLogOut style={{ marginRight: "5px" }} />
+            <IoIosLogOut style={{ marginRight: "5px" }} />
             <span className="menu_item_title">Log out</span>
           </div>
         </div>

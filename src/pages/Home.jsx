@@ -8,9 +8,14 @@ import NowPlaying from "../components/NowPlaying/NowPlaying";
 import TvAiring from "../components/TvAiring/TvAiring";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import Footer from "../components/Footer/Footer";
+import { Helmet } from "react-helmet";
 const Home = () => {
   return (
     <div>
+      <Helmet>
+        <title>Dmovie - Home</title>
+        <meta name="description" content="Home dmovie" />
+      </Helmet>
       <Navbar home={true} />
       <Carousel />
       <NowPlaying />
@@ -18,7 +23,7 @@ const Home = () => {
       <MovieUpcoming />
       <HighestRatingTvShow />
       <HighestRatingMovie />
-      <Footer/>
+      <Footer />
       <ScrollToTop />
     </div>
   );

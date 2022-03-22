@@ -162,21 +162,25 @@
     font-weight: 400;
     box-sizing: border-box;
     padding: 5px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .now_play_title {
       box-sizing: border-box;
       margin: 0 !important;
       padding: 0 !important;
       // background-color: #181818;
-      text-align: left !important;
+      text-align: center !important;
       overflow: hidden;
       color: #000000;
       font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 1; /* number of lines to show */
-      line-clamp: 1;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       cursor: pointer;
     }

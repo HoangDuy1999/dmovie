@@ -43,7 +43,7 @@ const PeopleInfo = () => {
         .then((res) => {
           // const data = res.article;
           // // console.log(data);
-          const date = res.data.person?.birth_date.split("-");
+          const date = res.data.person?.birth_date?.split("-");
           if (date.length >= 2)
             res.data.person.birth_date =
               date[2] + "-" + date[1] + "-" + date[0];
@@ -123,9 +123,9 @@ const PeopleInfo = () => {
   const handleClickShowProduction = (e) => {
     setIsShowProduction(() => !isShowProduction);
   };
-  const handleImgaeLoadDone = (e) => {
-    console.log(e);
-  };
+  // const handleImgaeLoadDone = (e) => {
+  //   console.log(e);
+  // };
   // console.log(infos);
   // console.log(combineCredits);
   return (
@@ -142,9 +142,9 @@ const PeopleInfo = () => {
                     "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                   event.onerror = null;
                 }}
-                onLoad={(e) => {
-                  handleImgaeLoadDone(e);
-                }}
+                // onLoad={(e) => {
+                //   handleImgaeLoadDone(e);
+                // }}
                 alt=""
               />
             ) : (
@@ -157,9 +157,9 @@ const PeopleInfo = () => {
                     "https://www.leadershipmartialartsct.com/wp-content/uploads/2017/04/default-image-620x600.jpg";
                   event.onerror = null;
                 }}
-                onLoad={(e) => {
-                  handleImgaeLoadDone(e);
-                }}
+                // onLoad={(e) => {
+                //   handleImgaeLoadDone(e);
+                // }}
                 alt=""
               />
             )}

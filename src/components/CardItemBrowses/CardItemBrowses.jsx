@@ -106,7 +106,15 @@ const CardItemBrowses = ({ item, types, colorGroup }) => {
         </div>
         <div
           className="icon_group"
-          title={name}
+          title={`${name} ${
+            item.releaseTime
+              ? `(${item.releaseTime})`
+              : item?.release_date
+              ? `(${item?.release_date?.split("-")[0]})`
+              : item?.first_air_date
+              ? `(${item?.first_air_date?.split("-")[0]})`
+              : ""
+          }`}
           onMouseOver={(e) => {
             handleOnMoveOverPoster(e);
           }}
@@ -149,10 +157,23 @@ const CardItemBrowses = ({ item, types, colorGroup }) => {
         >
           <span
             className="now_play_title"
-            title={name}
+            title={`${name} ${
+              item.releaseTime
+                ? `(${item.releaseTime})`
+                : item?.release_date
+                ? `(${item?.release_date?.split("-")[0]})`
+                : item?.first_air_date
+                ? `(${item?.first_air_date?.split("-")[0]})`
+                : ""
+            }`}
             style={posterHover ? { textDecoration: "underline" } : {}}
           >
             {name}
+            {item?.release_date
+              ? ` (${item?.release_date?.split("-")[0]})`
+              : item?.first_air_date
+              ? ` (${item?.first_air_date?.split("-")[0]})`
+              : ""}
           </span>
         </Link>
       </div>

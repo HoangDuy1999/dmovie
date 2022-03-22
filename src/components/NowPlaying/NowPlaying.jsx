@@ -24,8 +24,8 @@ const NowPlayings = () => {
       setNowPlayingMovies([]); // This worked for me
     };
   }, []);
-  
-  // console.log(nowPlayingMovies);
+
+  console.log(nowPlayingMovies);
   return (
     <div className="now_playings">
       <div className="now_play_top">
@@ -33,12 +33,12 @@ const NowPlayings = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
             fontSize: "30px",
             fontWeight: "600",
             marginBottom: "20px",
             position: "relative",
-            marginRight: "1%"
+            marginRight: "1%",
           }}
         >
           <span>Now Playing</span>
@@ -49,7 +49,7 @@ const NowPlayings = () => {
               alignItems: "flex-end",
               justifyContent: "flex-end",
               padding: 0,
-              margin: 0,
+              margin: "15px 0 0 0",
               bottom: 0,
             }}
           >
@@ -62,7 +62,9 @@ const NowPlayings = () => {
                 fontWeight: "600",
                 cursor: "pointer",
               }}
-              onClick={()=> {navigate(`/list?type=now_playing&cate=movie`)}}
+              onClick={() => {
+                navigate(`/list?type=now_playing&cate=movie`);
+              }}
             >
               <div>More</div>
               <FaAngleDoubleRight style={{ marginLeft: "5px" }} />
@@ -73,7 +75,9 @@ const NowPlayings = () => {
         <p className="now_playing_description" style={{ marginTop: "-10px" }}>
           Movies that are currently playing in theaters.
         </p>
-        <hr style={{ marginTop: "-5px", marginBottom: "20px", marginRight: "1%" }} />
+        <hr
+          style={{ marginTop: "-5px", marginBottom: "20px", marginRight: "1%" }}
+        />
       </div>
       <div className="now_play_bottom">
         {nowPlayingMovies.map((item) => (

@@ -21,6 +21,7 @@
 .scroll-to-top:hover {
   cursor: pointer;
   transform: scale(1.05);
+  -moz-transform: scale(1.05);
 }
 
 .arrow_upward {
@@ -31,10 +32,12 @@
 @keyframes scrollTop {
   from {
     transform: translateY(1px);
+    -moz-transform: translateY(1px);
     // transform: scale(1.5);
   }
   to {
     transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
     // transform: scale(1.5);
   }
 }

@@ -36,10 +36,6 @@ const BrowseInfo = () => {
       label: "All Languages",
     } || null
   );
-  // const types = [
-  //   { value: "movie", label: "Movie" },
-  //   { value: "tv", label: "Tv series" },
-  // ];
 
   // set type default
   useEffect(() => {
@@ -105,7 +101,7 @@ const BrowseInfo = () => {
     getData();
     return () => clearTimeout(timeout);
   }, [selectMovieGenres, selectedType, score, releaseIn, selectedLanguege]);
-
+  console.log(dataLists);
   const handleChangeReleaseIn = (e) => {
     setReleaseIn(e);
   };
@@ -410,7 +406,7 @@ const BrowseInfo = () => {
           <div className="right">
             <div className="label_top">
               <div className="label_left">Browse</div>
-              <div style={{display: "flex", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
                 <AiOutlineMenuUnfold
                   className="filter_icon"
                   onClick={(e) => {
