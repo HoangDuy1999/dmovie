@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./vipSearch.scss";
+import "./vipSearchInfo.scss";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import CardItem from "../CardItem/CardItem";
 
-const VipSearch = () => {
+const VipSearchInfo = () => {
   const [keysearch, setKeySearch] = useState("");
   const [searchList, setSearchList] = useState([]);
 
@@ -64,7 +64,6 @@ const VipSearch = () => {
 
         <div className="middle">
           <Paper
-            component="form"
             style={{
               width: "100%",
               boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
@@ -80,6 +79,9 @@ const VipSearch = () => {
               sx={{ ml: 1, flex: 1 }}
               placeholder="Movies, Series, Entertainment show"
               autoFocus
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
               onChange={(e) => handleOnchangeInputSearch(e)}
             />
             <IconButton sx={{ p: "10px" }} aria-label="search">
@@ -119,4 +121,4 @@ const VipSearch = () => {
   );
 };
 
-export default VipSearch;
+export default VipSearchInfo;

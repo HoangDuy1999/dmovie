@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-import VipSearch from "../components/VipSearch/VipSearch";
+import VipSearchInfo from "../components/VipSearchInfo/VipSearchInfo";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
 import { Helmet } from "react-helmet";
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
         <meta name="description" content="Dmovie vip search" />
       </Helmet>
       <Navbar />
-      <VipSearch />
+      <VipSearchInfo />
       <Footer />
       <ScrollToTop />
     </div>

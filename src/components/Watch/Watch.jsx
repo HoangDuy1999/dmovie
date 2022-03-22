@@ -671,6 +671,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
+
   return (
     <div
       className="watch_movie_container"
