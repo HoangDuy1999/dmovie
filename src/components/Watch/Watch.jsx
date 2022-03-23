@@ -153,6 +153,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     if (rs.code === 200) {
       setTokenLokLok(rs.data.l_token);
       console.log("LÂY ĐƯỢC TOKEN");
+      console.log(rs.data.l_token);
     }else{
       console.log("KHÔNG LẤY ĐƯỢC TOKEN DATA");
     }
