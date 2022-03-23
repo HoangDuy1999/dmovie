@@ -166,7 +166,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     console.log("GET VIDEO");
     await axios
       .get(
-        `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
+        `https://ga-mobile-api.loklok.tv/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
         {
           params: {},
           headers: {
