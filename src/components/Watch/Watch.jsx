@@ -108,7 +108,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         }
       )
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setVideoUrl(res.data?.data?.mediaUrl || "");
         // setOnLoaded(false);
       })
@@ -117,8 +117,6 @@ const Watch = ({ cate, ep, onFocus }) => {
         return null;
       });
   };
-
-  console.log(tokenLokLok);
 
   const getDetailMovies = () => {
     if (count > 0) {
