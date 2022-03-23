@@ -130,8 +130,6 @@ const Watch = ({ cate, ep, onFocus }) => {
       });
   };
 
-  console.log(videoUrl);
-
   const getDetailMovies = () => {
     if (count > 0) {
       setCount(0);
@@ -173,40 +171,51 @@ const Watch = ({ cate, ep, onFocus }) => {
     }
   };
 
-  console.log(movieInfo);
-  const getVideos = (episode, resoluton = "SD") => {
+  const getVideos = async (episode, resoluton = "SD") => {
     if (count > 0) {
       setCount(0);
     }
     console.log("GET VIDEO");
-    axios
-      .get(
-        `https://ga-mobile-api.loklok.tv/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
-        {
-          params: {},
-          headers: {
-            lang: "en",
-            versioncode: 11,
-            clienttype: "ios_jike_default",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data?.data) {
-          // if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
-          setVideoUrl(res.data.data.mediaUrl || "");
-          // setOnLoaded(false);
-          //   } else {
-          //     // getVipVideo();
-          //   }
-          // } else {
-          //   // getVipVideo();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        return null;
-      });
+    let i = 0;
+    for (const item of ["SD", "LD", "HD", "SD", "LD", "HD"]) {
+      i += 1;
+      console.log(item);
+      const rs = await axios
+        .get(
+          `https://ga-mobile-api.loklok.tv/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${item}`,
+          {
+            params: {},
+            headers: {
+              lang: "en",
+              versioncode: 11,
+              clienttype: "ios_jike_default",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data?.data) {
+            if (res.data.data.mediaUrl.includes("https")) {
+              setVideoUrl(res.data.data.mediaUrl || "");
+              return true;
+            } else {
+              return false;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          return false;
+        });
+      console.log(rs);
+      if (rs) {
+        break;
+      }
+      if (i === 6) {
+        setOnLoaded(false);
+
+        setErrorLoaded(true);
+      }
+    }
   };
 
   const getSubtitle = (list) => {
@@ -385,7 +394,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
         setOnLoaded(true);
       }
-    }, 5000);
+    }, 4000);
 
     const timeout3 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
@@ -402,7 +411,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       } else {
         console.log("get subtitle none");
       }
-    }, 2000);
+    }, 2500);
 
     const timeout = setTimeout(() => {
       setDoneLoad(true);
@@ -417,6 +426,9 @@ const Watch = ({ cate, ep, onFocus }) => {
   // PROCESS ....................
   const handleProgressReactPlayer = (progress) => {
     const secondRoot = parseInt(progress.playedSeconds);
+    if (errorLoaded) {
+      setErrorLoaded(false);
+    }
     // hide loading
     const loaded = playerRef?.current?.getSecondsLoaded();
     if (loaded >= secondRoot && onLoaded === true) {
