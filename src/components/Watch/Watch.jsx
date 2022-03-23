@@ -17,6 +17,7 @@ import FBComment from "../FBComment/FBComment";
 import SubTitleList from "../SubTitleList/SubTitleList";
 import ModalConfirm from "../ModalConfirm/ModalConfirm";
 import { useBeforeunload } from "react-beforeunload";
+import TokenLokLokApi from "../../api/dmovie/tokenLoklok";
 
 var { default: srtParser2 } = require("srt-parser-2");
 
@@ -68,7 +69,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [count, setCount] = useState(0);
   const [hideSub, setHideSub] = useState(false);
   const [currentTimeBefore, setCurrentTimeBefore] = useState(null);
-
+  const [tokenLokLok, setTokenLokLok] = useState("");
   const formatTimeVideo = (seconds) => {
     if (isNaN(seconds)) {
       return "00:00";
@@ -101,16 +102,13 @@ const Watch = ({ cate, ep, onFocus }) => {
           params: {},
           headers: {
             lang: "en",
-            token:
-              "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnb29nbGVJZCI6IjExNzA3MzcyNDg0MDAxNDkzNTk0MCIsIm5pY2tOYW1lIjoiVGl0dGlrOTEyNzA5MjQiLCJjdXJyZW50VGltZU1pbGxpcyI6MTY0ODAxNDg1ODA4MSwiZXhwIjoxNjUwNjA2ODU4LCJ1c2VySWQiOjMwMzYwNTN9.4oyvnDEGuvvZTE0mWQoQii7iXLDOH_TZSyaugmiwe74",
+            token: tokenLokLok,
           },
         }
       )
       .then((res) => {
-        setVideoUrl(
-          res.data.data.mediaUrl ||
-            "https://web-api.netpop.app/cms/web/pc/movieDrama/getPlayInfo?category=0&contentId=12685&definition=GROOT_SD&episodeId=75154"
-        );
+        console.log(res.data.data);
+        setVideoUrl(res.data?.data?.mediaUrl || "");
         setOnLoaded(false);
       })
       .catch((error) => {
@@ -143,6 +141,14 @@ const Watch = ({ cate, ep, onFocus }) => {
           }
         })
         .catch((error) => console.log(error));
+    }
+  };
+
+  const getTokenLokLok = async () => {
+    const rs = await TokenLokLokApi.get();
+    if (rs.code === 200) {
+      setTokenLokLok(rs.data.l_token);
+      console.log(rs);
     }
   };
 
@@ -329,6 +335,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   });
 
   useEffect(() => {
+    getTokenLokLok();
     getDetailMovies();
     setEpisodeId(ep);
     getCurrentTimeBefore(ep);
@@ -346,6 +353,9 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   useEffect(() => {
     setDoneLoad(false);
+    if (tokenLokLok === "") {
+      getTokenLokLok();
+    }
     const timeout = setTimeout(() => {
       setDoneLoad(true);
     }, 4000);
@@ -363,6 +373,8 @@ const Watch = ({ cate, ep, onFocus }) => {
         // setListSubTitle(listCaption);
         setArrSub(list);
         getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
+      } else {
+        console.log("get detail movie none");
       }
     }, 2000);
 
