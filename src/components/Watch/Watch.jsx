@@ -160,6 +160,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     if (count > 0) {
       setCount(0);
     }
+    console.log("GET VIDEO");
     await axios
       .get(
         `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
@@ -178,10 +179,24 @@ const Watch = ({ cate, ep, onFocus }) => {
             setVideoUrl(res.data.data.mediaUrl);
             // setOnLoaded(false);
           } else {
-            getVipVideo();
+            if (tokenLokLok === "") {
+              const timeout = setTimeout(() => {
+                getVipVideo();
+              }, 2000);
+              return () => clearTimeout(timeout);
+            } else {
+              getVipVideo();
+            }
           }
         } else {
-          getVipVideo();
+          if (tokenLokLok === "") {
+            const timeout = setTimeout(() => {
+              getVipVideo();
+            }, 2000);
+            return () => clearTimeout(timeout);
+          } else {
+            getVipVideo();
+          }
         }
       })
       .catch((error) => {
@@ -365,7 +380,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setErrorLoaded(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 3000);
+    }, 5000);
     const timeout2 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
         setOnLoaded(true);
@@ -383,7 +398,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       } else {
         console.log("get detail movie none");
       }
-    }, 5000);
+    }, 4000);
 
     const timeout3 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
