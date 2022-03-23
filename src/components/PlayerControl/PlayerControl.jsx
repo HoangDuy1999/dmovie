@@ -43,7 +43,7 @@ const PlayerControl = (
     elapsedTime,
     totalDuration,
     onChangeDisplayFormat,
-    onErrorLoaded
+    onErrorLoaded,
   },
   ref
 ) => {
@@ -107,6 +107,9 @@ const PlayerControl = (
                 height: "60px",
               }}
             />
+            <h4 style={{ color: "red", wordBreak: "break-all" }}>
+              Please change server to reload video
+            </h4>
           </div>
         ) : onLoaded ? (
           <div

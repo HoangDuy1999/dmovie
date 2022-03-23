@@ -208,11 +208,12 @@ const Watch = ({ cate, ep, onFocus }) => {
         });
       console.log(rs);
       if (rs) {
+        controlsRef.current.style.visibility = "visible";
         break;
       }
       if (i === 6) {
         setOnLoaded(false);
-
+        controlsRef.current.style.visibility = "visible";
         setErrorLoaded(true);
       }
     }
