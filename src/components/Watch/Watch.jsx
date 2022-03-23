@@ -71,6 +71,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [hideSub, setHideSub] = useState(false);
   const [currentTimeBefore, setCurrentTimeBefore] = useState(null);
   const [tokenLokLok, setTokenLokLok] = useState("");
+
   const formatTimeVideo = (seconds) => {
     if (isNaN(seconds)) {
       return "00:00";
@@ -85,39 +86,49 @@ const Watch = ({ cate, ep, onFocus }) => {
     return `${mm}:${ss}`;
   };
 
-  const getVipVideo = async () => {
+  const getVipVideo = async (_token) => {
     console.log("vip run");
-    console.log(tokenLokLok);
     if (count > 0) {
       setCount(0);
     }
     controlsRef.current.style.visibility = "visible";
-    await axios
+    console.log(tokenLokLok ? tokenLokLok : _token);
+    console.log(movieInfo);
+    console.log(`
+    https://web-api.netpop.app/cms/web/pc/movieDrama/getPlayInfo?category=${cate}&contentId=${id}&definition=GROOT_${
+      displayResolution || "SD"
+    }&episodeId=${
+      contentId === -1 ? movieInfo?.episodeVo["0"]?.id : contentId
+    }`);
+    axios
       .get(
         `
         https://web-api.netpop.app/cms/web/pc/movieDrama/getPlayInfo?category=${cate}&contentId=${id}&definition=GROOT_${
           displayResolution || "SD"
         }&episodeId=${
-          contentId === -1 ? movieInfo.episodeVo[0]?.id : contentId
+          contentId === -1 ? movieInfo?.episodeVo[0]?.id : contentId
         }`,
         {
           params: {},
           headers: {
             lang: "en",
-            token: tokenLokLok,
+            token: tokenLokLok ? tokenLokLok : _token,
           },
         }
       )
       .then((res) => {
+        console.log("ket qua vip");
         console.log(res.data?.data?.mediaUrl);
         setVideoUrl(res.data?.data?.mediaUrl || "");
         // setOnLoaded(false);
       })
       .catch((error) => {
+        console.log("LỖI");
         console.log(error);
-        return null;
       });
   };
+
+  console.log(videoUrl);
 
   const getDetailMovies = () => {
     if (count > 0) {
@@ -152,20 +163,21 @@ const Watch = ({ cate, ep, onFocus }) => {
     const rs = await TokenLokLokApi.get();
     if (rs.code === 200) {
       setTokenLokLok(rs.data.l_token);
-      console.log("LÂY ĐƯỢC TOKEN");
-      console.log(rs.data.l_token);
-    }else{
+      // getVideos();
+      // console.log("LÂY ĐƯỢC TOKEN");
+      // console.log("DMMMMMMMMMMMMMMMMMMMM");
+    } else {
       console.log("KHÔNG LẤY ĐƯỢC TOKEN DATA");
     }
   };
 
-  // console.log(movieInfo);
-  const getVideos = async (episode, resoluton = "SD") => {
+  console.log(movieInfo);
+  const getVideos = (episode, resoluton = "SD") => {
     if (count > 0) {
       setCount(0);
     }
     console.log("GET VIDEO");
-    await axios
+    axios
       .get(
         `https://ga-mobile-api.loklok.tv/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
         {
@@ -180,27 +192,13 @@ const Watch = ({ cate, ep, onFocus }) => {
       .then((res) => {
         if (res.data?.data) {
           if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
-            setVideoUrl(res.data.data.mediaUrl);
+            setVideoUrl(res.data.data.mediaUrl || "");
             // setOnLoaded(false);
           } else {
-            if (tokenLokLok === "") {
-              const timeout = setTimeout(() => {
-                getVipVideo();
-              }, 2000);
-              return () => clearTimeout(timeout);
-            } else {
-              getVipVideo();
-            }
+            // getVipVideo();
           }
         } else {
-          if (tokenLokLok === "") {
-            const timeout = setTimeout(() => {
-              getVipVideo();
-            }, 2000);
-            return () => clearTimeout(timeout);
-          } else {
-            getVipVideo();
-          }
+          // getVipVideo();
         }
       })
       .catch((error) => {
@@ -377,32 +375,17 @@ const Watch = ({ cate, ep, onFocus }) => {
   }, [id, cate, ep]);
 
   useEffect(() => {
-    if (tokenLokLok === "") {
-      getTokenLokLok();
-    }
     setDoneLoad(false);
     setErrorLoaded(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 4000);
     const timeout2 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
+        getVipVideo();
         setOnLoaded(true);
-        getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
-        //lấy phiên dịch
-        let list = movieInfo.episodeVo[episodeId]?.subtitlingList.map(
-          (item, index) => {
-            return { label: item.language, value: item.languageAbbr };
-          }
-        );
-        list.push({ label: "Off", value: "" });
-        // setListSubTitle(listCaption);
-        setArrSub(list);
-        getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
-      } else {
-        console.log("get detail movie none");
       }
-    }, 4000);
+    }, 5000);
 
     const timeout3 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
@@ -419,7 +402,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       } else {
         console.log("get subtitle none");
       }
-    }, 1500);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
@@ -589,7 +572,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 4000);
 
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
@@ -780,7 +763,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
-  console.log(videoUrl);
+
   return (
     <div
       className="watch_movie_container"
