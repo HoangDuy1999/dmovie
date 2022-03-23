@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -10,7 +10,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import Slider1 from "@mui/material/Slider";
 import Tooltip from "@mui/material/Tooltip";
-// import { styled } from "@mui/material/styles";
+import { VscRunErrors } from "react-icons/vsc";
 import VolumeUpIcons from "@mui/icons-material/VolumeUp";
 import VolumeOffIcons from "@mui/icons-material/VolumeOff";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
@@ -43,6 +43,7 @@ const PlayerControl = (
     elapsedTime,
     totalDuration,
     onChangeDisplayFormat,
+    onErrorLoaded
   },
   ref
 ) => {
@@ -89,7 +90,25 @@ const PlayerControl = (
           </Grid>
         </Grid>
         {/* MIDDLE */}
-        {onLoaded ? (
+        {onErrorLoaded ? (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
+            <VscRunErrors
+              style={{
+                color: "red",
+                fontSize: "60px",
+                width: "60px",
+                height: "60px",
+              }}
+            />
+          </div>
+        ) : onLoaded ? (
           <div
             style={{
               display: "flex",

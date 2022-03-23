@@ -35,6 +35,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [subText1, setSubText1] = useState("");
   const [countHiddenText, setCountHiddenText] = useState(0);
   const [onLoaded, setOnLoaded] = useState(false);
+  const [errorLoaded, setErrorLoaded] = useState(false);
   const [arrSub, setArrSub] = useState([
     {
       value: "",
@@ -109,13 +110,15 @@ const Watch = ({ cate, ep, onFocus }) => {
       .then((res) => {
         console.log(res.data.data);
         setVideoUrl(res.data?.data?.mediaUrl || "");
-        setOnLoaded(false);
+        // setOnLoaded(false);
       })
       .catch((error) => {
         console.log(error);
         return null;
       });
   };
+
+  console.log(tokenLokLok);
 
   const getDetailMovies = () => {
     if (count > 0) {
@@ -148,7 +151,6 @@ const Watch = ({ cate, ep, onFocus }) => {
     const rs = await TokenLokLokApi.get();
     if (rs.code === 200) {
       setTokenLokLok(rs.data.l_token);
-      console.log(rs);
     }
   };
 
@@ -157,7 +159,6 @@ const Watch = ({ cate, ep, onFocus }) => {
     if (count > 0) {
       setCount(0);
     }
-    controlsRef.current.style.visibility = "visible";
     await axios
       .get(
         `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
@@ -174,7 +175,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         if (res.data?.data) {
           if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
             setVideoUrl(res.data.data.mediaUrl);
-            setOnLoaded(false);
+            // setOnLoaded(false);
           } else {
             getVipVideo();
           }
@@ -336,6 +337,10 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   useEffect(() => {
     getTokenLokLok();
+    if (doneLoad) {
+      setDoneLoad(false);
+    }
+    setErrorLoaded(false);
     getDetailMovies();
     setEpisodeId(ep);
     getCurrentTimeBefore(ep);
@@ -352,13 +357,14 @@ const Watch = ({ cate, ep, onFocus }) => {
   }, [id, cate, ep]);
 
   useEffect(() => {
-    setDoneLoad(false);
     if (tokenLokLok === "") {
       getTokenLokLok();
     }
+    setDoneLoad(false);
+    setErrorLoaded(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 4000);
+    }, 3000);
     const timeout2 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
         setOnLoaded(true);
@@ -376,11 +382,29 @@ const Watch = ({ cate, ep, onFocus }) => {
       } else {
         console.log("get detail movie none");
       }
-    }, 2000);
+    }, 4000);
+
+    const timeout3 = setTimeout(() => {
+      if (!_.isEmpty(movieInfo)) {
+        setOnLoaded(true);
+        //lấy phiên dịch
+        let list = movieInfo.episodeVo[episodeId]?.subtitlingList.map(
+          (item, index) => {
+            return { label: item.language, value: item.languageAbbr };
+          }
+        );
+        list.push({ label: "Off", value: "" });
+        setArrSub(list);
+        getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
+      } else {
+        console.log("get subtitle none");
+      }
+    }, 1500);
 
     return () => {
       clearTimeout(timeout);
       clearTimeout(timeout2);
+      clearTimeout(timeout3);
     };
   }, [movieInfo, displayResolution, episodeId]);
 
@@ -520,6 +544,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleClickChangeEpisode = (value) => {
     setIsDoneLoad(false);
+    setVideoUrl("");
     // setConte
     if (
       playerRef.current.getCurrentTime() !== null &&
@@ -553,6 +578,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const onClickChangeServer = (val) => {
     setIsDoneLoad(false);
+    setVideoUrl("");
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -596,6 +622,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       played: 0,
       seeking: false,
     });
+    setVideoUrl("");
     setArrSub([]);
     setIsDoneLoad(false);
     setSubText1("");
@@ -774,7 +801,9 @@ Do you want to continue watching?</div>`}
             <ReactPlayer
               onReady={(e) => {
                 console.log("Ready");
+                setErrorLoaded(false);
                 setIsDoneLoad(true);
+                setOnLoaded(false);
                 controlsRef.current.style.visibility = "visible";
               }}
               onProgress={(progress) => {
@@ -787,6 +816,9 @@ Do you want to continue watching?</div>`}
               playing={playerStates.playing}
               muted={playerStates.muted}
               onError={(error, data, hlsInstance, hlsGlobal) => {
+                console.log("tải phim lỗi");
+                setErrorLoaded(true);
+                setOnLoaded(false);
                 setIsDoneLoad(false);
               }}
               url={videoUrl}
@@ -801,6 +833,7 @@ Do you want to continue watching?</div>`}
               // style={isDoneLoad ? {} : { display: "none", width: 0, height: 0 }}
             >
               <PlayerControl
+                onErrorLoaded={errorLoaded}
                 onLoaded={onLoaded}
                 ref={controlsRef}
                 onPlayPause={(e) => handlePlayPause(e)}
