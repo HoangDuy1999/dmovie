@@ -379,9 +379,6 @@ const Watch = ({ cate, ep, onFocus }) => {
   useEffect(() => {
     setDoneLoad(false);
     setErrorLoaded(false);
-    const timeout = setTimeout(() => {
-      setDoneLoad(true);
-    }, 4000);
     const timeout2 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
         getVipVideo();
@@ -406,6 +403,9 @@ const Watch = ({ cate, ep, onFocus }) => {
       }
     }, 2000);
 
+    const timeout = setTimeout(() => {
+      setDoneLoad(true);
+    }, 4000);
     return () => {
       clearTimeout(timeout);
       clearTimeout(timeout2);
@@ -803,34 +803,38 @@ Do you want to continue watching?</div>`}
             onMouseMove={handleMouseMove}
             ref={playerContainerRef}
           >
-            <ReactPlayer
-              onReady={(e) => {
-                console.log("Ready");
-                setErrorLoaded(false);
-                setIsDoneLoad(true);
-                setOnLoaded(false);
-                controlsRef.current.style.visibility = "visible";
-              }}
-              onProgress={(progress) => {
-                handleProgressReactPlayer(progress);
-              }}
-              className="react-player"
-              width="100%"
-              height="100%"
-              onEnded={handleOnEndedReactPlayer}
-              playing={playerStates.playing}
-              muted={playerStates.muted}
-              onError={(error, data, hlsInstance, hlsGlobal) => {
-                console.log("tải phim lỗi");
-                setErrorLoaded(true);
-                setOnLoaded(false);
-                setIsDoneLoad(false);
-              }}
-              url={videoUrl}
-              ref={playerRef}
-              volume={playerStates.volume}
-              playbackRate={playerStates.playbackRate}
-            />
+            {videoUrl.includes("https") ? (
+              <ReactPlayer
+                onReady={(e) => {
+                  console.log("Ready");
+                  setErrorLoaded(false);
+                  setIsDoneLoad(true);
+                  setOnLoaded(false);
+                  controlsRef.current.style.visibility = "visible";
+                }}
+                onProgress={(progress) => {
+                  handleProgressReactPlayer(progress);
+                }}
+                className="react-player"
+                width="100%"
+                height="100%"
+                onEnded={handleOnEndedReactPlayer}
+                playing={playerStates.playing}
+                muted={playerStates.muted}
+                onError={(error, data, hlsInstance, hlsGlobal) => {
+                  console.log("tải phim lỗi");
+                  setErrorLoaded(true);
+                  setOnLoaded(false);
+                  setIsDoneLoad(false);
+                }}
+                url={videoUrl}
+                ref={playerRef}
+                volume={playerStates.volume}
+                playbackRate={playerStates.playbackRate}
+              />
+            ) : (
+              ""
+            )}
 
             {/* play control */}
             <div
