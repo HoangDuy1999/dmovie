@@ -70,7 +70,9 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [count, setCount] = useState(0);
   const [hideSub, setHideSub] = useState(false);
   const [currentTimeBefore, setCurrentTimeBefore] = useState(null);
-  const [tokenLokLok, setTokenLokLok] = useState("");
+  const [tokenLokLok, setTokenLokLok] = useState(
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnb29nbGVJZCI6IjExNzA3MzcyNDg0MDAxNDkzNTk0MCIsIm5pY2tOYW1lIjoiVGl0dGlrOTEyNzA5MjQiLCJjdXJyZW50VGltZU1pbGxpcyI6MTY0ODAzNjAzNjM2MCwiZXhwIjoxNjUwNjI4MDM2LCJ1c2VySWQiOjMwMzYwNTN9.1JDOIVrxpeZoWfKwAV2NmunN9i_1f8T7RlSQVqZ5qEM"
+  );
 
   const formatTimeVideo = (seconds) => {
     if (isNaN(seconds)) {
@@ -191,14 +193,14 @@ const Watch = ({ cate, ep, onFocus }) => {
       )
       .then((res) => {
         if (res.data?.data) {
-          if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
-            setVideoUrl(res.data.data.mediaUrl || "");
-            // setOnLoaded(false);
-          } else {
-            // getVipVideo();
-          }
-        } else {
-          // getVipVideo();
+          // if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
+          setVideoUrl(res.data.data.mediaUrl || "");
+          // setOnLoaded(false);
+          //   } else {
+          //     // getVipVideo();
+          //   }
+          // } else {
+          //   // getVipVideo();
         }
       })
       .catch((error) => {
