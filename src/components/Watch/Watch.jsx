@@ -26,6 +26,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [movieInfo, setMovieInfor] = useState({});
   const [videoUrl, setVideoUrl] = useState("");
   const [episodeId, setEpisodeId] = useState("0");
+  const [contentId, setContenId] = useState(-1);
   const [doneLoad, setDoneLoad] = useState(true);
   const [displayResolution, setDisPlayResoluton] = useState("SD");
   const [subTextSize, setSubTextSize] = useState("27px");
@@ -82,7 +83,46 @@ const Watch = ({ cate, ep, onFocus }) => {
     return `${mm}:${ss}`;
   };
 
+  const getVipVideo = async () => {
+    console.log("vip run");
+    if (count > 0) {
+      setCount(0);
+    }
+    controlsRef.current.style.visibility = "visible";
+    await axios
+      .get(
+        `
+        https://web-api.netpop.app/cms/web/pc/movieDrama/getPlayInfo?category=${cate}&contentId=${id}&definition=GROOT_${
+          displayResolution || "SD"
+        }&episodeId=${
+          contentId === -1 ? movieInfo.episodeVo[0]?.id : contentId
+        }`,
+        {
+          params: {},
+          headers: {
+            lang: "en",
+            token:
+              "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnb29nbGVJZCI6IjExNzA3MzcyNDg0MDAxNDkzNTk0MCIsIm5pY2tOYW1lIjoiVGl0dGlrOTEyNzA5MjQiLCJjdXJyZW50VGltZU1pbGxpcyI6MTY0ODAxNDg1ODA4MSwiZXhwIjoxNjUwNjA2ODU4LCJ1c2VySWQiOjMwMzYwNTN9.4oyvnDEGuvvZTE0mWQoQii7iXLDOH_TZSyaugmiwe74",
+          },
+        }
+      )
+      .then((res) => {
+        setVideoUrl(
+          res.data.data.mediaUrl ||
+            "https://web-api.netpop.app/cms/web/pc/movieDrama/getPlayInfo?category=0&contentId=12685&definition=GROOT_SD&episodeId=75154"
+        );
+        setOnLoaded(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        return null;
+      });
+  };
+
   const getDetailMovies = () => {
+    if (count > 0) {
+      setCount(0);
+    }
     if (id !== undefined) {
       axios
         .get(
@@ -97,45 +137,49 @@ const Watch = ({ cate, ep, onFocus }) => {
           }
         )
         .then((res) => {
-          // console.log(res.data.data);
-          setMovieInfor(res.data.data);
+          if (res.data?.data) {
+            setContenId(res.data?.data?.episodeVo[ep].id);
+            setMovieInfor(res.data.data);
+          }
         })
         .catch((error) => console.log(error));
     }
   };
 
+  // console.log(movieInfo);
   const getVideos = async (episode, resoluton = "SD") => {
-    const arr = ["SD", "LD", "HD"];
-    for (const item of arr) { 
-      controlsRef.current.style.visibility = "visible";
-      const rs = await axios
-        .get(
-          `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${item}`,
-          {
-            params: {},
-            headers: {
-              lang: "en",
-              versioncode: 11,
-              clienttype: "ios_jike_default",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data?.data) {
-            // console.log(res.data.data);
-            return res.data.data.mediaUrl;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          return null;
-        });
-      if (rs !== null) {
-        setVideoUrl(rs);
-        controlsRef.current.style.visibility = "visible";
-        break;
-      }
+    if (count > 0) {
+      setCount(0);
     }
+    controlsRef.current.style.visibility = "visible";
+    await axios
+      .get(
+        `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${resoluton}`,
+        {
+          params: {},
+          headers: {
+            lang: "en",
+            versioncode: 11,
+            clienttype: "ios_jike_default",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data?.data) {
+          if (res.data.data.mediaUrl.toLowerCase().includes("htttps")) {
+            setVideoUrl(res.data.data.mediaUrl);
+            setOnLoaded(false);
+          } else {
+            getVipVideo();
+          }
+        } else {
+          getVipVideo();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        return null;
+      });
   };
 
   const getSubtitle = (list) => {
@@ -302,24 +346,30 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   useEffect(() => {
     setDoneLoad(false);
-
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
-    if (!_.isEmpty(movieInfo)) {
-      getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
-      //lấy phiên dịch
-      let list = movieInfo.episodeVo[episodeId]?.subtitlingList.map(
-        (item, index) => {
-          return { label: item.language, value: item.languageAbbr };
-        }
-      );
-      list.push({ label: "Off", value: "" });
-      // setListSubTitle(listCaption);
-      setArrSub(list);
-      getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
-    }
-    return () => clearTimeout(timeout);
+    }, 4000);
+    const timeout2 = setTimeout(() => {
+      if (!_.isEmpty(movieInfo)) {
+        setOnLoaded(true);
+        getVideos(movieInfo.episodeVo[episodeId].id, displayResolution);
+        //lấy phiên dịch
+        let list = movieInfo.episodeVo[episodeId]?.subtitlingList.map(
+          (item, index) => {
+            return { label: item.language, value: item.languageAbbr };
+          }
+        );
+        list.push({ label: "Off", value: "" });
+        // setListSubTitle(listCaption);
+        setArrSub(list);
+        getSubtitle(movieInfo.episodeVo[episodeId]?.subtitlingList);
+      }
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(timeout2);
+    };
   }, [movieInfo, displayResolution, episodeId]);
 
   // PROCESS ....................
@@ -458,6 +508,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleClickChangeEpisode = (value) => {
     setIsDoneLoad(false);
+    // setConte
     if (
       playerRef.current.getCurrentTime() !== null &&
       playerRef.current.getCurrentTime() !== undefined &&
@@ -481,7 +532,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 5000);
+    }, 4000);
 
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
@@ -641,7 +692,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const handleMouseMove = () => {
     controlsRef.current.style.visibility = "visible";
-    setCount(() => 0);
+    setCount(0);
   };
 
   const handleChangeDisplayTimeFormat = () => {
@@ -710,7 +761,7 @@ Do you want to continue watching?</div>`}
           >
             <ReactPlayer
               onReady={(e) => {
-                console.log("okkk");
+                console.log("Ready");
                 setIsDoneLoad(true);
                 controlsRef.current.style.visibility = "visible";
               }}
@@ -725,7 +776,6 @@ Do you want to continue watching?</div>`}
               muted={playerStates.muted}
               onError={(error, data, hlsInstance, hlsGlobal) => {
                 setIsDoneLoad(false);
-                controlsRef.current.style.visibility = "hidden";
               }}
               url={videoUrl}
               ref={playerRef}
