@@ -131,6 +131,7 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
     localStorage.removeItem("account_info");
     setIsLogin(false);
     handleProfileMenuClose();
+    navigate("/account?type=login");
   };
   return (
     <>

@@ -106,7 +106,8 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const getVideos = async (episode, resoluton = "SD") => {
     const arr = ["SD", "LD", "HD"];
-    for (const item of arr) {
+    for (const item of arr) { 
+      controlsRef.current.style.visibility = "visible";
       const rs = await axios
         .get(
           `/cms/app/media/previewInfo?category=${cate}&contentId=${id}&episodeId=${episode}&definition=GROOT_${item}`,
@@ -709,6 +710,7 @@ Do you want to continue watching?</div>`}
           >
             <ReactPlayer
               onReady={(e) => {
+                console.log("okkk");
                 setIsDoneLoad(true);
                 controlsRef.current.style.visibility = "visible";
               }}

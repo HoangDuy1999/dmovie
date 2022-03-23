@@ -1,4 +1,4 @@
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -18,6 +18,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListMovie from "./pages/ListMovie";
 import VipSearch from "./pages/VipSearch";
+import ProtectedRoutes from "./ProtectedRoutes";
+import PageNotFound from "./pages/PageNotFound";
 const App = () => {
   return (
     <div className="app">
@@ -28,6 +30,9 @@ const App = () => {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
+          {/*HOME */}
+          <Route exact path="/" element={<Home />} />
+
           <Route path="/browse" element={<Browse />} />
           {/*MOVIES */}
           <Route path="movies/detail/:id" element={<MovieDetail />} />
@@ -44,17 +49,20 @@ const App = () => {
           {/* News Detail*/}
           <Route path="/news/detail/:id" element={<NewsDetail />} />
           {/* Login Detail*/}
+
           <Route path="/account" element={<Login />} />
+
+          {/* Private Route */}
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/vip-search" element={<VipSearch />} />
+            <Route path="/favorite-list/:id" element={<FavoriteList />} />
+          </Route>
+
           {/* watch movie*/}
           <Route path="/watch/:id" element={<WatchMovie />} />
 
-          <Route path="/favorite-list/:id" element={<FavoriteList />} />
-
           <Route path="/list" element={<ListMovie />} />
-          
-          <Route path="/vip-search" element={<VipSearch />} />
-          {/*HOME */}
-          <Route path="/" element={<Home />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
