@@ -109,7 +109,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         }
       )
       .then((res) => {
-        // console.log(res.data.data);
+        console.log(res.data?.data?.mediaUrl);
         setVideoUrl(res.data?.data?.mediaUrl || "");
         // setOnLoaded(false);
       })
@@ -570,7 +570,7 @@ const Watch = ({ cate, ep, onFocus }) => {
     setDoneLoad(false);
     const timeout = setTimeout(() => {
       setDoneLoad(true);
-    }, 4000);
+    }, 5000);
 
     navigate(`/watch/${id}?type=${cate}&ep=${value}`);
     // setEpisodeId(value);
