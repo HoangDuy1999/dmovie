@@ -87,6 +87,7 @@ const Watch = ({ cate, ep, onFocus }) => {
 
   const getVipVideo = async () => {
     console.log("vip run");
+    console.log(tokenLokLok);
     if (count > 0) {
       setCount(0);
     }
