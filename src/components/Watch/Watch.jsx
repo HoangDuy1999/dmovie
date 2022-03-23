@@ -140,6 +140,8 @@ const Watch = ({ cate, ep, onFocus }) => {
           if (res.data?.data) {
             setContenId(res.data?.data?.episodeVo[ep].id);
             setMovieInfor(res.data.data);
+          } else {
+            console.log("get detail error");
           }
         })
         .catch((error) => console.log(error));
@@ -381,7 +383,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       } else {
         console.log("get detail movie none");
       }
-    }, 4000);
+    }, 5000);
 
     const timeout3 = setTimeout(() => {
       if (!_.isEmpty(movieInfo)) {
@@ -759,7 +761,7 @@ const Watch = ({ cate, ep, onFocus }) => {
       ? formatTimeVideo(currentTime)
       : `-${formatTimeVideo(duration - currentTime)}`;
   const totalDuration = formatTimeVideo(duration);
-
+  console.log(videoUrl);
   return (
     <div
       className="watch_movie_container"
