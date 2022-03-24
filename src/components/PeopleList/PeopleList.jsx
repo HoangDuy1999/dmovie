@@ -276,9 +276,7 @@ const PeopleList = () => {
               })
             : ""}
           <div style={{ display: "flex", justifyContent: "center" }}>
-            {page > totalPages ? (
-              ""
-            ) : (
+            {page < totalPages && listPeople.length > 0 ? (
               <Button
                 style={{ width: "200px", height: "50px" }}
                 variant="outlined"
@@ -288,6 +286,8 @@ const PeopleList = () => {
               >
                 Load more...
               </Button>
+            ) : (
+              ""
             )}
           </div>
         </div>

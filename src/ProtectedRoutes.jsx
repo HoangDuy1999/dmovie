@@ -6,12 +6,13 @@ const useAuth = () => {
   console.log(access_token);
   try {
     const decoded = jwt_decode(access_token);
-    console.log(decoded);
     let currentDate = new Date();
 
     // JWT exp is in seconds
     if (decoded.exp * 1000 < currentDate.getTime()) {
       console.log("Token expired.");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("account_info");
       return false;
     } else {
       console.log("Valid token");

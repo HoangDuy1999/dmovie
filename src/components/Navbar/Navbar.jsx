@@ -15,10 +15,11 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { VscSearch } from "react-icons/vsc";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
-
+// import "@szhsin/react-menu/dist/index.css";
+// import "@szhsin/react-menu/dist/transitions/slide.css";
+import { MdGroupWork } from "react-icons/md";
 import dmovieLogo from "../../images/dmovie_logo.png";
+
 const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
   const navigate = useNavigate();
   const [isCloseIcon, setIsCloseIcon] = useState(false);
@@ -410,6 +411,17 @@ const Navbar = ({ handleOnFocus = (e) => {}, home }) => {
         className="content_menu"
         style={isOpenMenuProfile ? { display: "flex" } : { display: "none" }}
       >
+        <div className="menu_item" onClick={() => setIsOpenMenuProfile(false)}>
+          <Link
+            to={`/vip-content`}
+            style={{ textDecoration: "none", color: "#263238" }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <MdGroupWork style={{ marginRight: "5px" }} />
+              <span className="menu_item_title">Vip content</span>
+            </div>
+          </Link>
+        </div>
         <div className="menu_item" onClick={() => setIsOpenMenuProfile(false)}>
           <Link
             to={`/vip-search`}

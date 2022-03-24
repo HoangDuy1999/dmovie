@@ -20,6 +20,7 @@ import ListMovie from "./pages/ListMovie";
 import VipSearch from "./pages/VipSearch";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PageNotFound from "./pages/PageNotFound";
+import VipContent from "./pages/VipContent";
 const App = () => {
   return (
     <div className="app">
@@ -55,6 +56,7 @@ const App = () => {
           {/* Private Route */}
           <Route element={<ProtectedRoutes />}>
             <Route path="/vip-search" element={<VipSearch />} />
+            <Route path="/vip-content" element={<VipContent />} />
             <Route path="/favorite-list/:id" element={<FavoriteList />} />
           </Route>
 
