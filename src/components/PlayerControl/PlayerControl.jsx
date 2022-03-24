@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
 import ClosedCaptionIcon from "@mui/icons-material/ClosedCaption";
 import ClosedCaptionDisabledIcon from "@mui/icons-material/ClosedCaptionDisabled";
 import CircularProgress from "@mui/material/CircularProgress";
+import { BsFillEyeFill } from "react-icons/bs";
+import { BsFillEyeSlashFill } from "react-icons//bs";
 
 const PlayerControl = (
   {
@@ -44,6 +46,8 @@ const PlayerControl = (
     totalDuration,
     onChangeDisplayFormat,
     onErrorLoaded,
+    isShowRightMenu,
+    handleClickShowRightMenu,
   },
   ref
 ) => {
@@ -171,7 +175,7 @@ const PlayerControl = (
           alignItems="center"
           justifyContent="space-between"
         >
-          <Grid item xs={12} key="bottom1" style={{ padding: "0px 16px" }}>
+          <Grid item xs={12} key="bottom1" style={{ padding: "0px 8px" }}>
             <Slider1
               className="slider_seek_root"
               min={0}
@@ -191,9 +195,9 @@ const PlayerControl = (
             />
           </Grid>
 
-          <Grid item key="bottom2">
+          <Grid item key="bottom2" style={{ paddingLeft: "5px" }}>
             <Grid container direction="row" alignItems="center">
-              <IconButton
+              {/* <IconButton
                 className="bottom_icons"
                 key="icon1"
                 onClick={(e) => onPlayPause()}
@@ -204,7 +208,7 @@ const PlayerControl = (
                 ) : (
                   <PlayArrowIcon fontSize="inherit" />
                 )}
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 onClick={onMuted}
                 className="bottom_icons"
@@ -248,6 +252,7 @@ const PlayerControl = (
                 key="bottom10"
                 size="large"
                 style={{ marginRight: "10px" }}
+                title="hide sub on video"
               >
                 <ClosedCaptionDisabledIcon fontSize="inherit" />
               </IconButton>
@@ -258,16 +263,31 @@ const PlayerControl = (
                 key="bottom11"
                 size="large"
                 style={{ marginRight: "10px" }}
+                title="show sub on video"
               >
                 <ClosedCaptionIcon fontSize="inherit" />
               </IconButton>
             )}
 
+            <IconButton className="bottom_icons" key="bottom4" size="large">
+              {isShowRightMenu ? (
+                <BsFillEyeFill
+                  title="show menu sub right"
+                  onClick={() => handleClickShowRightMenu(false)}
+                />
+              ) : (
+                <BsFillEyeSlashFill
+                  title="hide menu sub right"
+                  onClick={() => handleClickShowRightMenu(true)}
+                />
+              )}
+            </IconButton>
             <IconButton
               onClick={onToggleFullScreen}
               className="bottom_icons"
-              key="bottom4"
+              key="bottom8"
               size="large"
+              style={{ paddingRight: "5px", marginLeft: "10px" }}
             >
               <FullscreenIcon fontSize="inherit" />
             </IconButton>

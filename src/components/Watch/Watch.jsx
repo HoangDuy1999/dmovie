@@ -36,6 +36,7 @@ const Watch = ({ cate, ep, onFocus }) => {
   const [countHiddenText, setCountHiddenText] = useState(0);
   const [onLoaded, setOnLoaded] = useState(false);
   const [errorLoaded, setErrorLoaded] = useState(false);
+  const [isShowRightMenu, setIsShowRightMenu] = useState(true);
   const [arrSub, setArrSub] = useState([
     {
       value: "",
@@ -128,6 +129,10 @@ const Watch = ({ cate, ep, onFocus }) => {
         console.log("LỖI");
         console.log(error);
       });
+  };
+
+  const handleClickShowRightMenu = (value) => {
+    setIsShowRightMenu(value);
   };
 
   const getDetailMovies = () => {
@@ -805,10 +810,10 @@ Do you want to continue watching?</div>`}
         <div
           className="group"
           style={
-            width < 600 &&
-            selectedSub1.value === "" &&
-            selectedSub2.value === ""
-              ? { minHeight: "250px" }
+            width < 600 && isShowRightMenu === false
+              ? { minHeight: "300px", maxHeight: "300px" }
+              : width >=1024 && isShowRightMenu === false
+              ? { width: "90%", minHeight: "80vh", marginLeft: "auto", marginRight: "auto" }
               : {}
           }
         >
@@ -876,6 +881,8 @@ Do you want to continue watching?</div>`}
                 elapsedTime={elapsedTime}
                 totalDuration={totalDuration}
                 onChangeDisplayFormat={handleChangeDisplayTimeFormat}
+                isShowRightMenu={isShowRightMenu}
+                handleClickShowRightMenu={handleClickShowRightMenu}
               />
             </div>
 
@@ -895,14 +902,24 @@ Do you want to continue watching?</div>`}
           <div
             className="sub_list"
             style={
-              width < 600 &&
-              selectedSub1.value === "" &&
-              selectedSub2.value === ""
-                ? { display: "none", width: 0, height: 0 }
-                : {}
+              isShowRightMenu ? {} : { display: "none", width: 0, height: 0 }
             }
+            // style={
+            //   width < 600 &&
+            //   selectedSub1.value === "" &&
+            //   selectedSub2.value === ""
+            //     ? { display: "none", width: 0, height: 0 }
+            //     : {}
+            // }
           >
             <SubTitleList
+              style={
+                width < 600 &&
+                selectedSub1.value === "" &&
+                selectedSub2.value === ""
+                  ? { display: "none", width: 0, height: 0 }
+                  : {}
+              }
               listSubTitle={listSubTitle}
               selectedSub1={selectedSub1}
               selectedSub2={selectedSub2}

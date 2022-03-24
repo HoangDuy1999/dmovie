@@ -45,6 +45,10 @@
       padding: 0;
       margin: 0;
     }
+    .css-14gf62f-MuiSlider-thumb::after{
+      width: 15px !important;
+      height: 15px !important;
+    }
   }
   .bottom_icons:hover {
     color: #fff;

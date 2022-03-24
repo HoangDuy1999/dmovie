@@ -24,8 +24,8 @@
       min-height: 500px;
       @media screen and (max-width: 978px) {
         flex-direction: column;
-        min-height: 450px !important;
-        max-height: 800px;
+        min-height: 450px;
+        max-height: 900px;
       }
 
       .player-wrapper {
@@ -40,12 +40,18 @@
         min-height: 100%;
         // max-height: 450px;
         @media screen and (max-width: 978px) {
-          width: 95%;
+          width: 98%;
           min-height: 450px;
         }
-        @media screen and (max-width: 700px) {
-          width: 95%;
+        @media screen and (max-width: 480px) {
+          width: 98%;
           min-height: 210px;
+          max-height: 220px;
+        }
+        @media screen and (max-width: 600px) {
+          width: 98%;
+          min-height: 300px;
+          max-height: 300px;
         }
         // height: 60%;
         /* Player ratio: 100 / (1280 / 720) */
@@ -60,6 +66,9 @@
           min-width: 100%;
           margin: 0 auto !important;
           //left: calc((100% - 40%) / 2);
+          @media screen and (max-width: 600px) {
+            bottom: 1.5%;
+          }
           .wrapper {
             position: relative;
             display: flex;
@@ -100,7 +109,7 @@
         @media screen and (max-width: 978px) {
           position: relative;
           // overflow: scroll;
-          width: 95%;
+          width: 98%;
           margin: 15px auto;
         }
       }
@@ -114,7 +123,7 @@
       box-sizing: border-box;
       position: relative;
       @media screen and (max-width: 978px) {
-        width: 95%;
+        width: 98%;
         position: relative;
         // height: 70%;
       }
@@ -218,7 +227,7 @@
         flex-direction: column;
       }
       @media screen and (max-width: 978px) {
-        width: 95%;
+        width: 98%;
         // height: 70%;
       }
       .label {
@@ -285,7 +294,7 @@
       display: flex;
       flex-direction: column;
       @media screen and (max-width: 978px) {
-        width: 95%;
+        width: 98%;
       }
       color: #da966e;
       .name {
@@ -314,7 +323,7 @@
       // display: flex;
       // flex-direction: column;
       @media screen and (max-width: 978px) {
-        width: 95%;
+        width: 98%;
       }
       span {
         color: white;
@@ -332,7 +341,7 @@
       // flex-direction: column;
       background-color: white;
       @media screen and (max-width: 978px) {
-        width: 95%;
+        width: 98%;
       }
     }
   }
