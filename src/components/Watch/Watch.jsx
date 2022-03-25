@@ -812,8 +812,14 @@ Do you want to continue watching?</div>`}
           style={
             width < 600 && isShowRightMenu === false
               ? { minHeight: "300px", maxHeight: "300px" }
-              : width >=1024 && isShowRightMenu === false
-              ? { width: "90%", minHeight: "80vh", marginLeft: "auto", marginRight: "auto" }
+              : width >= 1024 && isShowRightMenu === false
+              ? {
+                  width: "90%",
+                  minHeight: "80vh",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  transition: "all 1.5s ease-in-out",
+                }
               : {}
           }
         >
@@ -902,7 +908,14 @@ Do you want to continue watching?</div>`}
           <div
             className="sub_list"
             style={
-              isShowRightMenu ? {} : { display: "none", width: 0, height: 0 }
+              isShowRightMenu
+                ? {}
+                : {
+                    display: "none",
+                    // width: 0,
+                    // height: 0,
+                    transition: "all 1.5s ease-in-out",
+                  }
             }
             // style={
             //   width < 600 &&
