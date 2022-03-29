@@ -213,6 +213,7 @@ const Watch = ({ cate, ep, onFocus }) => {
         });
       console.log(rs);
       if (rs) {
+      
         controlsRef.current.style.visibility = "visible";
         break;
       }
