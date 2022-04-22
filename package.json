@@ -74,7 +74,6 @@
     "slick-carousel": "^1.8.1",
     "srt-parser-2": "^1.1.7",
     "util": "^0.12.4",
-    "video.js": "^7.sẻ17.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
