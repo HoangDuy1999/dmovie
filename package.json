@@ -77,10 +77,10 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "SET PORT=9999 serve -s build",
-    "build": "SET PORT=9999 react-scripts build",
-    "test": "SET PORT=9999 react-scripts test",
-    "eject": "SET PORT=9999 react-scripts eject"
+    "start": "SET PORT=9999 && serve -s build",
+    "build": "SET PORT=9999 && react-scripts build",
+    "test": "SET PORT=9999 && react-scripts test",
+    "eject": "SET PORT=9999 && react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
