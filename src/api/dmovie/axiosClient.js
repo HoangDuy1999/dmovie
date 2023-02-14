@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosClient = axios.create({
   // baseURL: "http://localhost:5000/",
-  baseURL: "https://dmoviebe113.herokuapp.com/",
+  baseURL: "http://45.32.115.65/",
   headers: {
     "Content-Type": "application/json",
   },
