@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosClient = axios.create({
   // baseURL: "http://localhost:5000/",
-  baseURL: "http://45.32.115.65/",
+  baseURL: "https://product-view-service.tk/",
   headers: {
     "Content-Type": "application/json",
   },
